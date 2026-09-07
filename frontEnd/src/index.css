@@ -158,13 +158,13 @@
 /* Series Page */
 
 /* Movies and Series */
-.active-sort{
+.active-sort {
   background-color: var(--color-cta-primary);
   color: var(--color-text-primary);
 }
 
 /* Genre Page */
-.active-genre{
+.active-genre {
   background-color: var(--color-cta-primary);
   color: var(--color-text-primary);
 }
@@ -268,6 +268,25 @@
     opacity: 100;
   }
 }
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    -webkit-transform: translateY(20px);
+    -moz-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    -o-transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
+}
 @keyframes fadeOut {
   0% {
     opacity: 100;
@@ -276,6 +295,7 @@
     opacity: 0;
   }
 }
+
 @keyframes loading {
   0% {
     box-shadow:
@@ -327,6 +347,7 @@
 
   /* Animations */
   --animate-fadeIn: fadeIn 300ms ease-in;
+  --animate-fadeInUp: fadeInUp 500ms ease-in;
   --animate-fadeOut: fadeOut 300ms ease-out;
   --animate-loader: loading 600ms infinite linear alternate;
 }
