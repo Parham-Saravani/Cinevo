@@ -13,7 +13,7 @@ function Hero({ data }) {
         <Header />
       </section>
       <section className="banner relative h-190 max-xl:h-150 max-lg:h-140 max-md:h-100 max-sm:h-90">
-        {data.length > 0 ? (
+        {data ? (
           <Swiper
             className="h-full"
             modules={[Pagination]}

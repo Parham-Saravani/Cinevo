@@ -55,10 +55,10 @@ function Banner({
                 })}
               </p>
               <p className="relative mx-4 text-text-secondary banner-data">
-                {releaseYear}
+                {TimeFormatter(duration)}
               </p>
               <p className="relative mx-4 text-text-secondary banner-data">
-                {TimeFormatter(duration)}
+                {releaseYear}
               </p>
             </div>
           </div>
