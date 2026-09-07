@@ -1,5 +1,4 @@
 import Hero from "./elements/Hero/Hero";
-import LoadingCard from "../Loading/LoadingCard";
 
 import Footer from "../Footer/Footer";
 import { FaFire, FaCalendar } from "react-icons/fa";

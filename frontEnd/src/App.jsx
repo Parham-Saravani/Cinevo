@@ -1,7 +1,6 @@
-import Home from "./Components/Home/Home";
-
+import Auth from "./Components/Auth/Auth";
 function App() {
-  return <Home />;
+  return <Auth />;
 }
 
 export default App;
