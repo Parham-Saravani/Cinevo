@@ -27,7 +27,7 @@ const takeTrendContent = async (req, res) => {
   const totalTrendSeries = await Serie.find(
     { trending: true },
     {
-      _id: false,
+      _id: true,
       title: true,
       slug: true,
       genres: true,
@@ -38,7 +38,7 @@ const takeTrendContent = async (req, res) => {
   const totalTrendMovies = await Movie.find(
     { trending: true },
     {
-      _id: false,
+      _id: true,
       title: true,
       slug: true,
       genres: true,
@@ -52,7 +52,7 @@ const takeNewContent = async (req, res) => {
   const totalPopularSeries = await Serie.find(
     { releaseYear: { $gte: 2025 } },
     {
-      _id: false,
+      _id: true,
       title: true,
       slug: true,
       genres: true,
@@ -63,7 +63,7 @@ const takeNewContent = async (req, res) => {
   const totalPopularMovies = await Movie.find(
     { releaseYear: { $gte: 2025 } },
     {
-      _id: false,
+      _id: true,
       title: true,
       slug: true,
       genres: true,
@@ -78,7 +78,7 @@ const takePopularContent = async (req, res) => {
   const totalPopularSeries = await Serie.find(
     { rating: { $gte: 8 } },
     {
-      _id: false,
+      _id: true,
       title: true,
       slug: true,
       genres: true,
@@ -89,7 +89,7 @@ const takePopularContent = async (req, res) => {
   const totalPopularMovies = await Movie.find(
     { rating: { $gte: 8 } },
     {
-      _id: false,
+      _id: true,
       title: true,
       slug: true,
       genres: true,
@@ -103,7 +103,7 @@ const takeRecommendedContent = async (req, res) => {
   const recommendSeries = await Serie.find(
     { rating: { $gte: 9 } },
     {
-      _id: false,
+      _id: true,
       title: true,
       slug: true,
       genres: true,
@@ -114,7 +114,7 @@ const takeRecommendedContent = async (req, res) => {
   const recommendMovies = await Movie.find(
     { rating: { $gte: 9 } },
     {
-      _id: false,
+      _id: true,
       title: true,
       slug: true,
       genres: true,

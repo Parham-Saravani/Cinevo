@@ -76,7 +76,13 @@
 .banner-data:first-child {
   margin-left: 0;
 }
-
+.banner-genres:last-child::before {
+  content: none;
+}
+.banner-genres:last-child {
+  margin-right: 0;
+  content: none;
+}
 .swiper-pagination-bullet {
   background-color: var(--color-text-secondary) !important;
 }

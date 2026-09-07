@@ -33,12 +33,9 @@ function Header() {
               placeholder="Search for movies, series..."
             />
           </div>
-          <a
-            href="/auth.html"
-            className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn"
-          >
+          <button className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn">
             Login | Signup
-          </a>
+          </button>
           <div className="hidden relative profile-content">
             <button className="bg-input-bg hover:bg-input-bg/90 hover:border-input-border-hover px-2 py-2 border-2 border-input-border rounded-full cursor-pointer transition-colors duration-300">
               <svg

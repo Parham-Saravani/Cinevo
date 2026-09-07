@@ -9,7 +9,7 @@ const createNewBanner = async (req, res) => {
       (await Serie.findOne(
         { slug: currentSlug },
         {
-          _id: false,
+          _id: true,
           title: true,
           banner: true,
           slug: true,
@@ -24,7 +24,7 @@ const createNewBanner = async (req, res) => {
       (await Movie.findOne(
         { slug: currentSlug },
         {
-          _id: false,
+          _id: true,
           title: true,
           banner: true,
           slug: true,

@@ -21,7 +21,7 @@ function Hero({ data }) {
           >
             {data.map((item) => {
               return (
-                <SwiperSlide className="">
+                <SwiperSlide key={item.id} className="">
                   <Banner {...item} />
                 </SwiperSlide>
               );
