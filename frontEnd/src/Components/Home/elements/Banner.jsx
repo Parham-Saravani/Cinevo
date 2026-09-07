@@ -37,7 +37,7 @@ function Banner({
                 Add To Watchlist
               </button>
             </div>
-            <div className="mt-4 flex flex-wrap items-center text-sm max-md:text-xs">
+            <div className="mt-5 flex flex-wrap items-center text-sm max-md:text-xs">
               <p className="relative mx-4 flex gap-1 items-center text-text-secondary banner-data">
                 <FaStar className="size-4 fill-yellow-500" />
                 {rating}/10

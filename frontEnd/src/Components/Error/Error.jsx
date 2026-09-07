@@ -1,13 +1,11 @@
 import { useEffect } from "react";
 
-function Error() {
-
-  useEffect(()=> {
-    console.log('s');
-    
-  }, [])
+function Error({ children, error }) {
+  useEffect(() => {
+    console.log("s");
+  }, []);
   return (
-    <div className="fixed inset-0 flex flex-col justify-center items-center">
+    <div className="animate-fadeIn fixed inset-0 flex flex-col justify-center items-center">
       <div className="eyes-container" id="eyesContainer">
         <div className="eye">
           <div className="pupil"></div>
@@ -18,10 +16,10 @@ function Error() {
       </div>
       <div className="mt-10 text-text-primary text-center">
         <h2 className="font-bold text-3xl">Opps...</h2>
-        <p className="mt-2 text-xl">We couldn't find anything.</p>
+        <p className="mt-2 text-xl">{children}</p>
       </div>
-      <button className="mt-4 w-40 py-3 rounded-xl bg-cta-primary hover:bg-cta-hover text-text-primary text-sm transition-colors duration-300 cursor-pointer reload-btn">
-        Back to Home
+      <button className="font-semibold mt-8 w-40 py-3 rounded-xl bg-cta-primary hover:bg-cta-hover text-text-primary transition-colors duration-300 cursor-pointer reload-btn">
+        {error ? "Back to Home" : "Refresh"}
       </button>
     </div>
   );

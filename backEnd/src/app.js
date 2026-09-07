@@ -14,7 +14,7 @@ app.use("/api/movies", moviesRouter);
 app.use("/api/series", seriesRouter);
 app.use("/api/discover", discoverRouter);
 app.use("/api/banners", bannerRouter);
-app.use("/api/comment", commentRouter);
+app.use("/api/comment", commentRouter);     
 app.use("/api/user", userRouter);
 
 export default app;

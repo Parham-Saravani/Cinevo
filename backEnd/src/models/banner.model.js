@@ -7,7 +7,7 @@ const bannerSchema = new mongoose.Schema({
   releaseYear: String,
   genres: [String],
   rating: String,
-  duration: String,
+  duration: Number,
   type: String,
 });
 

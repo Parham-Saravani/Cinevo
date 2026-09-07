@@ -31,8 +31,10 @@ function Home() {
         ]);
         data.forEach((item) => {
           if (!item.ok) throw Error();
-        });        
-        setBanners(await data[0].json());
+        });
+        // setBanners(await data[0].json());
+        console.log(await data[0].json());
+
         setTrending(await data[1].json());
         setNewRelease(await data[2].json());
         setPapular(await data[3].json());
@@ -46,7 +48,7 @@ function Home() {
   }, []);
 
   if (error) {
-    return <Error />;
+    return <Error error={false}>Something happend please refresh Page!</Error>;
   }
   return (
     <>
