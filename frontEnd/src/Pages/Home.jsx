@@ -17,6 +17,7 @@ function Home() {
     recommend: null,
   });
   useEffect(() => {
+    document.title = 'Home | Cinevo'
     const baseUrl = "http://localhost:64235";
 
     (async () => {

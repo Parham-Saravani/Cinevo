@@ -1,11 +1,14 @@
 import { FaPlay, FaStar } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
+import { Link } from "react-router";
 import TimeFormatter from "../../Utilities/TimeFormatter/TimeFormatter";
+
 function Banner({
   banner,
   bannerDescription,
   duration,
   genres,
+  type,
   rating,
   releaseYear,
   slug,
@@ -28,10 +31,10 @@ function Banner({
               {bannerDescription}
             </p>
             <div className="mt-5 flex">
-              <button className="flex max-md:gap-1 gap-2 items-center justify-center bg-cta-primary hover:bg-cta-hover text-text-primary font-semibold w-45 max-md:w-fit text-sm max-md:text-[10px] max-md:px-3 py-3 max-md:py-0 transition-colors duration-300 cursor-pointer rounded-xl">
+              <Link to={type === 'movie' ? `/movie/${slug}`:`/serie/${slug}`} className="flex max-md:gap-1 gap-2 items-center justify-center bg-cta-primary hover:bg-cta-hover text-text-primary font-semibold w-45 max-md:w-fit text-sm max-md:text-[10px] max-md:px-3 py-3 max-md:py-0 transition-colors duration-300 cursor-pointer rounded-xl">
                 <FaPlay className="size-6 max-md:size-4 fill-text-primary" />
                 Watch Now
-              </button>
+              </Link>
               <button className="flex items-center justify-center text-text-secondary border-input-border hover:bg-input-border/50 transition-colors duration-300 ml-4 rounded-xl w-45 max-md:w-fit max-md:px-3 py-3 text-sm max-md:text-[10px] border-2  cursor-pointer">
                 <FaPlus className="size-6 max-md:size-4 fill-current" />
                 Add To Watchlist

@@ -7,7 +7,7 @@ import {
 
 function Footer() {
   return (
-    <footer className="py-4 border-b border-t border-input-border/20">
+    <footer className="animate-fadeIn py-4 border-b border-t border-input-border/20">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex max-sm:justify-center max-sm:w-full items-center">

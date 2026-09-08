@@ -8,7 +8,7 @@ function Header() {
             Cinevo
           </Link>
           <ul className="max-sm:hidden flex gap-4 justify-between items-center ml-20">
-            <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative menu-item-active">
+            <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
               <Link to="/">Home</Link>
             </li>
             <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
