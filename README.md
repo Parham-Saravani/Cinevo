@@ -105,8 +105,6 @@ MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET = your_jwt_secret
 ```
 
-> Never commit sensitive credentials or API keys to the repository.
-
 ### 4. Run the backend
 
 ```bash
@@ -143,7 +141,6 @@ Cinevo is designed to provide a responsive experience across:
 ## 🔮 Future Improvements
 
 * [ ] Complete all frontend pages
-* [ ] Add React Router
 * [ ] Advanced search and filtering
 * [ ] User authentication
 * [ ] User profiles
