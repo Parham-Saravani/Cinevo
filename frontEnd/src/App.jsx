@@ -6,6 +6,9 @@ import Series from "./Pages/Series";
 import Genre from "./Pages/Genre";
 import Search from "./Pages/Search";
 import NotFound from "./Pages/NotFound";
+import Movie from "./Pages/Movie";
+import Serie from "./Pages/Serie";
+
 function App() {
   return (
     <Routes>
@@ -15,6 +18,8 @@ function App() {
       <Route path="/series" element={<Series />} />
       <Route path="/genre" element={<Genre />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/movie/:slug" element={<Movie />} />
+      <Route path="/serie/:slug" element={<Serie />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

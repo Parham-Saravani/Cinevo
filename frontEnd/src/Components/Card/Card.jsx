@@ -1,14 +1,15 @@
-import { SwiperSlide } from "swiper/react";
+import {Link} from "react-router";
+
 function Card({ poster, slug, title, type, genres }) {
   return (
-    <a href="" className="relative h-full">
+    <Link to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`} className="block relative h-full">
       <img
         className="animate-fadeIn object-cover h-full w-full rounded-xl card-image bg-gray-900"
         src={poster}
         alt={title}
         loading="lazy"
       />
-      <div className="hidden absolute opacity-0 group-hover:opacity-100 transition-normal duration-300 top-0 w-full h-full bg-black/50 z-10">
+      <div className="absolute opacity-0 group-hover:opacity-100 transition-normal duration-300 top-0 left-0 right-0 bottom-0 w-full h-full bg-black/50 z-10">
         <div className="relative h-full w-full">
           <div className="absolute flex justify-center flex-wrap left-0 right-0 mx-auto w-fit top-0 bottom-0 my-auto h-fit px-2 gap-2">
             {genres.map((genre, index) => {
@@ -24,7 +25,7 @@ function Card({ poster, slug, title, type, genres }) {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 

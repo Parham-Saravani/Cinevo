@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import Banner from "./Banner";
-function Hero({ data }) {
+function HomeHero({ data }) {
   return (
     <header className="header">
       <section className="absolute z-30 top-5 left-0 right-0">
@@ -65,4 +65,4 @@ function Hero({ data }) {
   );
 }
 
-export default Hero;
+export default HomeHero;

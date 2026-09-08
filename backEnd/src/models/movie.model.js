@@ -15,7 +15,7 @@ const movieSchema = new mongoose.Schema(
 
     releaseYear: Number,
 
-    duration: String,
+    duration: Number,
     runtime: String,
 
     rating: Number,

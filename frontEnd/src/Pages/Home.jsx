@@ -1,4 +1,4 @@
-import Hero from "../Components/Home/Hero";
+import HomeHero from "../Components/Home/HomeHero";
 import Footer from "../Components/Footer/Footer";
 import { FaFire, FaCalendar } from "react-icons/fa";
 import { BsFillTvFill } from "react-icons/bs";
@@ -58,7 +58,7 @@ function Home() {
 
   return (
     <>
-      <Hero data={data.banners} />
+      <HomeHero data={data.banners} />
       <main className="mt-8 mb-15">
         {/* <!-- Trending --> */}
         <Section
