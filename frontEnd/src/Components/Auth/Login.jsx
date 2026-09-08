@@ -12,7 +12,7 @@ function Login() {
         Glad to see you again! Please login to continue
       </p>
 
-      <form className="animate-fadeInUp mt-7">
+      <form className="mt-7">
         <div className="animate-fadeInUp relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
           <MdOutlineMail className="absolute size-5 left-2 bottom-0 top-0 my-auto fill-current" />
           <input

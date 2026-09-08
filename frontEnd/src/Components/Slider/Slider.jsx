@@ -1,4 +1,4 @@
-import LoadingCard from "../Loading/LoadingCard";
+import LoadingCard from "../Home/LoadingCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Card from "../Card/Card";
 function Slider({ data }) {

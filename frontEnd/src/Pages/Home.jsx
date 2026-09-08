@@ -1,12 +1,11 @@
-import Hero from "./elements/Hero/Hero";
-
-import Footer from "../Footer/Footer";
+import Hero from "../Components/Home/Hero";
+import Footer from "../Components/Footer/Footer";
 import { FaFire, FaCalendar } from "react-icons/fa";
 import { BsFillTvFill } from "react-icons/bs";
 import { FaStar } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import Error from "../Error/Error";
-import Section from "./elements/Section/Section";
+import NotFound from "./NotFound";
+import Section from "../Components/Home/Section";
 
 function Home() {
   const [error, setError] = useState(false);
@@ -31,10 +30,11 @@ function Home() {
         ]);
 
         responses.forEach((item) => {
-          if (!item.ok) throw new Error(`${item} take error!`);
+          if (!item.ok) throw new NotFound(`${item} take error!`);
         });
 
-        const [banners, trending, newRelease, popular, recommend] = await Promise.all(responses.map(responce => responce.json()))
+        const [banners, trending, newRelease, popular, recommend] =
+          await Promise.all(responses.map((responce) => responce.json()));
         setData({
           banners: banners,
           trending: trending,
@@ -51,7 +51,9 @@ function Home() {
   }, []);
 
   if (error) {
-    return <Error error={false}>Something happend please refresh Page!</Error>;
+    return (
+      <NotFound error={false}>Something happend please refresh Page!</NotFound>
+    );
   }
 
   return (
@@ -59,19 +61,47 @@ function Home() {
       <Hero data={data.banners} />
       <main className="mt-8 mb-15">
         {/* <!-- Trending --> */}
-        <Section icon={<FaFire className="size-6 max-md:size-5 max-sm:size-4.5 fill-cta-primary" /> } data={data.trending} > Trending Now
+        <Section
+          icon={
+            <FaFire className="size-6 max-md:size-5 max-sm:size-4.5 fill-cta-primary" />
+          }
+          data={data.trending}
+        >
+          {" "}
+          Trending Now
         </Section>
 
         {/* <!-- Releases --> */}
-        <Section icon={ <FaCalendar className="size-6 max-md:size-5 max-sm:size-4.5 fill-cta-primary" /> } data={data.newRelease} > New Releases
+        <Section
+          icon={
+            <FaCalendar className="size-6 max-md:size-5 max-sm:size-4.5 fill-cta-primary" />
+          }
+          data={data.newRelease}
+        >
+          {" "}
+          New Releases
         </Section>
 
         {/* <!-- Popular Series --> */}
-        <Section icon={ <BsFillTvFill className="size-6 max-md:size-5 max-sm:size-4.5 fill-cta-primary" /> } data={data.popular} > Popular Series
+        <Section
+          icon={
+            <BsFillTvFill className="size-6 max-md:size-5 max-sm:size-4.5 fill-cta-primary" />
+          }
+          data={data.popular}
+        >
+          {" "}
+          Popular Series
         </Section>
 
         {/* <!-- Recommended --> */}
-        <Section icon={ <FaStar className="size-6 max-md:size-5 max-sm:size-4.5 fill-cta-primary" />} data={data.recommend} > Recommended
+        <Section
+          icon={
+            <FaStar className="size-6 max-md:size-5 max-sm:size-4.5 fill-cta-primary" />
+          }
+          data={data.recommend}
+        >
+          {" "}
+          Recommended
         </Section>
       </main>
       <Footer />

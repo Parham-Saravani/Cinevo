@@ -1,6 +1,6 @@
 import { FaPlay, FaStar } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
-import TimeFormatter from "../../../Utilities/TimeFormatter/TimeFormatter";
+import TimeFormatter from "../../Utilities/TimeFormatter/TimeFormatter";
 function Banner({
   banner,
   bannerDescription,

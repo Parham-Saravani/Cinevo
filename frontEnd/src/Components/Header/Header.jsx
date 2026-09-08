@@ -1,27 +1,27 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Link } from "react-router";
 function Header() {
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
-          <a href="/" className="text-white font-bold text-2xl">
+          <Link to="/" className="text-white font-bold text-2xl">
             Cinevo
-          </a>
+          </Link>
           <ul className="max-sm:hidden flex gap-4 justify-between items-center ml-20">
             <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative menu-item-active">
-              <a href="/index.html">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <a href="/movies.html">Movies</a>
+              <Link to="/movies">Movies</Link>
             </li>
             <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <a href="/series.html">Series</a>
+              <Link to="/series">Series</Link>
             </li>
             <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <a href="/genre.html">Genres</a>
+              <Link to="/genre">Genres</Link>
             </li>
             <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <a href="/search.html">Search</a>
+              <Link to="/search">Search</Link>
             </li>
           </ul>
         </div>
@@ -33,9 +33,9 @@ function Header() {
               placeholder="Search for movies, series..."
             />
           </div>
-          <button className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn">
+          <Link to="/auth" className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn">
             Login | Signup
-          </button>
+          </Link>
           <div className="hidden relative profile-content">
             <button className="bg-input-bg hover:bg-input-bg/90 hover:border-input-border-hover px-2 py-2 border-2 border-input-border rounded-full cursor-pointer transition-colors duration-300">
               <svg

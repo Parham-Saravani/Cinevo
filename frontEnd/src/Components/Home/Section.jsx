@@ -1,5 +1,5 @@
 import { FaArrowRight } from "react-icons/fa6";
-import Slider from "../../../Slider/Slider";
+import Slider from "../Slider/Slider";
 
 function Section({ children, data, icon }) {
   return (

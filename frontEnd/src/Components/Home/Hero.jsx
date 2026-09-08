@@ -1,11 +1,10 @@
-import Header from "../../../Header/Header";
-import Card from "../../../Card/Card";
+import Header from "../Header/Header";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import Banner from "../Banner";
+import Banner from "./Banner";
 function Hero({ data }) {
   return (
     <header className="header">
