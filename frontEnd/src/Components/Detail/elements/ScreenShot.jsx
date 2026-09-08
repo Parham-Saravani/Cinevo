@@ -28,7 +28,7 @@ function ScreenShot({ imgUrl }) {
       ) : (
         <>
           <img
-            src='https://ik.imagekit.io/Cinevo/default-image.jpg?updatedAt=1788875899492'
+            src={imgUrl}
             onLoad={(event) => {
               setIsLoading(false);
             }}

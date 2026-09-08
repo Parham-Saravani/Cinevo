@@ -6,13 +6,12 @@ import SerieDetail from "../Components/Detail/SerieDetail";
 function Serie() {
   const { slug } = useParams();
   const [serie, setSerie] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState(false);
-  const [comment, setComment] = useState({
-    isSpoil: false,
-    message: null,
-  });
+  const [similarContent, setSimilarContent] = useState(null);
+  const baseUrl = "http://localhost:64235";
+
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     document.title = `${slug
       .split("-")
       .map((item) => item[0].toLocaleUpperCase() + item.slice(1))
@@ -20,20 +19,24 @@ function Serie() {
 
     try {
       (async () => {
-        const response = await fetch(
-          `http://localhost:64235/api/series/${slug}`,
+        const response = await Promise.all([
+          fetch(`${baseUrl}/api/series/${slug}`),
+          fetch(`${baseUrl}/api/discover/similar/${slug}`),
+        ]);
+        response.forEach((item) => {
+          if (!item.ok) throw Error();
+        });
+        const [detail, similarData] = await Promise.all(
+          response.map((res) => res.json()),
         );
-        const data = await response.json();
-
-        console.log(data);
-        if (!response.ok) throw Error();
-        setSerie({ ...data });
+        setSimilarContent([...similarData]);
+        setSerie({ ...detail });
       })();
     } catch (error) {
       console.log(error);
       setError(true);
     }
-  }, []);
+  }, [slug]);
 
   if (error) {
     return <h1 className="text-white text-2xl">Error</h1>;
@@ -48,7 +51,7 @@ function Serie() {
           bannerDescription={serie.bannerDescription}
         />
       )}
-      {serie && <SerieDetail {...serie} />}
+      {serie && <SerieDetail similarContent={similarContent} {...serie} />}
       <Footer />
     </>
   );

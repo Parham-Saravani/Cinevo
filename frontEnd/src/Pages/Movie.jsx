@@ -8,8 +8,10 @@ function Movie() {
   const { slug } = useParams();
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(false);
-
+  const [similarContent, setSimilarContent] = useState(null);
+  const baseUrl = "http://localhost:64235";
   useEffect(() => {
+    window.scrollTo({top:0 , behavior:'smooth'})
     document.title = `${slug
       .split("-")
       .map((item) => item[0].toLocaleUpperCase() + item.slice(1))
@@ -17,20 +19,24 @@ function Movie() {
 
     try {
       (async () => {
-        const response = await fetch(
-          `http://localhost:64235/api/movies/${slug}`,
+        const response = await Promise.all([
+          fetch(`${baseUrl}/api/movies/${slug}`),
+          fetch(`${baseUrl}/api/discover/similar/${slug}`),
+        ]);
+        response.forEach((item) => {
+          if (!item.ok) throw Error();
+        });
+        const [detail, similarData] = await Promise.all(
+          response.map((res) => res.json()),
         );
-        const data = await response.json();
-        if (!response.ok) throw Error();
-        console.log(data);
-
-        setMovie({ ...data });
+        setSimilarContent([...similarData]);
+        setMovie({ ...detail });
       })();
     } catch (error) {
       console.log(error);
       setError(true);
     }
-  }, []);
+  }, [slug]);
 
   if (error) {
     return <h1 className="text-white text-2xl">Error</h1>;
@@ -45,7 +51,7 @@ function Movie() {
           bannerDescription={movie.bannerDescription}
         />
       )}
-      {movie && <MovieDetail {...movie} />}
+      {movie && <MovieDetail similarContent={similarContent} {...movie} />}
       <Footer />
     </>
   );

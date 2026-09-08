@@ -26,7 +26,7 @@ function QuickInfo({ releaseYear, duration, genres, rating, director }) {
         </InfoItem>
         <InfoItem
           icon={<LuClapperboard className="text-cta-primary size-5" />}
-          value={genres.map((item, index) => (
+          value={genres.slice(0,3).map((item, index) => (
             <span
               key={index}
               className="relative mr-2.5 before:absolute before:-right-1.5 before:content-[','] last:before:content-none"

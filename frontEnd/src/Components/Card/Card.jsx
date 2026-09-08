@@ -1,8 +1,11 @@
-import {Link} from "react-router";
+import { Link } from "react-router";
 
 function Card({ poster, slug, title, type, genres }) {
   return (
-    <Link to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`} className="block relative h-full">
+    <Link
+      to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`}
+      className="block relative h-full"
+    >
       <img
         className="animate-fadeIn object-cover h-full w-full rounded-xl card-image bg-gray-900"
         src={poster}
