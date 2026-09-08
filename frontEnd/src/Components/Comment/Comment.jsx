@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import FormatTimeAgo from "../../Utilities/FormatTimeAgo/FormatTimeAgo";
+import { FaRegUser } from "react-icons/fa6";
 
-function Comment() {
-  const [loading, setLoading] = useState(true);
+
+function Comment({ author, text, isSpoil, createdAt }) {
   return (
-    <div className="mt-3 flex items-center rounded-xl border-2 px-5 py-5 bg-gray-900 animate-pulse">
-      <div className="w-10 h-10 rounded-md bg-gray-950 animate-pulse"></div>
+    <div className="mt-3 flex items-center rounded-xl border-2 px-5 py-5 border-input-border">
+      <span className="bg-input-border/50 px-2 py-2 rounded-md">
+        <FaRegUser className="text-text-secondary size-5" />
+      </span>
       <div className="ml-5 w-full">
         <div className="flex items-center justify-between">
-          <h5 className="bg-gray-950 animate-pulse w-20 h-5 rounded-md"></h5>
-          <p className="rounded-md bg-gray-950 animate-pulse w-20 h-5"></p>
+          <h5 className="text-text-primary font-semibold">{author}</h5>
+          <p className="text-text-secondary ml-6 text-xs">
+            {FormatTimeAgo(createdAt)}
+          </p>
         </div>
-        <div className="mt-1.5 text-text-secondary relative">
-          <div className="bg-gray-950 animate-pulse w-full  h-3.5 rounded-md"></div>
-          <div className="mt-0.5 bg-gray-950 animate-pulse w-full  h-3.5 rounded-md"></div>
+        <div className="mt-1 text-text-secondary relative">
+          <p className="">{text}</p>
+          {isSpoil ? (
+            <div className="absolute -inset-2 flex justify-center items-center backdrop-blur-xs">
+              <button className="hover:border-cta-primary/50 hover:bg-cta-primary/50 bg-input-border/50 backdrop-blur-3xl transition-colors duration-300 cursor-pointer border-2 text-sm border-input-border rounded-xl px-3 py-1 text-text-primary remove-comment-spoiler-cover-btn">
+                Read
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

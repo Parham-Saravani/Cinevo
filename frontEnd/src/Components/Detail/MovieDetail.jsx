@@ -22,6 +22,7 @@ function MovieDetail({
   cast,
   screenshots,
 }) {
+  
   return (
     <main className="animate-fadeIn mt-8 max-lg:mt-15 max-md:mt-20 max-sm:mt-25">
       <Section>
@@ -86,7 +87,9 @@ function MovieDetail({
               <EmptyComments />
             ) : (
               <div className="mt-10 comments-container">
-                <Comment />
+                {totalComments.comments.map((item) => (
+                  <Comment key={item._id} {...item} />
+                ))}
               </div>
             )}
           </div>
