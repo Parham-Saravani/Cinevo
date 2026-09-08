@@ -8,6 +8,8 @@ function Serie() {
   const [serie, setSerie] = useState(null);
   const [error, setError] = useState(false);
   const [similarContent, setSimilarContent] = useState(null);
+  const [totalComments, setTotalComments] = useState([]);
+
   const baseUrl = "http://localhost:64235";
 
   useEffect(() => {
@@ -51,7 +53,13 @@ function Serie() {
           bannerDescription={serie.bannerDescription}
         />
       )}
-      {serie && <SerieDetail similarContent={similarContent} {...serie} />}
+      {serie && (
+        <SerieDetail
+          totalComments={totalComments}
+          similarContent={similarContent}
+          {...serie}
+        />
+      )}
       <Footer />
     </>
   );

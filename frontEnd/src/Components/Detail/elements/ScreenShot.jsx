@@ -4,7 +4,6 @@ import { RiMovie2Line } from "react-icons/ri";
 function ScreenShot({ imgUrl }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-  console.log(imgUrl);
 
   return (
     <div
@@ -15,10 +14,10 @@ function ScreenShot({ imgUrl }) {
       }
     >
       {error ? (
-        <div className="flex flex-col items-center justify-center w-full h-full bg-gray-900 rounded-xl gap-2">
+        <div className="animate-fadeIn flex flex-col items-center justify-center w-full h-full bg-gray-900 rounded-xl gap-2">
           <RiMovie2Line className="fa-solid fa-film text-4xl text-gray-500" />
           <p className="text-sm font-medium text-text-primary/70">
-            Screen not available
+            Scene not available
           </p>
 
           <span className="text-xs text-text-secondary/50">
@@ -36,7 +35,7 @@ function ScreenShot({ imgUrl }) {
               setIsLoading(false);
               setError(true);
             }}
-            className={`w-full h-full object-cover aspect-video page-screenshot ${isLoading ? "opacity-0" : "opacity-100"}`}
+            className={`animate-fadeIn w-full h-full object-cover aspect-video page-screenshot ${isLoading ? "opacity-0" : "opacity-100"}`}
           />
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-black/30 transition-opacity duration-300"></div>
         </>

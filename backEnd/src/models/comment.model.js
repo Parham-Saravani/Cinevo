@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 const commentSchema = new mongoose.Schema(
   {
-    contentID: { type: String, required: true },
+    contentID: { type: mongoose.Schema.Types.ObjectId, required: true },
     comments: [
       {
         author: String,
         text: String,
-        isSpoil: Boolean,
+        isSpoil: { type: Boolean, default: false },
         createdAt: { type: Date, default: Date.now },
       },
     ],
