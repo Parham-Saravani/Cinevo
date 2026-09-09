@@ -14,7 +14,7 @@ function ScreenShot({ imgUrl }) {
       }
     >
       {error ? (
-        <div className="animate-fadeIn flex flex-col items-center justify-center w-full h-full bg-gray-900 rounded-xl gap-2">
+        <div className="flex flex-col items-center justify-center w-full h-full bg-gray-900 rounded-xl gap-2">
           <RiMovie2Line className="fa-solid fa-film text-4xl text-gray-500" />
           <p className="text-sm font-medium text-text-primary/70">
             Scene not available

@@ -1,6 +1,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 
-function Cast({cast}) {
+import EmptyCast from "../../Empty/EmptyCast";
+function Cast({ cast }) {
+  if (!cast.length) {
+    return (
+      <EmptyCast/>
+    );
+  }
   return (
     <Swiper
       slidesPerView={"auto"}

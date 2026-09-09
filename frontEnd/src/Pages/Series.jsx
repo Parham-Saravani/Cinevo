@@ -4,6 +4,7 @@ import ContentFilters from "../Components/ContentFilters/ContentFilters";
 import Card from "../Components/Card/Card";
 import { baseUrl } from "../Utilities/constants";
 import ListCard from "../Components/Card/ListCard";
+import LoadingCard from "../Components/Loader/LoadingCard";
 
 function Series() {
   const [series, setSeries] = useState([]);
@@ -11,6 +12,7 @@ function Series() {
   const [genres, setGenres] = useState([]);
   const [error, setError] = useState(false);
   const [layout, setLayout] = useState("grid");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = "Series | Cinevo";
@@ -34,6 +36,8 @@ function Series() {
         setSeries([...totalSeries]);
       } catch (error) {
         setError(true);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
@@ -60,20 +64,26 @@ function Series() {
           <section className="mt-7">
             <div className="container mx-auto">
               <div
-                className={`grid ${layout === "grid" ? "grid-cols-7" : "grid-cols-1"} max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5 movies-page-movies-container`}
+                className={`grid ${layout === "grid" ? "grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3" : "grid-cols-1"} gap-5 movies-page-movies-container`}
               >
-                {series.map((item, index) => {
-                  return layout === "list" ? (
-                    <ListCard key={item._id} {...item} />
-                  ) : (
-                    <div
-                      key={index}
-                      className={`group rounded-xl overflow-hidden ${layout === "grid" ? "h-62" : "h-45"}`}
-                    >
-                      <Card {...item} />
-                    </div>
-                  );
-                })}
+                {loading
+                  ? [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 14, 15, 16].map(
+                      (item, index) => {
+                        return <LoadingCard key={index} />;
+                      },
+                    )
+                  : series.map((item, index) => {
+                      return layout === "list" ? (
+                        <ListCard key={item._id} {...item} />
+                      ) : (
+                        <div
+                          key={index}
+                          className="group rounded-xl overflow-hidden h-62"
+                        >
+                          <Card {...item} />
+                        </div>
+                      );
+                    })}
               </div>
             </div>
           </section>
