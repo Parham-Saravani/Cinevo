@@ -2,12 +2,70 @@ import { LuEye } from "react-icons/lu";
 import { MdOutlineMail, MdLockOutline } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { useState } from "react";
+import SignupValidator from "../../Validators/SignupValidator";
+import Toast from "../Toast/Toast";
+import { baseUrl } from "../../Utilities/constants";
+import saveCookie from "../../Utilities/Cookie/saveCookie";
+import { useNavigate } from "react-router";
 
 function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+
+  const signupHandler = async () => {
+    const data = SignupValidator.safeParse({
+      username,
+      email,
+      password,
+      confirmPassword,
+    });
+
+    if (!data.success) {
+      Toast({ children: data.error.issues[0].message });
+    } else {
+      try {
+        const responce = await fetch(`${baseUrl}/api/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, email, password }),
+        });
+        const data = await responce.json();
+        console.log(data);
+        if (!responce.ok) {
+          throw new Error("Registration failed. Please try again.");
+        }
+        if (data.message === "USER_CREATED") {
+          saveCookie(data.token);
+          Toast({
+            isError: false,
+            children: "Registration successful. Welcome to Cinevo!",
+          });
+          navigate("/");
+        } else if (data.message === "USERNAME_TAKEN") {
+          Toast({
+            children:
+              "This username is already taken. Please choose another one.",
+          });
+        } else if (data.message === "EMAIL_USED") {
+          Toast({
+            children:
+              "This email is already registered. Please use another email.",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+
+        Toast({
+          children: error.message,
+        });
+      }
+    }
+  };
   return (
     <>
       <h2 className="animate-fadeInUp font-bold text-2xl max-sm:text-xl">
@@ -79,6 +137,7 @@ function Signup() {
         </p>
 
         <button
+          onClick={signupHandler}
           className="animate-fadeInUp max-sm:text-xs mt-5 font-bold text-sm text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer signup-btn disabled:bg-cta-primary/40 disabled:cursor-default"
           type="button"
         >

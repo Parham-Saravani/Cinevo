@@ -1,5 +1,8 @@
 import { Link } from "react-router";
+import checkCookie from "../../Utilities/Cookie/checkCookie";
+
 function Header() {
+  checkCookie()
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center">
@@ -33,7 +36,10 @@ function Header() {
               placeholder="Search for movies, series..."
             />
           </div>
-          <Link to="/auth" className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn">
+          <Link
+            to="/auth"
+            className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn"
+          >
             Login | Signup
           </Link>
           <div className="hidden relative profile-content">

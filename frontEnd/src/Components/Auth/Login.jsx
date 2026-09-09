@@ -33,14 +33,14 @@ function Login() {
             children:
               "Login failed. Please check your credentials and try again.",
           });
-          if (rembember) {
-            saveCookie(crypto.randomUUID());
-          }
         } else if (data.message === "LOGIN_SUCCESSFUL") {
           showToast({
             isError: false,
             children: "Login successful. Welcome back to Cinevo!",
           });
+          if (rembember) {
+            saveCookie(data.token);
+          }
         }
       } catch (error) {
         <showToast>{error.message}</showToast>;
