@@ -45,13 +45,15 @@ const loginOperation = async (req, res) => {
       if (user) {
         const passwordCompare = await bcrypt.compare(password, user.password);
         if (passwordCompare) {
-          if (user.isLogin) {
-            throw new Error("ALREADY_LOGIN");
-          } else {
-            User.updateOne({ _id: user._id }, { isLogin: true });
-            const token = await createToken(user._id);
-            res.json({ message: "LOGIN_SUCCESSFUL", token });
-          }
+          const token = await createToken(user._id);
+          res.json({ message: "LOGIN_SUCCESSFUL", token });
+          // if (user.isLogin) {
+          //   throw new Error("ALREADY_LOGIN");
+          // } else {
+          // User.updateOne({ _id: user._id }, { isLogin: true });
+          //   const token = await createToken(user._id);
+          //   res.json({ message: "LOGIN_SUCCESSFUL", token });
+          // }
         } else {
           throw new Error("WRONG_CREDENTIALS");
         }
@@ -59,6 +61,8 @@ const loginOperation = async (req, res) => {
         throw new Error("WRONG_CREDENTIALS");
       }
     } catch (error) {
+      console.log(error);
+
       res.json({ message: error.message });
     }
   }

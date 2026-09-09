@@ -2,7 +2,14 @@ import Movie from "../models/movie.model.js";
 const takeAllMovies = async (req, res) => {
   const movies = await Movie.find(
     {},
-    { title: true, slug: true, type: true, genres: true, poster: true },
+    {
+      title: true,
+      slug: true,
+      type: true,
+      genres: true,
+      poster: true,
+      bannerDescription: true,
+    },
   );
   res.json(movies);
 };
@@ -44,16 +51,36 @@ const takeAllGenres = async (req, res) => {
 };
 
 const filters = async (req, res) => {
-const { genre, releaseYear } = req.query;
-  if(genre && releaseYear){
-    const data = await Movie.find({genres : genre, releaseYear : {$gte : releaseYear}} ,  {_id:false , title: true, slug: true, type: true, genres: true, poster: true})
-    res.json(data)
-  }else if(genre){
-    const data = await Movie.find({genres : genre}, {_id:false , title: true, slug: true, type: true, genres: true, poster: true});
-    res.json(data)
-  }else{
-    const data = await Movie.find({releaseYear: {$gte: releaseYear}})
-    res.json(data)
+  const { genre, releaseYear } = req.query;
+  if (genre && releaseYear) {
+    const data = await Movie.find(
+      { genres: genre, releaseYear: { $gte: releaseYear } },
+      {
+        _id: false,
+        title: true,
+        slug: true,
+        type: true,
+        genres: true,
+        poster: true,
+      },
+    );
+    res.json(data);
+  } else if (genre) {
+    const data = await Movie.find(
+      { genres: genre },
+      {
+        _id: false,
+        title: true,
+        slug: true,
+        type: true,
+        genres: true,
+        poster: true,
+      },
+    );
+    res.json(data);
+  } else {
+    const data = await Movie.find({ releaseYear: { $gte: releaseYear } });
+    res.json(data);
   }
 };
 

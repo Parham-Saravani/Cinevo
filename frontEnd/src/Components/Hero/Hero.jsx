@@ -4,7 +4,8 @@ import { FaPlay } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 
 function Hero({ title, banner, poster, bannerDescription }) {
-  const [loading, setLoading] = useState(true);
+  const [bannerLoading, setBannerLoading] = useState(true);
+  const [posterLoading, setPosterLoading] = useState(true);
   return (
     <header className="animate-fadeIn">
       <section className="absolute z-10 top-5 left-0 right-0">
@@ -13,19 +14,20 @@ function Hero({ title, banner, poster, bannerDescription }) {
 
       <section className="h-190 max-xl:h-160 max-lg:h-140 max-md:h-100 max-sm:h-90 relative header-hero">
         <img
-          onLoad={() => setLoading(false)}
+          onLoad={() => setBannerLoading(false)}
           src={banner}
-          className={`blur-xs max-sm:blur-none w-full h-full object-cover ${loading ? "animate-pulse bg-gray-900" : ""}`}
+          className={`blur-xs max-sm:blur-none w-full h-full object-cover ${bannerLoading ? "animate-pulse bg-gray-900" : ""}`}
           alt=""
           loading="lazy"
         />
 
         <div className="container mx-auto">
           <div className="top-20 max-xl:top-20 max-lg:top-80 max-md:top-60 max-sm:top-40 max-sm:w-[95%] absolute flex max-sm:flex-col items-center z-10 bottom-0 my-auto h-fit">
-            <div className="max-sm:mb-6 relative h-100 max-xl:h-90 max-lg:h-70 max-md:h-55 w-80 max-xl:w-67 max-md:w-50 max-sm:w-45 rounded-xl">
+            <div className="max-sm:mb-6 relative h-107 max-xl:h-90 max-lg:h-70 max-md:h-55 w-80 max-xl:w-67 max-md:w-50 max-sm:w-45 rounded-xl">
               <img
                 src={poster}
-                className="rounded-xl w-full block"
+                onLoad={() => setPosterLoading(false)}
+                className={`rounded-xl w-full block ${posterLoading ? "animate-pulse bg-gray-900" : ""}`}
                 loading="lazy"
                 alt=""
               />

@@ -2,12 +2,52 @@ import { useId } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { MdOutlineMail, MdLockOutline } from "react-icons/md";
 import { LuEye } from "react-icons/lu";
+import LoginValidator from "../../Validators/LoginValidator";
+import { useState } from "react";
+import Toast from "../Toast/Toast";
+import { baseUrl } from "../../Utilities/constants";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const loginHandler = async () => {
+    const data = LoginValidator.safeParse({ email, password });
+    if (data.success) {
+      try {
+        const response = await fetch(`${baseUrl}/api/user/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+        if (!response.ok) {
+          throw Error();
+        }
+        const data = await response.json();
+        if (data.message === "WRONG_CREDENTIALS") {
+          <Toast>
+            Login failed. Please check your credentials and try again.
+          </Toast>;
+        } else if (data.message === "LOGIN_SUCCESSFUL") {
+          <Toast isError={false}>
+            Login successful. Welcome back to Cinevo!
+          </Toast>;
+        }
+      } catch (error) {
+        <Toast>{error.message}</Toast>;
+      }
+    } else {
+      <Toast>{data.error.issues[0].message}</Toast>;
+    }
+  };
+
   const id = useId();
   return (
     <>
-      <h2 className="animate-fadeInUp font-bold text-2xl max-sm:text-xl">Welcome Back</h2>
+      <h2 className="animate-fadeInUp font-bold text-2xl max-sm:text-xl">
+        Welcome Back
+      </h2>
       <p className="animate-fadeInUp text-text-secondary text-sm max-sm:text-xs">
         Glad to see you again! Please login to continue
       </p>
@@ -16,18 +56,19 @@ function Login() {
         <div className="animate-fadeInUp relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
           <MdOutlineMail className="absolute size-5 left-2 bottom-0 top-0 my-auto fill-current" />
           <input
+            onInput={(event) => setEmail(event.target.value)}
+            value={email}
             className="max-sm:text-xs pl-9 pr-6 h-full w-full rounded-xl outline-hidden placeholder:text-text-secondary login-email"
             placeholder="Enter your email"
-            type="text"
+            type="email"
           />
         </div>
-        <p className="ml-1 max-sm:text-[10px] mt-1 text-red-600 text-xs email-alert hidden">
-          Enter a valid Email!
-        </p>
 
         <div className="animate-fadeInUp relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
           <MdLockOutline className="absolute left-2 size-5 top-0 bottom-0 my-auto fill-current" />
           <input
+            onInput={(event) => setPassword(event.target.value)}
+            value={password}
             className="max-sm:text-xs pr-9 pt-1 pl-9 h-full rounded-xl w-full outline-hidden placeholder:text-text-secondary password-input login-password"
             placeholder="Enter your password"
             type="password"
@@ -39,9 +80,6 @@ function Login() {
             <LuEye className="size-5 stroke-current" />
           </button>
         </div>
-        <p className="ml-1 max-sm:text-[10px] mt-1 text-red-600 text-xs password-alert hidden">
-          Password must be at least 8 characters!
-        </p>
 
         <div className="animate-fadeInUp mt-3 flex items-center justify-between">
           <div className="flex items-center text-xs max-sm:text-[10px]">
@@ -65,6 +103,7 @@ function Login() {
         </div>
 
         <button
+          onClick={loginHandler}
           className="animate-fadeInUp font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default login-btn"
           type="button"
         >

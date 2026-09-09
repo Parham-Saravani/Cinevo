@@ -2,14 +2,21 @@ import Serie from "../models/series.model.js";
 const takeAllSeries = async (req, res) => {
   const series = await Serie.find(
     {},
-    { title: true, slug: true, type: true, genres: true, poster: true },
+    {
+      title: true,
+      slug: true,
+      type: true,
+      genres: true,
+      poster: true,
+      bannerDescription: true,
+    },
   );
   res.json(series);
 };
 
 const takeSerie = async (req, res) => {
   const title = req.params.title;
-  const serieData = await Serie.findOne({ slug: title });  
+  const serieData = await Serie.findOne({ slug: title });
   res.json(serieData);
 };
 
@@ -27,7 +34,7 @@ const takeAllYears = async (req, res) => {
       return array;
     }, [])
     .sort((a, b) => b - a);
-  
+
   res.json(finalData);
 };
 
@@ -46,16 +53,36 @@ const takeAllGenres = async (req, res) => {
 
 const filters = async (req, res) => {
   const { genre, releaseYear } = req.query;
-  if(genre && releaseYear){
-    const data = await Serie.find({genres : genre, releaseYear : {$gte : releaseYear}} ,  {_id:false , title: true, slug: true, type: true, genres: true, poster: true})
-    res.json(data)
-  }else if(genre){
-    const data = await Serie.find({genres : genre}, {_id:false , title: true, slug: true, type: true, genres: true, poster: true});
-    res.json(data)
-  }else{
-    const data = await Serie.find({releaseYear: {$gte: releaseYear}})
-    res.json(data)
+  if (genre && releaseYear) {
+    const data = await Serie.find(
+      { genres: genre, releaseYear: { $gte: releaseYear } },
+      {
+        _id: false,
+        title: true,
+        slug: true,
+        type: true,
+        genres: true,
+        poster: true,
+      },
+    );
+    res.json(data);
+  } else if (genre) {
+    const data = await Serie.find(
+      { genres: genre },
+      {
+        _id: false,
+        title: true,
+        slug: true,
+        type: true,
+        genres: true,
+        poster: true,
+      },
+    );
+    res.json(data);
+  } else {
+    const data = await Serie.find({ releaseYear: { $gte: releaseYear } });
+    res.json(data);
   }
 };
 
-export { takeAllSeries, takeSerie, takeAllYears, takeAllGenres , filters};
+export { takeAllSeries, takeSerie, takeAllYears, takeAllGenres, filters };

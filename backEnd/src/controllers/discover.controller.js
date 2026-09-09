@@ -71,7 +71,7 @@ const takeNewContent = async (req, res) => {
       type: true,
     },
   ).limit(5);
-  res.json([...totalPopularSeries, ...totalPopularMovies]); 
+  res.json([...totalPopularSeries, ...totalPopularMovies]);
 };
 
 const takePopularContent = async (req, res) => {
@@ -125,11 +125,31 @@ const takeRecommendedContent = async (req, res) => {
   res.json([...recommendSeries, ...recommendMovies]);
 };
 
-const takeAllGenres = async (req , res) => {
-  const allMovies = await Movie.find({}, {_id:false , genres:true})
-  const allSeries = await Serie.find({}, {_id:false , genres:true})
-  res.json({...allMovies , allSeries})
-}
+const takeAllGenres = async (req, res) => {
+  const allMovies = await Movie.find({}, { _id: false, genres: true });
+  const allSeries = await Serie.find({}, { _id: false, genres: true });
+
+  const moviesGenres = allMovies.reduce((array, current) => {
+    current.genres.forEach((item) => {
+      if (!array.includes(item)) {
+        array.push(item);
+      }
+    });
+    return array;
+  }, []);
+
+  const seriesGenres = allSeries.reduce((array, current) => {
+    current.genres.forEach((item) => {
+      if (!array.includes(item)) {
+        array.push(item);
+      }
+    });
+    return array;
+  }, []);
+  const totalGenres = await new Set([...seriesGenres, ...moviesGenres]);
+  const finalData = [...totalGenres]
+  res.json(finalData);
+};
 
 export {
   takeSimilarContent,
@@ -137,5 +157,5 @@ export {
   takeNewContent,
   takePopularContent,
   takeRecommendedContent,
-  takeAllGenres
+  takeAllGenres,
 };

@@ -8,6 +8,6 @@ import "./index.css";
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <App />
-    <Toaster />
+    <Toaster toastOptions={{ position: "top-left", duration: 3000 }} />
   </BrowserRouter>,
 );

@@ -6,6 +6,7 @@ import Button from "../Components/Auth/Button";
 function Auth() {
   const [status, setStatus] = useState("login");
   const [active, setActive] = useState("Login");
+  
   useEffect(() => {
     document.title = 'Login | Cinevo';
   }, [])

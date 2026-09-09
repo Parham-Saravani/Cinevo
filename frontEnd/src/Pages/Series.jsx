@@ -6,9 +6,10 @@ import { baseUrl } from "../Utilities/constants";
 
 function Series() {
   const [series, setSeries] = useState([]);
-  const [years, setYears] = useState(null);
-  const [genres, setGenres] = useState(null);
+  const [years, setYears] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [error, setError] = useState(false);
+  const [layout, setLayout] = useState("grid");
 
   useEffect(() => {
     document.title = "Series | Cinevo";
@@ -31,34 +32,48 @@ function Series() {
         setGenres([...genres]);
         setSeries([...totalSeries]);
       } catch (error) {
-        console.log(error);
-
         setError(true);
       }
     })();
   }, []);
 
-  if(error){
-    return <h1>Try Again!</h1>
+  const changeLayout = (value) => {
+    setLayout(value);
+  };
+
+  if (error) {
+    return <h1>Try Again!</h1>;
   }
   return (
     <>
       <header className="pt-5">
         <Header />
         <main className="mt-10 text-text-primary">
-          <ContentFilters />
+          <ContentFilters
+            changeLayout={changeLayout}
+            layout={layout}
+            years={years}
+            genres={genres}
+          />
 
           <section className="mt-7">
             <div className="container mx-auto">
-              <div className="grid grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5 movies-page-movies-container">
-                {series.map((item, index) => {
-                  return (
-                    <div key={index} className="group">
-                      <Card {...item} />
-                    </div>
-                  );
-                })}
-              </div>
+              {series && (
+                <div
+                  className={`grid ${layout === "grid" ? "grid-cols-7" : "grid-cols-1"} max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5 movies-page-movies-container`}
+                >
+                  {series.map((item, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className={`group rounded-xl overflow-hidden ${layout === "grid" ? "h-62" : "h-45"}`}
+                      >
+                        <Card {...item} />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </section>
         </main>
