@@ -1,15 +1,18 @@
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { MdOutlineMail, MdLockOutline } from "react-icons/md";
 import { LuEye } from "react-icons/lu";
 import LoginValidator from "../../Validators/LoginValidator";
 import { useState } from "react";
-import Toast from "../Toast/Toast";
+import showToast from "../Toast/Toast";
 import { baseUrl } from "../../Utilities/constants";
+import saveCookie from "../../Utilities/Cookie/saveCookie";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rembember, setRemember] = useState(false);
+
   const loginHandler = async () => {
     const data = LoginValidator.safeParse({ email, password });
     if (data.success) {
@@ -26,19 +29,24 @@ function Login() {
         }
         const data = await response.json();
         if (data.message === "WRONG_CREDENTIALS") {
-          <Toast>
-            Login failed. Please check your credentials and try again.
-          </Toast>;
+          showToast({
+            children:
+              "Login failed. Please check your credentials and try again.",
+          });
+          if (rembember) {
+            saveCookie(crypto.randomUUID());
+          }
         } else if (data.message === "LOGIN_SUCCESSFUL") {
-          <Toast isError={false}>
-            Login successful. Welcome back to Cinevo!
-          </Toast>;
+          showToast({
+            isError: false,
+            children: "Login successful. Welcome back to Cinevo!",
+          });
         }
       } catch (error) {
-        <Toast>{error.message}</Toast>;
+        <showToast>{error.message}</showToast>;
       }
     } else {
-      <Toast>{data.error.issues[0].message}</Toast>;
+      showToast({ children: data.error.issues[0].message });
     }
   };
 
@@ -88,6 +96,8 @@ function Login() {
               htmlFor="remember-checkbox"
             >
               <input
+                onChange={(event) => setRemember(event.target.checked)}
+                checked={rembember}
                 id="remember-checkbox"
                 className="mr-2"
                 type="checkbox"
