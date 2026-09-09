@@ -350,6 +350,8 @@
   --animate-fadeInUp: fadeInUp 500ms ease-in;
   --animate-fadeOut: fadeOut 300ms ease-out;
   --animate-loader: loading 600ms infinite linear alternate;
+
+
 }
 
 @utility container {

@@ -7,11 +7,13 @@ import { useState } from "react";
 import showToast from "../Toast/Toast";
 import { baseUrl } from "../../Utilities/constants";
 import saveCookie from "../../Utilities/Cookie/saveCookie";
+import { useNavigate } from "react-router";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rembember, setRemember] = useState(false);
+  const navigate = useNavigate();
 
   const loginHandler = async () => {
     const data = LoginValidator.safeParse({ email, password });
@@ -40,7 +42,12 @@ function Login() {
           });
           if (rembember) {
             saveCookie(data.token);
+          } else {
+            saveCookie(data.token, false);
           }
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
         }
       } catch (error) {
         <showToast>{error.message}</showToast>;

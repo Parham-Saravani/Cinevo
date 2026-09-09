@@ -60,7 +60,7 @@ function Home() {
   return (
     <>
       <HomeHero data={data.banners} />
-      <main className="mt-8 mb-15">
+      <main className="animate-fadeIn mt-8 mb-15">
         {/* <!-- Trending --> */}
         <Section
           icon={

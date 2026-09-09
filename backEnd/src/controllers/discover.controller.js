@@ -129,26 +129,94 @@ const takeAllGenres = async (req, res) => {
   const allMovies = await Movie.find({}, { _id: false, genres: true });
   const allSeries = await Serie.find({}, { _id: false, genres: true });
 
-  const moviesGenres = allMovies.reduce((array, current) => {
-    current.genres.forEach((item) => {
-      if (!array.includes(item)) {
-        array.push(item);
-      }
-    });
-    return array;
-  }, []);
+  const totalGenres = await new Set([
+    ...allMovies.reduce((array, current) => {
+      current.genres.forEach((item) => {
+        if (!array.includes(item)) {
+          array.push(item);
+        }
+      });
+      return array;
+    }, []),
+    ...allSeries.reduce((array, current) => {
+      current.genres.forEach((item) => {
+        if (!array.includes(item)) {
+          array.push(item);
+        }
+      });
+      return array;
+    }, []),
+  ]);
+  res.json([...totalGenres]);
+};
+const takeAllTypes = async (req, res) => {
+  const moviesYear = await Movie.find({}, { type: true });
+  const serieYear = await Serie.find({}, { type: true });
+  const finalData = new Set([
+    ...serieYear.map((item) => item.type),
+    ...moviesYear.map((item) => item.type),
+  ]);
+  res.json([...finalData]);
+};
 
-  const seriesGenres = allSeries.reduce((array, current) => {
-    current.genres.forEach((item) => {
-      if (!array.includes(item)) {
-        array.push(item);
+const takeAllContent = async (req, res) => {
+  const series = await Serie.find(
+    {},
+    {
+      title: true,
+      slug: true,
+      type: true,
+      genres: true,
+      poster: true,
+      bannerDescription: true,
+      rating: true,
+      bannerDescription: true,
+      releaseYear: true,
+      duration: true,
+      ageRating: true,
+      seasons: true,
+      director: true,
+      featured: true,
+      trending: true,
+    },
+  );
+  const movies = await Movie.find(
+    {},
+    {
+      title: true,
+      slug: true,
+      type: true,
+      genres: true,
+      poster: true,
+      rating: true,
+      bannerDescription: true,
+      releaseYear: true,
+      duration: true,
+      ageRating: true,
+      director: true,
+      featured: true,
+      trending: true,
+    },
+  );
+  res.json([...movies, ...series]);
+};
+const takeAllYears = async (req, res) => {
+  const moviesYear = await Movie.find({}, { releaseYear: true });
+  const serieYear = await Serie.find({}, { releaseYear: true });
+
+  const finalData = new Set([
+    ...moviesYear.map((item) => {
+      if (item) {
+        return Math.floor(item.releaseYear / 10) * 10;
       }
-    });
-    return array;
-  }, []);
-  const totalGenres = await new Set([...seriesGenres, ...moviesGenres]);
-  const finalData = [...totalGenres]
-  res.json(finalData);
+    }),
+    ...moviesYear.map((item) => {
+      if (item) {
+        return Math.floor(item.releaseYear / 10) * 10;
+      }
+    }),
+  ]);
+  res.json([...finalData]);
 };
 
 export {
@@ -158,4 +226,7 @@ export {
   takePopularContent,
   takeRecommendedContent,
   takeAllGenres,
+  takeAllContent,
+  takeAllTypes,
+  takeAllYears,
 };

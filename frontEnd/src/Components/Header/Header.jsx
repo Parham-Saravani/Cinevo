@@ -1,8 +1,12 @@
 import { Link } from "react-router";
 import checkCookie from "../../Utilities/Cookie/checkCookie";
+import { useState } from "react";
 
 function Header() {
-  checkCookie()
+  const [isLogin, setIslogin] = useState(false);
+  useState(() => {
+    setIslogin(checkCookie("auth-token"));
+  }, []);
   return (
     <div className="container mx-auto">
       <div className="flex justify-between items-center">
@@ -36,12 +40,14 @@ function Header() {
               placeholder="Search for movies, series..."
             />
           </div>
-          <Link
-            to="/auth"
-            className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn"
-          >
-            Login | Signup
-          </Link>
+          {!isLogin && (
+            <Link
+              to="/auth"
+              className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn"
+            >
+              Login | Signup
+            </Link>
+          )}
           <div className="hidden relative profile-content">
             <button className="bg-input-bg hover:bg-input-bg/90 hover:border-input-border-hover px-2 py-2 border-2 border-input-border rounded-full cursor-pointer transition-colors duration-300">
               <svg

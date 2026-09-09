@@ -9,7 +9,7 @@ function Card({ poster, slug, title, type, genres }) {
       className={`block relative h-full ${loading ? "bg-gray-900 animate-fadeIn" : ""}`}
     >
       <img
-        className="h-full w-full rounded-xl "
+        className={`h-full w-full rounded-xl ${loading ? "bg-gray-900 animate-fadeIn" : ""}`}
         src={poster}
         alt={title}
         loading="lazy"

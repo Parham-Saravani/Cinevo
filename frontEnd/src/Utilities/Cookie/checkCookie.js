@@ -1,5 +1,5 @@
-function checkCookie() {
-  return document.cookie.includes("auth-token");
+function checkCookie(value) {
+  return document.cookie.includes(value);
 }
 
 export default checkCookie;

@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useParams } from "react-router";
 
 function GenreSlider({ data, currentGenre, changeGenre }) {
+
   return (
     <div className="mt-3 flex items-center w-full">
       <span className="text-cta-primary text-[12px] block w-25">

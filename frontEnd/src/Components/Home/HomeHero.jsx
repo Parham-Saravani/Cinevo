@@ -7,7 +7,7 @@ import "swiper/css/effect-fade";
 import Banner from "./Banner";
 function HomeHero({ data }) {
   return (
-    <header className="header">
+    <header className="animate-fadeIn header">
       <section className="absolute z-30 top-5 left-0 right-0">
         <Header />
       </section>

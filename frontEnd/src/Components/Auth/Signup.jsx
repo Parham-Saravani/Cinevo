@@ -45,7 +45,9 @@ function Signup() {
             isError: false,
             children: "Registration successful. Welcome to Cinevo!",
           });
-          navigate("/");
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
         } else if (data.message === "USERNAME_TAKEN") {
           Toast({
             children:

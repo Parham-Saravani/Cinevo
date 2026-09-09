@@ -2,23 +2,37 @@ import { useEffect, useState } from "react";
 import Login from "../Components/Auth/Login";
 import Signup from "../Components/Auth/Signup";
 import Button from "../Components/Auth/Button";
+import checkCookie from "../Utilities/Cookie/checkCookie";
+import { useNavigate } from "react-router";
 
 function Auth() {
   const [status, setStatus] = useState("login");
   const [active, setActive] = useState("Login");
-  
+  const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    document.title = 'Login | Cinevo';
-  }, [])
+    if (redirect) {
+      navigate("/");
+    }
+  }, [redirect]);
+
   useEffect(() => {
-    document.title = status === "login" ? "Login | Cinevo " : "Register | Cinevo";
+    document.title = "Login | Cinevo";
+    setRedirect(checkCookie("auth-token"));
+  }, []);
+
+  useEffect(() => {
+    document.title =
+      status === "login" ? "Login | Cinevo " : "Register | Cinevo";
   }, [status]);
+  
   const changeStatus = (value, activeItem) => {
     setStatus(value);
     setActive(activeItem);
   };
   return (
-    <main className="fixed inset-0 max-sm:px-5 w-full h-full flex items-center justify-center auth-overlay">
+    <main className="animate-fadeIn fixed inset-0 max-sm:px-5 w-full h-full flex items-center justify-center auth-overlay">
       <div className="w-full h-full relative">
         <img
           className="w-full h-full"

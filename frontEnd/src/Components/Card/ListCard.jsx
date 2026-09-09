@@ -40,11 +40,11 @@ function ListCard({
               </h3>
             </Link>
 
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="mt-2 max-sm:justify-center flex flex-wrap gap-2">
               {genres.map((genre) => (
                 <span
                   key={genre}
-                  className="rounded-md bg-input-bg px-2 py-1 text-xs text-text-secondary"
+                  className="rounded-md bg-input-bg px-2 py-1 max-md:text-[10px] text-xs text-text-secondary"
                 >
                   {genre}
                 </span>
@@ -52,35 +52,35 @@ function ListCard({
             </div>
           </div>
 
-          <div className="flex items-center gap-1 rounded-lg bg-yellow-500/10 px-2.5 py-1 text-sm font-semibold text-yellow-500">
+          <div className="flex items-center gap-1 rounded-lg bg-yellow-500/10 px-2.5 py-1 max-md:text-[12px] text-sm font-semibold text-yellow-500">
             <HiStar className="size-4" /> {rating}
           </div>
         </div>
 
         {/* Description */}
-        <p className="mt-4 max-sm:text-center line-clamp-2 text-sm leading-6 text-text-secondary">
+        <p className="mt-4 max-sm:text-center line-clamp-2 max-md:text-xs text-sm leading-6 text-text-secondary">
           {bannerDescription}
         </p>
 
         {/* Meta */}
-        <div className="mt-4 flex max-sm:justify-center flex-wrap gap-x-5 gap-y-2 text-sm text-text-secondary">
-          <span className="flex items-center">
+        <div className="mt-4 flex max-sm:justify-center flex-wrap gap-x-2 gap-y-2 max-md:text-[10px] text-sm text-text-secondary/70">
+          <span className="flex items-center bg-gray-900/40 px-2 py-1 rounded-md">
             <HiCalendar className="size-4 mr-1 fill-cta-primary" />
             {releaseYear}
           </span>
 
-          <span className="flex items-center">
+          <span className="flex items-center bg-gray-900/40 px-2 py-1 rounded-md">
             <HiClock className="size-4 mr-1 fill-cta-primary" />
             {duration} min
           </span>
 
-          <span className="flex items-center">
+          <span className="flex items-center bg-gray-900/40 px-2 py-1 rounded-md">
             <MdMovie className="size-4 mr-1 fill-cta-primary" />
             {ageRating}
           </span>
 
           {type === "series" ? (
-            <span className="flex items-center">
+            <span className="flex items-center bg-gray-900/40 px-2 py-1 rounded-md">
               <MdOutlinePlaylistPlay className="size-4.5 mr-1 fill-cta-primary" />
               {seasons.length} Seasons
             </span>
@@ -89,7 +89,7 @@ function ListCard({
 
         {/* Director + Badges */}
         <div className="mt-auto flex max-sm:flex-col items-center justify-between pt-4">
-          <p className="flex items-center text-sm text-text-secondary">
+          <p className="flex items-center max-md:text-xs text-sm text-text-secondary">
             <LuClapperboard className="mr-1 size-4" />
             Directed by
             <span className="ml-1 font-medium text-text-primary">
@@ -99,14 +99,14 @@ function ListCard({
 
           <div className="flex gap-2">
             {featured && (
-              <span className="max-sm:mt-3 flex items-center rounded-lg bg-blue-500/10 px-2.5 py-1 text-xs font-medium text-blue-400">
+              <span className="max-sm:mt-3 flex items-center rounded-lg bg-blue-500/10 px-2.5 py-1 max-md:text-[10px] text-xs font-medium text-blue-400">
                 <MdWorkspacePremium className="size-4 mr-1" />
                 Featured
               </span>
             )}
 
             {trending && (
-              <span className="max-sm:mt-3 flex items-center rounded-lg bg-orange-500/10 px-2.5 py-1 text-xs font-medium text-orange-400">
+              <span className="max-sm:mt-3 flex items-center rounded-lg bg-orange-500/10 px-2.5 py-1 max-md:text-[10px] text-xs font-medium text-orange-400">
                 <HiFire className="size-4 mr-1" />
                 Trending
               </span>
