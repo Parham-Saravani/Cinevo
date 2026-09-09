@@ -1,13 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router";
 
 function Card({ poster, slug, title, type, genres }) {
+  const [loading, setLoading] = useState(true);
   return (
     <Link
       to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`}
-      className="block relative h-full"
+      className={`block relative h-full ${loading ? "bg-gray-900 animate-fadeIn" : ""}`}
     >
       <img
-        className="animate-fadeIn object-cover h-full w-full rounded-xl card-image bg-gray-900"
+        className="object-cover h-full w-full rounded-xl "
         src={poster}
         alt={title}
         loading="lazy"

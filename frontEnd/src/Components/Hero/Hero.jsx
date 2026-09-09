@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Header/Header";
 import { FaPlay } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 
 function Hero({ title, banner, poster, bannerDescription }) {
+  const [loading, setLoading] = useState(true);
   return (
     <header className="animate-fadeIn">
       <section className="absolute z-10 top-5 left-0 right-0">
@@ -12,9 +13,11 @@ function Hero({ title, banner, poster, bannerDescription }) {
 
       <section className="h-190 max-xl:h-160 max-lg:h-140 max-md:h-100 max-sm:h-90 relative header-hero">
         <img
+          onLoad={() => setLoading(false)}
           src={banner}
-          className="blur-xs max-sm:blur-none w-full h-full object-cover"
+          className={`blur-xs max-sm:blur-none w-full h-full object-cover ${loading ? "animate-pulse bg-gray-900" : ""}`}
           alt=""
+          loading="lazy"
         />
 
         <div className="container mx-auto">

@@ -6,6 +6,7 @@ import { FaStar } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import NotFound from "./NotFound";
 import Section from "../Components/Home/Section";
+import { baseUrl } from "../Utilities/constants";
 
 function Home() {
   const [error, setError] = useState(false);
@@ -17,8 +18,7 @@ function Home() {
     recommend: null,
   });
   useEffect(() => {
-    document.title = 'Home | Cinevo'
-    const baseUrl = "http://localhost:64235";
+    document.title = "Home | Cinevo";
 
     (async () => {
       try {

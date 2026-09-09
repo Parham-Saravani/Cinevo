@@ -10,6 +10,11 @@ import CommentFrom from "./elements/CommentFrom";
 import EmptyComments from "../Empty/EmptyComments";
 
 function MovieDetail({
+  typeHandler,
+  onStatusChange,
+  newCommentMessage,
+  newCommentSpoil,
+  onSmash,
   totalComments,
   similarContent,
   overview,
@@ -22,7 +27,6 @@ function MovieDetail({
   cast,
   screenshots,
 }) {
-  
   return (
     <main className="animate-fadeIn mt-8 max-lg:mt-15 max-md:mt-20 max-sm:mt-25">
       <Section>
@@ -82,13 +86,18 @@ function MovieDetail({
       <Section needMB={true}>
         <Content value={"Comments"} nested={true} child={"(0)"}>
           <div className="mt-3">
-            <CommentFrom />
+            <CommentFrom
+              onStatusChange={onStatusChange}
+              onType={typeHandler}
+              newCommentMessage={newCommentMessage}
+              newCommentSpoil={newCommentSpoil}
+            />
             {totalComments.length === 0 ? (
               <EmptyComments />
             ) : (
               <div className="mt-10 comments-container">
-                {totalComments.comments.map((item) => (
-                  <Comment key={item._id} {...item} />
+                {totalComments.map((item) => (
+                  <Comment onSmash={onSmash} key={item._id} {...item} />
                 ))}
               </div>
             )}

@@ -13,6 +13,11 @@ import CommentFrom from "./elements/CommentFrom";
 import EmptyComments from "../Empty/EmptyComments";
 
 function SerieDetail({
+  typeHandler,
+  onStatusChange,
+  newCommentMessage,
+  newCommentSpoil,
+  onSmash,
   totalComments,
   similarContent,
   overview,
@@ -112,14 +117,21 @@ function SerieDetail({
 
       {/* <!-- Comments --> */}
       <Section needMB={true}>
-        <Content value={"Comments"} nested={true} child={"(0)"}>
+        <Content value={"Comments"} nested={true} child={totalComments.length > 0 ? `(${totalComments.length})` : '(0)'}>
           <div className="mt-3">
-            <CommentFrom />
+            <CommentFrom
+              onStatusChange={onStatusChange}
+              onType={typeHandler}
+              newCommentMessage={newCommentMessage}
+              newCommentSpoil={newCommentSpoil}
+            />
             {totalComments.length === 0 ? (
               <EmptyComments />
             ) : (
               <div className="mt-10 comments-container">
-                <Comment />
+                {totalComments.map((item) => (
+                  <Comment onSmash={onSmash} key={item._id} {...item} />
+                ))}
               </div>
             )}
           </div>

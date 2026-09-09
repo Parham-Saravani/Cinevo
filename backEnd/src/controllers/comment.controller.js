@@ -57,8 +57,11 @@ const takeContentComments = async (req, res) => {
       { contentID: currentContentID._id },
       { comments: true, _id: false },
     );
-
-    res.json(comments);
+    if (comments) {
+      res.json(comments);
+    } else {
+      throw Error();
+    }
   } catch (error) {
     res.json({ message: "NO_COMMENT_FOUND" });
   }

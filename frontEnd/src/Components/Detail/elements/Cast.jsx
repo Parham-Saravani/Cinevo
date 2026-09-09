@@ -21,7 +21,7 @@ function Cast({cast}) {
                 src={item.image}
               />
               <h4 className="text-text-primary text-[10px] mt-1.5 w-17 text-center">
-                ${item.title}
+                {item.title}
               </h4>
             </div>
           </SwiperSlide>
