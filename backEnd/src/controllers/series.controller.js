@@ -9,6 +9,15 @@ const takeAllSeries = async (req, res) => {
       genres: true,
       poster: true,
       bannerDescription: true,
+      rating: true,
+      bannerDescription: true,
+      releaseYear: true,
+      duration: true,
+      ageRating: true,
+      seasons: true,
+      director: true,
+      featured: true,
+      trending: true,
     },
   );
   res.json(series);

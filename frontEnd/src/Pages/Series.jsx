@@ -3,6 +3,7 @@ import Header from "../Components/Header/Header";
 import ContentFilters from "../Components/ContentFilters/ContentFilters";
 import Card from "../Components/Card/Card";
 import { baseUrl } from "../Utilities/constants";
+import ListCard from "../Components/Card/ListCard";
 
 function Series() {
   const [series, setSeries] = useState([]);
@@ -58,22 +59,22 @@ function Series() {
 
           <section className="mt-7">
             <div className="container mx-auto">
-              {series && (
-                <div
-                  className={`grid ${layout === "grid" ? "grid-cols-7" : "grid-cols-1"} max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5 movies-page-movies-container`}
-                >
-                  {series.map((item, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className={`group rounded-xl overflow-hidden ${layout === "grid" ? "h-62" : "h-45"}`}
-                      >
-                        <Card {...item} />
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+              <div
+                className={`grid ${layout === "grid" ? "grid-cols-7" : "grid-cols-1"} max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5 movies-page-movies-container`}
+              >
+                {series.map((item, index) => {
+                  return layout === "list" ? (
+                    <ListCard key={item._id} {...item} />
+                  ) : (
+                    <div
+                      key={index}
+                      className={`group rounded-xl overflow-hidden ${layout === "grid" ? "h-62" : "h-45"}`}
+                    >
+                      <Card {...item} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </section>
         </main>

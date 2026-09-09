@@ -8,7 +8,14 @@ const takeAllMovies = async (req, res) => {
       type: true,
       genres: true,
       poster: true,
+      rating: true,
       bannerDescription: true,
+      releaseYear: true,
+      duration: true,
+      ageRating: true,
+      director: true,
+      featured: true,
+      trending: true,
     },
   );
   res.json(movies);
