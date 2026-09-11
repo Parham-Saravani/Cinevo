@@ -51,7 +51,8 @@ function Movies() {
   }
   return (
     <>
-      <header className="pt-5">
+      <header>
+        <Header />
         <main className="mt-10 text-text-primary">
           <ContentFilters
             changeLayout={changeLayout}
