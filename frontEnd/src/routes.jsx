@@ -8,6 +8,10 @@ import Search from "./Pages/Search";
 import NotFound from "./Pages/NotFound";
 import Movie from "./Pages/Movie";
 import Serie from "./Pages/Serie";
+import DashboardHome from "./Pages/DashboardHome";
+import DashbaordWatchlist from "./Pages/DashbaordWatchlist";
+import DashboardFavourit from "./Pages/DashboardFavourit";
+
 import DashboardLayout from "./Components/Layouts/DashboardLayout";
 
 const router = createBrowserRouter([
@@ -34,7 +38,15 @@ const router = createBrowserRouter([
   },
   { path: "/genre", element: <Genre /> },
   { path: "/search", element: <Search /> },
-  { path: "/dashboard", element: <DashboardLayout /> },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      { index: true, element: <DashboardHome /> },
+      { path: "watchlist", element: <DashbaordWatchlist /> },
+      { path: "favourit", element: <DashboardFavourit /> },
+    ],
+  },
   { path: "/*", element: <NotFound /> },
 ]);
 

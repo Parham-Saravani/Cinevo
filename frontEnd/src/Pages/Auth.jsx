@@ -4,6 +4,7 @@ import Signup from "../Components/Auth/Signup";
 import Button from "../Components/Auth/Button";
 import checkCookie from "../Utilities/Cookie/checkCookie";
 import { useNavigate } from "react-router";
+import { FaArrowLeft } from "react-icons/fa6";
 
 function Auth() {
   const [status, setStatus] = useState("login");
@@ -26,37 +27,45 @@ function Auth() {
     document.title =
       status === "login" ? "Login | Cinevo " : "Register | Cinevo";
   }, [status]);
-  
+
   const changeStatus = (value, activeItem) => {
     setStatus(value);
     setActive(activeItem);
   };
   return (
-    <main className="animate-fadeIn fixed inset-0 max-sm:px-5 w-full h-full flex items-center justify-center auth-overlay">
-      <div className="w-full h-full relative">
-        <img
-          className="w-full h-full"
-          src="/src/assets/Images/auth-background.png"
-          alt=""
-        />
-        <div className="w-full h-full absolute z-10 top-0 auth-overlay"></div>
-        <section className="z-20 absolute top-0 bottom-0 h-fit  m-auto left-0 right-0 px-5 pt-5 pb-10 w-110 bg-input-bg/60 backdrop-blur-xl rounded-xl border border-white/10 auth-form">
-          {/* <!-- Navigations --> */}
-          <header className="max-sm:text-xs flex items-center gap-2 w-70 mx-auto text-text-secondary">
-            <Button active={active} onSmash={changeStatus} value="login">
-              Login
-            </Button>
-            <Button active={active} onSmash={changeStatus} value="signup">
-              Sign Up
-            </Button>
-          </header>
+    <>
+      <main className="animate-fadeIn fixed inset-0 max-sm:px-5 w-full h-full flex items-center justify-center auth-overlay">
+        <div className="w-full h-full relative">
+          <button
+            onClick={() => navigate("/", { replace: true })}
+            className="absolute left-8 top-7 hover:text-text-primary/50 text-text-secondary transition-colors duration-300 text-xl cursor-pointer z-50"
+          >
+            <FaArrowLeft />
+          </button>
+          <img
+            className="w-full h-full"
+            src="/src/assets/Images/auth-background.png"
+            alt=""
+          />
+          <div className="w-full h-full absolute z-10 top-0 auth-overlay"></div>
+          <section className="z-20 absolute top-0 bottom-0 h-fit  m-auto left-0 right-0 px-5 pt-5 pb-10 w-110 bg-input-bg/60 backdrop-blur-xl rounded-xl border border-white/10 auth-form">
+            {/* <!-- Navigations --> */}
+            <header className="max-sm:text-xs flex items-center gap-2 w-70 mx-auto text-text-secondary">
+              <Button active={active} onSmash={changeStatus} value="login">
+                Login
+              </Button>
+              <Button active={active} onSmash={changeStatus} value="signup">
+                Sign Up
+              </Button>
+            </header>
 
-          <main className="mt-10 text-text-primary auth-content">
-            {status === "login" ? <Login /> : <Signup />}
-          </main>
-        </section>
-      </div>
-    </main>
+            <main className="mt-10 text-text-primary auth-content">
+              {status === "login" ? <Login /> : <Signup />}
+            </main>
+          </section>
+        </div>
+      </main>
+    </>
   );
 }
 

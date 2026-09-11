@@ -8,19 +8,12 @@ import getCookie from "../../Utilities/Cookie/getCookie";
 
 function Header() {
   const [isLogin, setIslogin] = useState(false);
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
 
   useEffect(() => {
     setIslogin(checkCookie("auth-token"));
     (async () => {
       try {
         const token = getCookie("auth-token");
-        console.log(token);
-
         const response = await fetch(`${baseUrl}/api/user/me`, {
           method: "POST",
           headers: {
@@ -84,7 +77,7 @@ function Header() {
               Login | Signup
             </Link>
           ) : (
-            <ProfileDropDown logOut={logOutHandler} userData={userData} />
+            <ProfileDropDown logOut={logOutHandler} />
           )}
           <div className="hidden relative profile-content">
             <button className="bg-input-bg hover:bg-input-bg/90 hover:border-input-border-hover px-2 py-2 border-2 border-input-border rounded-full cursor-pointer transition-colors duration-300">
