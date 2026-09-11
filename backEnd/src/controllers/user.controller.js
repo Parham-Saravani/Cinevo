@@ -77,4 +77,25 @@ const logoutHandler = async (req, res) => {
     res.json({ message: error.message });
   }
 };
-export { registerNewUser, loginOperation, logoutHandler };
+const takeUserData = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    const userID = decompressToken(token);
+    try {
+      const userData = await User.findOne(
+        { _id: userID },
+        { _id: false, username: true, role: true, imageUrl: true },
+      );
+      if (userData) {
+        res.json(userData);
+      } else {
+        throw new Error("NOT_FOUND");
+      }
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  } else {
+    res.status(400);
+  }
+};
+export { registerNewUser, loginOperation, logoutHandler, takeUserData };

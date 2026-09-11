@@ -20,6 +20,5 @@ router.get("/genre", takeAllGenres);
 router.get("/types", takeAllTypes);
 router.get("/year", takeAllYears);
 router.get("/all", takeAllContent);
-
 router.get("/similar/:slug", takeSimilarContent);
 export default router;

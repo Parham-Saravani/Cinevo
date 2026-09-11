@@ -22,7 +22,10 @@ function ListCard({
 }) {
   return (
     <div className="animate-fadeIn col-span-1 max-sm:flex-col max-sm:items-center group flex items-center gap-5 rounded-xl border border-input-border/50 p-4 transition-all duration-300 hover:border-input-border-focus">
-      <Link to={`/serie/${slug}`} className="shrink-0">
+      <Link
+        to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`}
+        className="shrink-0"
+      >
         <img
           src={poster}
           alt={title}
@@ -34,7 +37,7 @@ function ListCard({
         {/* Header */}
         <div className="flex max-sm:flex-col max-sm:items-center items-start justify-between gap-4">
           <div>
-            <Link to={`/serie/${slug}`}>
+            <Link to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`}>
               <h3 className="text-xl max-sm:text-center font-bold transition-colors hover:text-cta-primary">
                 {title}
               </h3>

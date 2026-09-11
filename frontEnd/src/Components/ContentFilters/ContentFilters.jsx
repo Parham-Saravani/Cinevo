@@ -11,7 +11,6 @@ function ContentFilters({
   layout,
   isGenre = false,
 }) {
-  console.log(years);
   
   if (isGenre) {
     return (
@@ -25,7 +24,7 @@ function ContentFilters({
                 type="text"
               />
             </div>
-            <div className="col-span-2 max-md:col-span-1 grid grid-cols-3 gap-3">
+            <div className="col-span-2 max-md:col-span-1 grid grid-cols-2 gap-3">
               <div className="group col-span-1 relative">
                 <button className="flex items-center justify-between px-2.5 py-3 bg-input-bg/50 border-2 border-input-border/50 w-full h-full rounded-xl cursor-pointer open-sort-btn">
                   <span>All years</span>
@@ -75,7 +74,7 @@ function ContentFilters({
                   })}
                 </ul>
               </div>
-              <div className="col-span-1 relative">
+              {/* <div className="col-span-1 relative">
                 <button className="flex items-center justify-between px-2.5  bg-input-bg/50 border-2 border-input-border/50 w-full h-full rounded-xl cursor-pointer open-sort-btn">
                   <span>Sort by: Popular</span>
                   <IoIosArrowDown className="size-4.5 fill-current" />
@@ -88,7 +87,7 @@ function ContentFilters({
                     All
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-span-1 flex max-xl:justify-between items-center justify-end">

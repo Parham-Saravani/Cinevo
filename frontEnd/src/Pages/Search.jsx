@@ -8,7 +8,7 @@ function Search() {
 
   return (
     <>
-      <header className="pt-5">
+      <header>
         <Header />
       </header>
     </>

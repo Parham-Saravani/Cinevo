@@ -27,16 +27,15 @@ function Signup() {
       Toast({ children: data.error.issues[0].message });
     } else {
       try {
-        const responce = await fetch(`${baseUrl}/api/user`, {
+        const response = await fetch(`${baseUrl}/api/user`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ username, email, password }),
         });
-        const data = await responce.json();
-        console.log(data);
-        if (!responce.ok) {
+        const data = await response.json();
+        if (!response.ok) {
           throw new Error("Registration failed. Please try again.");
         }
         if (data.message === "USER_CREATED") {

@@ -8,7 +8,7 @@ import Banner from "./Banner";
 function HomeHero({ data }) {
   return (
     <header className="animate-fadeIn header">
-      <section className="absolute z-30 top-5 left-0 right-0">
+      <section className="absolute z-30 left-0 right-0">
         <Header />
       </section>
       <section className="banner relative h-190 max-xl:h-150 max-lg:h-140 max-md:h-100 max-sm:h-90">

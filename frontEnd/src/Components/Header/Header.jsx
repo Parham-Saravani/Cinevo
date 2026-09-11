@@ -1,14 +1,50 @@
 import { Link } from "react-router";
 import checkCookie from "../../Utilities/Cookie/checkCookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ProfileDropDown from "./elements/ProfileDropDown";
+import { baseUrl } from "../../Utilities/constants";
+import removeCookie from "../../Utilities/Cookie/removeCookie";
+import getCookie from "../../Utilities/Cookie/getCookie";
 
 function Header() {
   const [isLogin, setIslogin] = useState(false);
-  useState(() => {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
+  useEffect(() => {
     setIslogin(checkCookie("auth-token"));
+    (async () => {
+      try {
+        const token = getCookie("auth-token");
+        console.log(token);
+
+        const response = await fetch(`${baseUrl}/api/user/me`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        });
+        if (!response.ok) throw Error();
+        const data = await response.json();
+        setUserData({
+          username: data.username,
+          role: data.role,
+          imageUrl: data.imageUrl,
+        });
+      } catch (error) {}
+    })();
   }, []);
+
+  const logOutHandler = () => {
+    setIslogin(false);
+    removeCookie("auth-token");
+  };
   return (
-    <div className="container mx-auto">
+    <div className="animate-fadeIn container mx-auto pt-5">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="text-white font-bold text-2xl">
@@ -36,17 +72,19 @@ function Header() {
           <div>
             <input
               type="text"
-              className="w-90 text-text-secondary text-sm bg-input-bg py-3 px-4 rounded-xl border-2 hover:border-input-border-hover focus:border-input-border-focus border-input-border outline-hidden transition-colors duration-300"
+              className="w-90 text-text-secondary text-sm bg-input-bg py-3 px-4 rounded-xl border hover:border-input-border-hover focus:border-input-border-focus border-input-border outline-hidden transition-colors duration-300"
               placeholder="Search for movies, series..."
             />
           </div>
-          {!isLogin && (
+          {!isLogin ? (
             <Link
               to="/auth"
               className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn"
             >
               Login | Signup
             </Link>
+          ) : (
+            <ProfileDropDown logOut={logOutHandler} userData={userData} />
           )}
           <div className="hidden relative profile-content">
             <button className="bg-input-bg hover:bg-input-bg/90 hover:border-input-border-hover px-2 py-2 border-2 border-input-border rounded-full cursor-pointer transition-colors duration-300">

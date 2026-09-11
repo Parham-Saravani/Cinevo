@@ -15,10 +15,13 @@ function Genre() {
   const [genres, setGenres] = useState([]);
   const [years, setYears] = useState([]);
   const [error, setError] = useState(false);
-  const [currentGenre, setCurrentGenre] = useState("All");
   const [layout, setLayout] = useState("grid");
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [currentGenre, setCurrentGenre] = useState("All");
+  const [currentType, setCurrentType] = useState("All");
+  const [currentYear, setCUrrentYear] = useState("All");
 
   const changeLayout = (value) => {
     setLayout(value);
@@ -35,12 +38,11 @@ function Genre() {
         ]);
         const [genres, allContent, types, year] = await Promise.all(
           response.map((res) => res.json()),
-        );
-
+        );        
         setContent([...allContent]);
-        setGenres(genres);
-        setYears(years);
-        setTypes(types);
+        setGenres([...genres]);
+        setYears([...year]);
+        setTypes([...types]);
         setLoading(false);
       } catch (error) {
         setError(true);
@@ -54,7 +56,7 @@ function Genre() {
 
   return (
     <>
-      <header className="pt-5">
+      <header>
         <Header />
 
         <main className="mt-10 text-text-primary animate-fadeIn">
