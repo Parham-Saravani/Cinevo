@@ -6,42 +6,6 @@ The platform provides a modern and responsive interface for discovering movies a
 
 ---
 
-## ✨ Features
-
-### 🎬 Content Discovery
-
-* Browse movies and TV series
-* Explore trending content
-* Discover new releases
-* Browse popular movies and series
-* Personalized recommendations
-* Dynamic hero banners
-* Movie and TV series detail pages
-* TV series seasons and episodes
-* Genre-based content filtering
-
-### 👤 User Features
-
-* User authentication
-* User profile
-* Favorites
-* Watchlist
-* Account information
-* Protected routes
-
-### ⚡ User Experience
-
-* Responsive design
-* Dark-themed modern UI
-* Loading states
-* Error states
-* Empty states
-* Toast notifications with React Hot Toast
-* Responsive content sliders
-* Form validation with Zod
-
----
-
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -81,6 +45,42 @@ The platform provides a modern and responsive interface for discovering movies a
 ### Home
 
 ![Cinevo Home](Images/Home.png)
+
+---
+
+## ✨ Features
+
+### 🎬 Content Discovery
+
+* Browse movies and TV series
+* Explore trending content
+* Discover new releases
+* Browse popular movies and series
+* Personalized recommendations
+* Dynamic hero banners
+* Movie and TV series detail pages
+* TV series seasons and episodes
+* Genre-based content filtering
+
+### 👤 User Features
+
+* User authentication
+* User profile
+* Favorites
+* Watchlist
+* Account information
+* Protected routes
+
+### ⚡ User Experience
+
+* Responsive design
+* Dark-themed modern UI
+* Loading states
+* Error states
+* Empty states
+* Toast notifications with React Hot Toast
+* Responsive content sliders
+* Form validation with Zod
 
 ---
 
