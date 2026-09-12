@@ -4,38 +4,59 @@ import { useEffect, useState } from "react";
 import ProfileDropDown from "./elements/ProfileDropDown";
 import { baseUrl } from "../../Utilities/constants";
 import removeCookie from "../../Utilities/Cookie/removeCookie";
+import getCookie from "../../Utilities/Cookie/getCookie";
+import Toast from "../Toast/Toast";
 
 function Header() {
   const [isLogin, setIslogin] = useState(false);
+  const [loading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState({});
+  const [error, setError] = useState(false);
+  const token = getCookie("auth-token");
+  if (!token) {
+    removeCookie("auth-token");
+  }
 
   useEffect(() => {
     setIslogin(checkCookie("auth-token"));
-    (async () => {
-      try {
-        const response = await fetch(`${baseUrl}/api/user/me`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token }),
-        });
-        console.log(response);
-        if (!response.ok) throw Error();
-        const data = await response.json();
-        
-        setUserData({
-          username: data.username,
-          role: data.role,
-          imageUrl: data.imageUrl,
-        });
-      } catch (error) {}
-    })();
+    if (token) {
+      (async () => {
+        try {
+          const response = await fetch(`${baseUrl}/api/user/me`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token }),
+          });
+          if (!response.ok) throw Error();
+          const data = await response.json();
+          console.log(data);
+
+          if (data.message === "INVALID_TOKEN") {
+            throw Error("Invalid token. Please log in again.");
+          } else if (data.message === "INVALID_DATA") {
+            throw Error("Invalid user data.");
+          }
+
+          setIslogin(true);
+          setIsLoading(false);
+          setUserData({ ...data });
+        } catch (error) {
+          setError(true);
+          removeCookie("auth-token");
+          setIsLoading(false);
+          Toast({ children: error.message });
+        }
+      })();
+    }
   }, []);
 
   const logOutHandler = () => {
     setIslogin(false);
     removeCookie("auth-token");
   };
+
   return (
     <div className="animate-fadeIn container mx-auto pt-5">
       <div className="flex justify-between items-center">
@@ -69,15 +90,19 @@ function Header() {
               placeholder="Search for movies, series..."
             />
           </div>
-          {!isLogin ? (
+          {!error && isLogin ? (
+            <ProfileDropDown
+              {...userData}
+              loading={loading}
+              logOut={logOutHandler}
+            />
+          ) : (
             <Link
               to="/auth"
               className="w-34 text-center py-3 text-sm font-semibold bg-cta-primary hover:bg-cta-hover text-white transition-colors duration-300 rounded-xl cursor-pointer auth-btn"
             >
               Login | Signup
             </Link>
-          ) : (
-            <ProfileDropDown logOut={logOutHandler} />
           )}
           <div className="hidden relative profile-content">
             <button className="bg-input-bg hover:bg-input-bg/90 hover:border-input-border-hover px-2 py-2 border-2 border-input-border rounded-full cursor-pointer transition-colors duration-300">

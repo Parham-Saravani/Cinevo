@@ -1,55 +1,16 @@
 import { Link } from "react-router";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useEffect, useState } from "react";
-import getCookie from "../../../Utilities/Cookie/getCookie";
-import { baseUrl } from "../../../Utilities/constants";
 import removeCookie from "../../../Utilities/Cookie/removeCookie";
-import Toast from "../../Toast/Toast";
 
-function ProfileDropDown({ logOut }) {
+function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [userData, setUserData] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const token = getCookie("auth-token");
-    if (!token) {
-      setIsLoading(false);
-      setError(true);
-      return;
-    }
-    (async () => {
-      try {
-        const response = await fetch(`${baseUrl}/api/user/me`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token }),
-        });
-        console.log(response);
-
-        if (!response.ok) throw Error();
-        const data = await response.json();
-        if (data.message === "INVALID_TOKEN") {
-          throw Error("Invalid token. Please log in again.");
-        } else if (data.message === "INVALID_DATA") {
-          throw Error("Invalid user data.");
-        }
-        setUserData({ ...data });
-      } catch (error) {
-        Toast({ children: error.message });
-        setError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
   const changeMenuStatus = () => {
     setIsOpen(!isOpen);
   };
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="h-12.75 w-40 bg-gray-900 animate-pulse rounded-full"></div>
     );
@@ -65,17 +26,17 @@ function ProfileDropDown({ logOut }) {
         className="max-w-40 cursor-pointer flex items-center gap-3 bg-input-bg border border-input-border hover:border-input-border-hover px-2.5 py-1.5 rounded-full transition-colors duration-300"
       >
         <img
-          src={userData.imageUrl ? userData.imageUrl : "/profile/default.webp"}
+          src={imageUrl ? imageUrl : "/profile/default.webp"}
           className="size-8 rounded-full object-cover"
           alt="Profile"
         />
 
         <div className="text-left">
           <p className="text-[14px] font-medium text-text-primary line-clamp-1">
-            {userData.username}
+            {username}
           </p>
           <p className="text-xs text-text-secondary">
-            {userData.role[0].toUpperCase() + userData.role.slice(1)}
+            {role[0].toUpperCase() + role.slice(1)}
           </p>
         </div>
         <MdKeyboardArrowDown className="text-text-secondary size-5" />

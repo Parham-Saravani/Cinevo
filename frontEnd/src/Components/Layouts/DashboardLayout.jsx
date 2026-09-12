@@ -1,12 +1,13 @@
 import React from "react";
 import { Outlet } from "react-router";
+import NavigationMenu from "../Dashboard/NavigationMenu";
 
 function DashboardLayout() {
   return (
-    <>
-      <header>Mene</header>
+    <div className="flex bg-amber-50 h-screen">
+      <NavigationMenu />
       <Outlet />
-    </>
+    </div>
   );
 }
 
