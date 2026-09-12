@@ -25,8 +25,13 @@ const takeAllSeries = async (req, res) => {
 
 const takeSerie = async (req, res) => {
   const title = req.params.title;
-  const serieData = await Serie.findOne({ slug: title });
-  res.json(serieData);
+  try {
+    const serieData = await Serie.findOne({ slug: title });
+    if(!serieData) throw new Error('NOT_FOUND')
+    res.json(serieData);
+  } catch (error) {
+    res.json({ message: error.message});
+  }
 };
 
 const takeAllYears = async (req, res) => {

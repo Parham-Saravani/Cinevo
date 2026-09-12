@@ -22,8 +22,14 @@ const takeAllMovies = async (req, res) => {
 };
 const takeMovieData = async (req, res) => {
   const title = req.params.title;
-  const movieData = await Movie.findOne({ slug: title });
-  res.json(movieData);
+  try {
+    const movieData = await Movie.findOne({ slug: title });
+    if (!movieData) throw new Error("NOT_FOUND");
+
+    res.json(movieData);
+  } catch (error) {
+    res.json({ message: error.message });
+  }
 };
 
 const takeAllYears = async (req, res) => {

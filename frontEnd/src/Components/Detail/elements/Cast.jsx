@@ -11,7 +11,6 @@ function Cast({ cast }) {
     <Swiper
       slidesPerView={"auto"}
       grabCursor={true}
-      spaceBetween={1}
       className="mt-2"
     >
       {cast.map((item, index) => {

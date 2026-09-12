@@ -34,11 +34,10 @@ function ListCard({
       </Link>
 
       <div className="flex flex-1 flex-col">
-        {/* Header */}
         <div className="flex max-sm:flex-col max-sm:items-center items-start justify-between gap-4">
           <div>
             <Link to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`}>
-              <h3 className="text-xl max-sm:text-center font-bold transition-colors hover:text-cta-primary">
+              <h3 className="text-xl max-sm:text-center font-bold transition-colors duration-300 hover:text-cta-primary">
                 {title}
               </h3>
             </Link>
@@ -60,12 +59,10 @@ function ListCard({
           </div>
         </div>
 
-        {/* Description */}
         <p className="mt-4 max-sm:text-center line-clamp-2 max-md:text-xs text-sm leading-6 text-text-secondary">
           {bannerDescription}
         </p>
 
-        {/* Meta */}
         <div className="mt-4 flex max-sm:justify-center flex-wrap gap-x-2 gap-y-2 max-md:text-[10px] text-sm text-text-secondary/70">
           <span className="flex items-center bg-gray-900/40 px-2 py-1 rounded-md">
             <HiCalendar className="size-4 mr-1 fill-cta-primary" />
@@ -90,7 +87,6 @@ function ListCard({
           ) : null}
         </div>
 
-        {/* Director + Badges */}
         <div className="mt-auto flex max-sm:flex-col items-center justify-between pt-4">
           <p className="flex items-center max-md:text-xs text-sm text-text-secondary">
             <LuClapperboard className="mr-1 size-4" />

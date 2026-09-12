@@ -80,22 +80,29 @@ const logoutHandler = async (req, res) => {
 const takeUserData = async (req, res) => {
   const { token } = req.body;
   if (token) {
-    const userID = decompressToken(token);
     try {
-      const userData = await User.findOne(
-        { _id: userID },
-        { _id: false, username: true, role: true, imageUrl: true },
-      );
-      if (userData) {
-        res.json(userData);
-      } else {
-        throw new Error("NOT_FOUND");
+      const userID = decompressToken(token);
+      if (!userID) throw Error();
+      try {
+        const userData = await User.findOne(
+          { _id: userID },
+          { _id: false, username: true, role: true, imageUrl: true },
+        );
+        if (userData) {
+          res.json(userData);
+        } else {
+          throw new Error("NOT_FOUND");
+        }
+      } catch (error) {
+        console.log(error);
+
+        // res.status(404).json({ message: error });
       }
     } catch (error) {
-      res.status(404).json({ message: error.message });
+      res.json({ message: "INVALID_TOKEN" });
     }
   } else {
-    res.status(400);
+    res.status(400).json({ message: "INVALID_DATA" });
   }
 };
 export { registerNewUser, loginOperation, logoutHandler, takeUserData };

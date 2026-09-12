@@ -7,6 +7,7 @@ import { baseUrl } from "../../Utilities/constants";
 import saveCookie from "../../Utilities/Cookie/saveCookie";
 import { useNavigate } from "react-router";
 import PasswordInput from "../PasswordInput";
+import removeCookie from "../../Utilities/Cookie/removeCookie";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -39,6 +40,7 @@ function Signup() {
           throw new Error("Registration failed. Please try again.");
         }
         if (data.message === "USER_CREATED") {
+          removeCookie("auth-token");
           saveCookie(data.token);
           Toast({
             isError: false,
@@ -102,7 +104,10 @@ function Signup() {
           Enter your password
         </PasswordInput>
 
-        <PasswordInput passwordValue={confirmPassword} passwordSetState={setConfirmPassword}>
+        <PasswordInput
+          passwordValue={confirmPassword}
+          passwordSetState={setConfirmPassword}
+        >
           Confirm your password{" "}
         </PasswordInput>
         <p className="max-sm:text-[10px] ml-1 mt-1 text-red-600 text-xs hidden confirm-password-alert">

@@ -1,13 +1,14 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Hero from "../Components/Hero/Hero";
 import Footer from "../Components/Footer/Footer";
 import SerieDetail from "../Components/Detail/SerieDetail";
-import toast from "react-hot-toast";
 import { baseUrl } from "../Utilities/constants";
 
 function Serie() {
+  const navigate = useNavigate();
   const { slug } = useParams();
+  const [loading, setLoading] = useState(true);
   const [serie, setSerie] = useState(null);
   const [error, setError] = useState(false);
   const [similarContent, setSimilarContent] = useState(null);
@@ -51,6 +52,7 @@ function Serie() {
         const [detail, similarData, comments] = await Promise.all(
           response.map((res) => res.json()),
         );
+        if (detail.message === "NOT_FOUND") throw Error();
         setSimilarContent([...similarData]);
         setSerie({ ...detail });
         if (comments.message === "NO_COMMENT_FOUND") {
@@ -60,6 +62,15 @@ function Serie() {
         }
       } catch (error) {
         setError(true);
+        navigate("/error", {
+          state: {
+            status: "404",
+            title: "Movie or Series Not Found",
+            desc: "We couldn't find the movie or series you're looking for.It may have been removed, renamed, or the link may be incorrect.",
+          },
+        });
+      } finally {
+        setLoading(false);
       }
     })();
   }, [slug]);
@@ -69,26 +80,26 @@ function Serie() {
   }
   return (
     <>
-      {serie && (
-        <Hero
-          title={serie.title}
-          poster={serie.poster}
-          banner={serie.banner}
-          bannerDescription={serie.bannerDescription}
-        />
-      )}
-      {serie && (
-        <SerieDetail
-          typeHandler={typeHandler}
-          onStatusChange={onStatusChange}
-          newCommentMessage={newCommentMessage}
-          newCommentSpoil={newCommentSpoil}
-          onSmash={removeSpilerCover}
-          totalComments={totalComments}
-          similarContent={similarContent}
-          {...serie}
-        />
-      )}
+      <Hero
+        loading={loading}
+        title={serie?.title}
+        poster={serie?.poster}
+        banner={serie?.banner}
+        bannerDescription={serie?.bannerDescription}
+      />
+
+      <SerieDetail
+        loading={loading}
+        typeHandler={typeHandler}
+        onStatusChange={onStatusChange}
+        newCommentMessage={newCommentMessage}
+        newCommentSpoil={newCommentSpoil}
+        onSmash={removeSpilerCover}
+        totalComments={totalComments}
+        similarContent={similarContent}
+        {...serie}
+      />
+
       <Footer />
     </>
   );

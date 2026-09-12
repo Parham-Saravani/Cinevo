@@ -8,8 +8,12 @@ import Section from "./Section";
 import Content from "./Content";
 import CommentFrom from "./elements/CommentFrom";
 import EmptyComments from "../Empty/EmptyComments";
+import CastLoading from "./elements/CastLoading";
+import CommentLoading from "./elements/CommentLoading";
+import SimilarContentLoading from "./elements/SliderLoading";
 
 function MovieDetail({
+  loading,
   typeHandler,
   onStatusChange,
   newCommentMessage,
@@ -34,16 +38,29 @@ function MovieDetail({
           <div className="max-lg:order-2 col-span-12 lg:col-span-8 xl:col-span-9">
             <div className="w-full">
               <Content value={"Overview"}>
-                <p className="mt-2 text-text-secondary page-overview">
-                  {overview}
-                </p>
+                {loading ? (
+                  <div className="mt-2">
+                    <div className="w-full h-5 bg-gray-900 animate-pulse rounded-xl"></div>
+                    <div className="mt-2 w-full h-5 bg-gray-900 animate-pulse rounded-xl"></div>
+                    <div className="mt-2 w-full h-5 bg-gray-900 animate-pulse rounded-xl"></div>
+                    <div className="mt-2 w-full h-5 bg-gray-900 animate-pulse rounded-xl"></div>
+                  </div>
+                ) : (
+                  <p className="mt-2 text-text-secondary page-overview">
+                    {overview}
+                  </p>
+                )}
               </Content>
             </div>
 
             <div className="mt-5 w-full">
-              <Content value={"Cast"}>
-                <Cast cast={cast} />
-              </Content>
+              {loading ? (
+                <CastLoading />
+              ) : (
+                <Content value={"Cast"}>
+                  <Cast cast={cast} />
+                </Content>
+              )}
             </div>
           </div>
 
@@ -64,9 +81,18 @@ function MovieDetail({
           <div className="col-span-1 max-lg:col-span-2">
             <Content value={"Scrreenshots"}>
               <div className="mt-2 grid grid-cols-2 gap-2 w-full">
-                {screenshots.map((item, index) => (
-                  <ScreenShot key={index} imgUrl={item} />
-                ))}
+                {loading
+                  ? Array.from({ length: 4 }).map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="rounded-xl col-span-1 aspect-video w-full h-full bg-gray-900 animate-pulse"
+                        ></div>
+                      );
+                    })
+                  : screenshots.map((item, index) => (
+                      <ScreenShot key={index} imgUrl={item} />
+                    ))}
               </div>
             </Content>
           </div>
@@ -77,7 +103,11 @@ function MovieDetail({
       <Section>
         <Content value={"Similar Movies"}>
           <div className="overflow-hidden mt-2">
-            <Slider data={similarContent} />
+            {loading ? (
+              <SimilarContentLoading />
+            ) : (
+              <Slider data={similarContent} />
+            )}
           </div>
         </Content>
       </Section>
@@ -92,14 +122,16 @@ function MovieDetail({
               newCommentMessage={newCommentMessage}
               newCommentSpoil={newCommentSpoil}
             />
-            {totalComments.length === 0 ? (
+            {loading ? (
+              Array.from({ length: 4 }).map((_, index) => {
+                return <CommentLoading key={index} />;
+              })
+            ) : totalComments.length === 0 ? (
               <EmptyComments />
             ) : (
-              <div className="mt-10 comments-container">
-                {totalComments.map((item) => (
-                  <Comment onSmash={onSmash} key={item._id} {...item} />
-                ))}
-              </div>
+              totalComments.map((item, index) => {
+                return <Comment key={index} {...item} />;
+              })
             )}
           </div>
         </Content>

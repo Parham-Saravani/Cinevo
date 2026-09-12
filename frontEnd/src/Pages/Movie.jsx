@@ -1,16 +1,18 @@
-import { useFetcher, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Hero from "../Components/Hero/Hero";
 import Footer from "../Components/Footer/Footer";
 import MovieDetail from "../Components/Detail/MovieDetail";
-import toast from "react-hot-toast";
-import {baseUrl} from "../Utilities/constants"
+import { baseUrl } from "../Utilities/constants";
+import { useNavigate } from "react-router";
 
 function Movie() {
+  const navigate = useNavigate();
   const { slug } = useParams();
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState({});
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [similarContent, setSimilarContent] = useState(null);
+  const [similarContent, setSimilarContent] = useState([]);
   const [totalComments, setTotalComments] = useState([]);
   const [newCommentMessage, setNewCommentMessage] = useState("");
   const [newCommentSpoil, setNewCommentSpoil] = useState(false);
@@ -51,6 +53,7 @@ function Movie() {
         const [detail, similarData, comments] = await Promise.all(
           response.map((res) => res.json()),
         );
+        if (detail.message === "NOT_FOUND") throw Error();
         setSimilarContent([...similarData]);
         setMovie({ ...detail });
 
@@ -61,6 +64,15 @@ function Movie() {
         }
       } catch (error) {
         setError(true);
+        navigate("/error", {
+          state: {
+            status: "404",
+            title: "Movie or Series Not Found",
+            desc: "We couldn't find the movie or series you're looking for.It may have been removed, renamed, or the link may be incorrect.",
+          },
+        });
+      } finally {
+        setLoading(false);
       }
     })();
   }, [slug]);
@@ -70,26 +82,24 @@ function Movie() {
   }
   return (
     <>
-      {movie && (
-        <Hero
-          title={movie.title}
-          poster={movie.poster}
-          banner={movie.banner}
-          bannerDescription={movie.bannerDescription}
-        />
-      )}
-      {movie && (
-        <MovieDetail
-          typeHandler={typeHandler}
-          onStatusChange={onStatusChange}
-          newCommentMessage={newCommentMessage}
-          newCommentSpoil={newCommentSpoil}
-          onSmash={removeSpilerCover}
-          totalComments={totalComments}
-          similarContent={similarContent}
-          {...movie}
-        />
-      )}
+      <Hero
+        loading={loading}
+        title={movie?.title}
+        poster={movie?.poster}
+        banner={movie?.banner}
+        bannerDescription={movie?.bannerDescription}
+      />
+      <MovieDetail
+        loading={loading}
+        typeHandler={typeHandler}
+        onStatusChange={onStatusChange}
+        newCommentMessage={newCommentMessage}
+        newCommentSpoil={newCommentSpoil}
+        onSmash={removeSpilerCover}
+        totalComments={totalComments}
+        similarContent={similarContent}
+        {...movie}
+      />
       <Footer />
     </>
   );

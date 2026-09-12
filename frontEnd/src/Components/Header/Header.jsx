@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import ProfileDropDown from "./elements/ProfileDropDown";
 import { baseUrl } from "../../Utilities/constants";
 import removeCookie from "../../Utilities/Cookie/removeCookie";
-import getCookie from "../../Utilities/Cookie/getCookie";
 
 function Header() {
   const [isLogin, setIslogin] = useState(false);
@@ -13,7 +12,6 @@ function Header() {
     setIslogin(checkCookie("auth-token"));
     (async () => {
       try {
-        const token = getCookie("auth-token");
         const response = await fetch(`${baseUrl}/api/user/me`, {
           method: "POST",
           headers: {
@@ -21,8 +19,10 @@ function Header() {
           },
           body: JSON.stringify({ token }),
         });
+        console.log(response);
         if (!response.ok) throw Error();
         const data = await response.json();
+        
         setUserData({
           username: data.username,
           role: data.role,

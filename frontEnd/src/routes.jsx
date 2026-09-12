@@ -11,6 +11,7 @@ import Serie from "./Pages/Serie";
 import DashboardHome from "./Pages/DashboardHome";
 import DashbaordWatchlist from "./Pages/DashbaordWatchlist";
 import DashboardFavourit from "./Pages/DashboardFavourit";
+import ErrorPage from "./Pages/ErrorPage";
 
 import DashboardLayout from "./Components/Layouts/DashboardLayout";
 
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
   },
   { path: "/genre", element: <Genre /> },
   { path: "/search", element: <Search /> },
+  { path: "/error", element: <ErrorPage /> },
   {
     path: "/dashboard",
     element: <DashboardLayout />,

@@ -8,6 +8,7 @@ import { baseUrl } from "../../Utilities/constants";
 import saveCookie from "../../Utilities/Cookie/saveCookie";
 import { useNavigate } from "react-router";
 import PasswordInput from "../PasswordInput";
+import removeCookie from "../../Utilities/Cookie/removeCookie";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -41,8 +42,10 @@ function Login() {
             children: "Login successful. Welcome back to Cinevo!",
           });
           if (rembember) {
+            removeCookie("auth-token");
             saveCookie(data.token);
           } else {
+            removeCookie("auth-token");
             saveCookie(data.token, false);
           }
           setTimeout(() => {

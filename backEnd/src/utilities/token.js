@@ -5,7 +5,11 @@ const createToken = (userID) => {
   });
 };
 const decompressToken = (token) => {
-  const data = jwt.verify(token, process.env.JWT_SECRET);
-  return data.id;
+  try {
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    return data.id;
+  } catch (error) {
+    return undefined;
+  }
 };
 export { createToken, decompressToken };

@@ -1,5 +1,6 @@
 import { FaArrowRight } from "react-icons/fa6";
 import Slider from "../Slider/Slider";
+import SliderLoading from "../Detail/elements/SliderLoading";
 
 function Section({ children, data, icon }) {
   return (
@@ -19,7 +20,7 @@ function Section({ children, data, icon }) {
           </button>
         </div>
         <div className="mt-4 overflow-hidden">
-          <Slider data={data} />
+          {data ? <Slider data={data} /> : <SliderLoading />}
         </div>
       </div>
     </section>
