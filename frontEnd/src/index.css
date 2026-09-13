@@ -28,7 +28,7 @@
 .menu-item-active::before {
   content: "";
   position: absolute;
-  bottom: -0.6rem;
+  bottom: -0.45rem;
   width: 2.5rem;
   margin: auto;
   left: 0;

@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { NavLink, Link } from "react-router";
 import { useEffect, useState } from "react";
 import ProfileDropDown from "./elements/ProfileDropDown";
 import { baseUrl } from "../../Utilities/constants";
@@ -11,7 +11,6 @@ function Header() {
   const [loading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [error, setError] = useState(false);
-  
 
   useEffect(() => {
     const token = getCookie("auth-token");
@@ -60,25 +59,60 @@ function Header() {
     <div className="animate-fadeIn container mx-auto pt-5">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
-          <Link to="/" className="text-white font-bold text-2xl">
+          <NavLink to="/" className="text-white font-bold text-2xl">
             Cinevo
-          </Link>
+          </NavLink>
           <ul className="max-sm:hidden flex gap-4 justify-between items-center ml-20">
-            <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <Link to="/movies">Movies</Link>
-            </li>
-            <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <Link to="/series">Series</Link>
-            </li>
-            <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <Link to="/genre">Genres</Link>
-            </li>
-            <li className="menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative">
-              <Link to="/search">Search</Link>
-            </li>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative menu-item-active"
+                  : "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative"
+              }
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/movies"
+              className={({ isActive }) =>
+                isActive
+                  ? "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative menu-item-active"
+                  : "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative"
+              }
+            >
+              Movies
+            </NavLink>
+            <NavLink
+              to="/series"
+              className={({ isActive }) =>
+                isActive
+                  ? "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative menu-item-active"
+                  : "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative"
+              }
+            >
+              Series
+            </NavLink>
+            <NavLink
+              to="/genre"
+              className={({ isActive }) =>
+                isActive
+                  ? "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative menu-item-active"
+                  : "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative"
+              }
+            >
+              Genres
+            </NavLink>
+            <NavLink
+              to="/search"
+              className={({ isActive }) =>
+                isActive
+                  ? "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative menu-item-active"
+                  : "menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative"
+              }
+            >
+              Search
+            </NavLink>
           </ul>
         </div>
         <div className="max-sm:hidden flex gap-10 items-center">

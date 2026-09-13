@@ -1,4 +1,4 @@
-import { Link, replace, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import {
   FaHouse,
   FaHeart,
@@ -34,7 +34,6 @@ function NavigationMenu() {
       icon: <IoSettings />,
     },
   ];
-  const [activeRoute, setActiveRoute] = useState("Overview");
 
   return (
     <aside className="absolute left-0 h-full w-60 border-l border-input-border/40 bg-input-bg px-4 py-6">
@@ -47,17 +46,19 @@ function NavigationMenu() {
         <ul>
           {menuItems.map((item, index) => {
             return (
-              <Link
+              <NavLink
                 key={index}
-                onClick={(event) => setActiveRoute(event.target.dataset.value)}
-                data-value={item.title}
                 to={item.path}
-                className={`mt-2 first:mt-0 flex cursor-pointer transition-colors duration-300 hover:text-text-primary/80 hover:bg-input-border/50 items-center gap-3 rounded-lg px-3 py-3 text-sm text-text-secondary/70 ${activeRoute === item.title ? "bg-cta-primary! text-text-primary!" : ""}`}
-                replace
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-cta-primary! text-white! mt-2 first:mt-0 flex cursor-pointer transition-colors duration-300 hover:text-text-primary/80 hover:bg-input-border/50 items-center gap-3 rounded-lg px-3 py-3 text-sm text-text-secondary/70"
+                    : "mt-2 first:mt-0 flex cursor-pointer transition-colors duration-300 hover:text-text-primary/80 hover:bg-input-border/50 items-center gap-3 rounded-lg px-3 py-3 text-sm text-text-secondary/70"
+                }
+                end
               >
                 {item.icon}
                 {item.title}
-              </Link>
+              </NavLink>
             );
           })}
         </ul>
