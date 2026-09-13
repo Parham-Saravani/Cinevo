@@ -8,7 +8,7 @@ import InfoItemLoading from "./InfoItemLoading";
 
 function QuickInfo({ releaseYear, duration, genres, rating, director }) {
   return (
-    <div className="max-lg:order-1 col-span-12 flex flex-col lg:col-span-4 xl:col-span-3 bg-linear-to-br from-cta-primary/5 via-transparent to-cta-primary/5 relative border border-white/20 backdrop-blur-2xl rounded-xl px-5 py-6 mt-4">
+    <div className="max-h-67 max-lg:order-1 col-span-12 flex flex-col lg:col-span-4 xl:col-span-3 bg-linear-to-br from-cta-primary/5 via-transparent to-cta-primary/5 relative border border-white/20 backdrop-blur-2xl rounded-xl px-5 py-6 mt-4">
       <h2 className="flex gap-2 items-center text-text-primary font-semibold text-2xl">
         Quick Info
       </h2>

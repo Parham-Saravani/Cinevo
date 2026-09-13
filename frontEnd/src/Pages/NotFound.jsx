@@ -20,11 +20,11 @@ function NotFound({ children }) {
       </div>
       <button
         onClick={() => {
-          navigate(-1, { replace: true });
+          navigate("/", { replace: true });
         }}
         className="font-semibold mt-5 w-50 h-13 rounded-xl bg-cta-primary hover:bg-cta-primary/50 text-text-primary transition-colors duration-300 cursor-pointer reload-btn"
       >
-        Go Back
+        Go Home
       </button>
     </div>
   );

@@ -53,21 +53,21 @@ function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
         </Link>
 
         <Link
-          to="/watchlist"
+          to="/dashboard/watchlist"
           className="block px-4 py-3 text-sm hover:bg-white/5 hover:text-text-primary transition-colors duration-300"
         >
           Watchlist
         </Link>
 
         <Link
-          to="/favorites"
+          to="/dashboard/favorites"
           className="block px-4 py-3 text-sm hover:bg-white/5 hover:text-text-primary transition-colors duration-300"
         >
           Favorites
         </Link>
 
         <Link
-          to="/settings"
+          to="/dashboard/settings"
           className="block px-4 py-3 text-sm hover:bg-white/5 hover:text-text-primary transition-colors duration-300"
         >
           Settings

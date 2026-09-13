@@ -8,12 +8,13 @@ import Search from "./Pages/Search";
 import NotFound from "./Pages/NotFound";
 import Movie from "./Pages/Movie";
 import Serie from "./Pages/Serie";
-import DashboardHome from "./Pages/DashboardHome";
-import DashbaordWatchlist from "./Pages/DashbaordWatchlist";
-import DashboardFavourit from "./Pages/DashboardFavourit";
+import DashboardHome from "./Components/Dashboard/DashboardHome";
+import DashbaordWatchlist from "./Components/Dashboard/DashbaordWatchlist";
+import DashboardFavourit from "./Components/Dashboard/DashboardFavourit";
 import ErrorPage from "./Pages/ErrorPage";
 
 import DashboardLayout from "./Components/Layouts/DashboardLayout";
+import DashboardSetting from "./Components/Dashboard/DashboardSetting";
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardHome /> },
       { path: "watchlist", element: <DashbaordWatchlist /> },
-      { path: "favourit", element: <DashboardFavourit /> },
+      { path: "favorites", element: <DashboardFavourit /> },
+      { path: "settings", element: <DashboardSetting /> },
     ],
   },
   { path: "/*", element: <NotFound /> },

@@ -9,9 +9,11 @@ import {
   takeAllTypes,
   takeAllYears,
   takeAllGenres,
+  filtering,
 } from "../controllers/discover.controller.js";
 const router = Router();
 
+router.post("/filter", filtering);
 router.get("/trending", takeTrendContent);
 router.get("/newRelease", takeNewContent);
 router.get("/popular", takePopularContent);

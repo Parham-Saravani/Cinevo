@@ -218,7 +218,142 @@ const takeAllYears = async (req, res) => {
   ]);
   res.json([...finalData]);
 };
+const filtering = async (req, res) => {
+  const { genre, year, type } = req.body;
+  console.log(genre, year, type);
+  const content = type === "series" ? Serie : Movie;
+  if (!year && !genre && !type) {
+    const movies = await Movie.find(
+      {},
+      {
+        title: true,
+        slug: true,
+        type: true,
+        genres: true,
+        poster: true,
+        bannerDescription: true,
+        rating: true,
+        bannerDescription: true,
+        releaseYear: true,
+        duration: true,
+        ageRating: true,
+        seasons: true,
+        director: true,
+        featured: true,
+        trending: true,
+      },
+    );
+    const series = await Serie.find(
+      {},
+      {
+        title: true,
+        slug: true,
+        type: true,
+        genres: true,
+        poster: true,
+        bannerDescription: true,
+        rating: true,
+        bannerDescription: true,
+        releaseYear: true,
+        duration: true,
+        ageRating: true,
+        seasons: true,
+        director: true,
+        featured: true,
+        trending: true,
+      },
+    );
+    return res.json([...movies, ...series]);
+  }
+  if (!year && !genre) {
+    const data = await content.find(
+      {},
+      {
+        title: true,
+        slug: true,
+        type: true,
+        genres: true,
+        poster: true,
+        bannerDescription: true,
+        rating: true,
+        bannerDescription: true,
+        releaseYear: true,
+        duration: true,
+        ageRating: true,
+        seasons: true,
+        director: true,
+        featured: true,
+        trending: true,
+      },
+    );
+    return res.json(data);
+  }
+  const filters = {};
+  if (year) filters.releaseYear = { $gte: Number(year) };
+  if (genre) filters.genres = { $in: genre };
+  console.log(filters);
+  if (!type) {
+    const movies = await Movie.find(filters, {
+      title: true,
+      slug: true,
+      type: true,
+      genres: true,
+      poster: true,
+      bannerDescription: true,
+      rating: true,
+      bannerDescription: true,
+      releaseYear: true,
+      duration: true,
+      ageRating: true,
+      seasons: true,
+      director: true,
+      featured: true,
+      trending: true,
+    });
+    const series = await Serie.find(filters, {
+      title: true,
+      slug: true,
+      type: true,
+      genres: true,
+      poster: true,
+      bannerDescription: true,
+      rating: true,
+      bannerDescription: true,
+      releaseYear: true,
+      duration: true,
+      ageRating: true,
+      seasons: true,
+      director: true,
+      featured: true,
+      trending: true,
+    });
+    return res.json([...movies, ...series]);
+  }
 
+  const data = await content.find(filters, {
+    title: true,
+    slug: true,
+    type: true,
+    genres: true,
+    poster: true,
+    bannerDescription: true,
+    rating: true,
+    bannerDescription: true,
+    releaseYear: true,
+    duration: true,
+    ageRating: true,
+    seasons: true,
+    director: true,
+    featured: true,
+    trending: true,
+  });
+  return res.json(data);
+};
+// {
+// $in : []
+// }
+//
+//
 export {
   takeSimilarContent,
   takeTrendContent,
@@ -229,4 +364,5 @@ export {
   takeAllContent,
   takeAllTypes,
   takeAllYears,
+  filtering,
 };

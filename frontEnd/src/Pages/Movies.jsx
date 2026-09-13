@@ -5,14 +5,19 @@ import Card from "../Components/Card/Card";
 import { baseUrl } from "../Utilities/constants";
 import ListCard from "../Components/Card/ListCard";
 import LoadingCard from "../Components/Loader/LoadingCard";
+import { useSearchParams } from "react-router";
 
 function Movies() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [movies, setMovies] = useState([]);
   const [years, setYears] = useState([]);
   const [genres, setGenres] = useState([]);
   const [error, setError] = useState(false);
   const [layout, setLayout] = useState("grid");
   const [loading, setLoading] = useState(true);
+  const [currentYear, setCurrentYear] = useState("All");
+  const [currentGenre, setCurrentGenre] = useState("All");
+  const [isClear, setIsClear] = useState(false);
 
   useEffect(() => {
     document.title = "Movies | Cinevo";
@@ -41,7 +46,24 @@ function Movies() {
       }
     })();
   }, []);
+  useEffect(() => {
+    setCurrentYear("All");
+    setCurrentGenre("All");
+  }, [isClear]);
+  useEffect(() => {
+    const filters = {};
+    const year = searchParams.get("year");
+    const genre = searchParams.get("genre");
+    const type = searchParams.get("type");
+    if (year) filters.year = year;
+    if (genre) filters.genre = genre;
+    if (type) filters.type = type;
+    console.log(filters);
 
+    setLoading(true);
+  }, [searchParams]);
+
+  
   const changeLayout = (value) => {
     setLayout(value);
   };
@@ -55,6 +77,13 @@ function Movies() {
         <Header />
         <main className="mt-10 text-text-primary">
           <ContentFilters
+            onClearSmash={setIsClear}
+            currentYear={currentYear}
+            currentGenre={currentGenre}
+            setCurrentYear={setCurrentYear}
+            setCurrentGenre={setCurrentGenre}
+            setSearchParams={setSearchParams}
+            searchParams={searchParams}
             changeLayout={changeLayout}
             layout={layout}
             years={years}
