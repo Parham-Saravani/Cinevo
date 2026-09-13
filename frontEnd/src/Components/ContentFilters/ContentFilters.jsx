@@ -26,15 +26,17 @@ function ContentFilters({
       <div className="mt-7 text-sm max-sm:text-xs text-text-secondary/50 bg-linear-to-br from-cta-primary/10 via-transparent to-cta-primary/10 px-3 py-4 border border-white/10 rounded-xl">
         <div className="grid grid-cols-5 max-xl:grid-cols-1 gap-3 text-xs">
           <div className="col-span-4 max-xl:col-span-1 max-md:grid-cols-1 grid grid-cols-4 gap-3">
-            <div className="col-span-2 max-md:col-span-1">
+            {/* <div className="col-span-2 max-md:col-span-1">
               <input
                 className="w-full text-text-secondary h-full rounded-xl bg-input-bg/50 border-2 border-input-border/50 outline-hidden px-2 py-3 placeholder:text-text-secondary/50 transition-colors duration-300 hover:border-input-border-hover focus:border-input-border-focus/50"
                 placeholder="Search movie..."
                 type="text"
               />
-            </div>
+            </div> */}
             <div className="col-span-2 max-md:col-span-1 grid grid-cols-2 gap-3">
-              <DropDown title={"All years"}>
+              <DropDown
+                title={currentYear === "All" ? "All years" : currentYear}
+              >
                 <li
                   onClick={() => {
                     const params = new URLSearchParams(searchParams);
@@ -63,7 +65,9 @@ function ContentFilters({
                   );
                 })}
               </DropDown>
-              <DropDown title={"All types"}>
+              <DropDown
+                title={currentType === "All" ? "All types" : currentType}
+              >
                 <li
                   onClick={() => {
                     const params = new URLSearchParams(searchParams);
@@ -155,21 +159,22 @@ function ContentFilters({
         <div className="mt-7 text-sm max-sm:text-xs text-text-secondary/50 bg-linear-to-br from-cta-primary/10 via-transparent to-cta-primary/10 px-3 py-4 border border-white/10 rounded-xl">
           <div className="grid grid-cols-5 max-xl:grid-cols-1 gap-3">
             <div className="col-span-4 max-xl:col-span-1 max-md:grid-cols-1 grid grid-cols-4 gap-3">
-              <div className="col-span-2 max-md:col-span-1">
+              {/* <div className="col-span-2 max-md:col-span-1">
                 <input
                   className="w-full text-text-secondary h-full rounded-xl bg-input-bg/50 border-2 border-input-border/50 outline-hidden px-2 py-3 placeholder:text-text-secondary/50 transition-colors duration-300 hover:border-input-border-hover focus:border-input-border-focus/50"
                   placeholder="Search movie..."
                   type="text"
                 />
-              </div>
+              </div> */}
               <div className="col-span-2 max-md:col-span-1 grid grid-cols-2 gap-3">
-                <DropDown title={"All genres"}>
+                <DropDown
+                  title={currentGenre === "All" ? "All genres" : currentGenre}
+                >
                   <li
                     onClick={() => {
                       const params = new URLSearchParams(searchParams);
                       params.delete("genre");
                       setSearchParams(params);
-                      setCurrentYear("All");
                       setCurrentGenre("All");
                     }}
                     className={`first:mt-0 mt-1.5 max-lg:text-xs py-2.5 px-2 rounded-xl cursor-pointer transition-colors duration-300 hover:bg-input-border/50 hover:text-text-primary/50 sort-item ${currentGenre === "All" ? "active-sort" : ""}`}
@@ -193,7 +198,9 @@ function ContentFilters({
                     );
                   })}
                 </DropDown>
-                <DropDown title={"All years"}>
+                <DropDown
+                  title={currentYear === "All" ? "All years" : currentYear}
+                >
                   <li
                     onClick={() => {
                       const params = new URLSearchParams(searchParams);
@@ -225,7 +232,7 @@ function ContentFilters({
               </div>
             </div>
             <div className="col-span-1 flex max-xl:justify-between items-center justify-end">
-              <div className="h-12.5 w-23 flex gap-2 items-center rounded-xl bg-input-bg/50 px-2 py-2 border border-input-border/50 mr-15 max-xl:mr-0">
+              <div className="h-12.5 w-23 flex gap-2 items-center rounded-xl bg-input-bg/50 px-2 py-2 border border-input-border/50 mr-5 max-xl:mr-0">
                 <button
                   onClick={(event) =>
                     changeLayout(event.currentTarget.dataset.layout)

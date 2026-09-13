@@ -8,6 +8,7 @@ import GenreSlider from "../Components/GenreSlider/GenreSlider";
 import ContentFilters from "../Components/ContentFilters/ContentFilters";
 import Card from "../Components/Card/Card";
 import EmptyFiltering from "../Components/Empty/EmptyFiltering";
+import filtering from "../Utilities/Filtering/Filtering";
 
 function Genre() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,6 +36,8 @@ function Genre() {
   }, [isCleared]);
   useEffect(() => {
     document.title = "Genres | Cinevo";
+    setSearchParams({});
+
     (async () => {
       try {
         const response = await Promise.all([
@@ -57,34 +60,7 @@ function Genre() {
     })();
   }, []);
   useEffect(() => {
-    const filters = {};
-    const year = searchParams.get("year");
-    const genre = searchParams.get("genre");
-    const type = searchParams.get("type");
-    if (year) filters.year = year;
-    if (genre) filters.genre = genre;
-    if (type) filters.type = type;
-    setLoading(true);
-    (async () => {
-      try {
-        const response = await fetch(`${baseUrl}/api/discover/filter`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(filters),
-        });
-        if (!response.ok) throw Error();
-        const data = await response.json();
-        console.log(data);
-
-        setContent([...data]);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    })();
+    filtering(setLoading, undefined , setContent, searchParams);
   }, [searchParams]);
 
   return (
@@ -137,11 +113,9 @@ function Genre() {
                   className={`grid ${layout === "grid" ? "grid-cols-7" : "grid-cols-1"} max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5 movies-page-movies-container`}
                 >
                   {loading
-                    ? Array.from({length:7}).map(
-                        (item, index) => {
-                          return <LoadingCard key={index} />;
-                        },
-                      )
+                    ? Array.from({ length: 7 }).map((item, index) => {
+                        return <LoadingCard key={index} />;
+                      })
                     : content.map((item, index) => {
                         return layout === "list" ? (
                           <ListCard key={item._id} {...item} />
