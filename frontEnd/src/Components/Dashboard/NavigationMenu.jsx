@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, replace, useNavigate } from "react-router";
 import {
   FaHouse,
   FaHeart,
@@ -8,7 +8,7 @@ import {
 import { FaHome } from "react-icons/fa";
 import { useState } from "react";
 import { IoSettings } from "react-icons/io5";
-
+import removeCookie from "../../Utilities/Cookie/removeCookie";
 
 function NavigationMenu() {
   const navigate = useNavigate();
@@ -45,13 +45,15 @@ function NavigationMenu() {
 
       <nav className="space-y-2">
         <ul>
-          {menuItems.map((item) => {
+          {menuItems.map((item, index) => {
             return (
               <Link
+                key={index}
                 onClick={(event) => setActiveRoute(event.target.dataset.value)}
                 data-value={item.title}
                 to={item.path}
                 className={`mt-2 first:mt-0 flex cursor-pointer transition-colors duration-300 hover:text-text-primary/80 hover:bg-input-border/50 items-center gap-3 rounded-lg px-3 py-3 text-sm text-text-secondary/70 ${activeRoute === item.title ? "bg-cta-primary! text-text-primary!" : ""}`}
+                replace
               >
                 {item.icon}
                 {item.title}
@@ -62,11 +64,20 @@ function NavigationMenu() {
       </nav>
 
       <div className="absolute bottom-6 left-4 right-4">
-        <button onClick={() => navigate('/', {replace:true})} className="w-full mt-2 first:mt-0 flex cursor-pointer transition-colors duration-300 hover:text-text-primary/80 hover:bg-input-border/50 items-center gap-3 rounded-lg px-3 py-3 text-sm text-text-secondary/70">
+        <button
+          onClick={() => navigate("/", { replace: true })}
+          className="w-full mt-2 first:mt-0 flex cursor-pointer transition-colors duration-300 hover:text-text-primary/80 hover:bg-input-border/50 items-center gap-3 rounded-lg px-3 py-3 text-sm text-text-secondary/70"
+        >
           <FaHome />
           <span>Home</span>
         </button>
-        <button className="cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red-400 transition hover:bg-red-500/10">
+        <button
+          onClick={() => {
+            removeCookie("auth-token");
+            navigate("/", { replace: true });
+          }}
+          className="cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red-400 transition hover:bg-red-500/10"
+        >
           <FaArrowRightFromBracket />
           <span>Logout</span>
         </button>

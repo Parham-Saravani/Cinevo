@@ -9,7 +9,7 @@ function DashboardLayout() {
   return (
     <div className="relative flex h-screen animate-fadeIn">
       <NavigationMenu />
-      <main className=" ml-65 mr-10 w-full overflow-auto py-5">
+      <main className="ml-66 mr-6 w-full overflow-auto py-5">
         <Outlet />
       </main>
     </div>

@@ -15,6 +15,7 @@ import ErrorPage from "./Pages/ErrorPage";
 
 import DashboardLayout from "./Components/Layouts/DashboardLayout";
 import DashboardSetting from "./Components/Dashboard/DashboardSetting";
+import PrivateRoute from "./Components/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -42,13 +43,18 @@ const router = createBrowserRouter([
   { path: "/search", element: <Search /> },
   { path: "/error", element: <ErrorPage /> },
   {
-    path: "/dashboard",
-    element: <DashboardLayout />,
+    element: <PrivateRoute />,
     children: [
-      { index: true, element: <DashboardHome /> },
-      { path: "watchlist", element: <DashbaordWatchlist /> },
-      { path: "favorites", element: <DashboardFavourit /> },
-      { path: "settings", element: <DashboardSetting /> },
+      {
+        path: "/dashboard",
+        element: <DashboardLayout />,
+        children: [
+          { index: true, element: <DashboardHome /> },
+          { path: "watchlist", element: <DashbaordWatchlist /> },
+          { path: "favorites", element: <DashboardFavourit /> },
+          { path: "settings", element: <DashboardSetting /> },
+        ],
+      },
     ],
   },
   { path: "/*", element: <NotFound /> },

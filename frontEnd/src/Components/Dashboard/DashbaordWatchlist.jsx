@@ -40,7 +40,7 @@ function DashbaordWatchlist() {
   return (
     <section>
       <div>
-        <h1 className="text-3xl font-bold max-sm:text-2xl">Watchlist</h1>
+        <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">Watchlist</h1>
 
         <p className="mt-1 text-sm text-text-secondary">
           Movies and series you've saved to watch later.

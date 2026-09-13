@@ -25,7 +25,6 @@ const filtering = async (
       });
       if (!response.ok) throw Error();
       const data = await response.json();
-      console.log(data);
       
       setContent(data);
     } catch (error) {

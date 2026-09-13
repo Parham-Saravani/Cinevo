@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import checkCookie from "../../Utilities/Cookie/checkCookie";
 import { useEffect, useState } from "react";
 import ProfileDropDown from "./elements/ProfileDropDown";
 import { baseUrl } from "../../Utilities/constants";
@@ -12,13 +11,11 @@ function Header() {
   const [loading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [error, setError] = useState(false);
-  const token = getCookie("auth-token");
-  if (!token) {
-    removeCookie("auth-token");
-  }
+  
 
   useEffect(() => {
-    setIslogin(checkCookie("auth-token"));
+    const token = getCookie("auth-token");
+
     if (token) {
       (async () => {
         try {
@@ -49,6 +46,8 @@ function Header() {
           Toast({ children: error.message });
         }
       })();
+    } else {
+      removeCookie("auth-token");
     }
   }, []);
 

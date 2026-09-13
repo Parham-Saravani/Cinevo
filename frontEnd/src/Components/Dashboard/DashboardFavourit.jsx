@@ -35,7 +35,7 @@ function DashboardFavourit() {
   return (
     <section>
       <div>
-        <h1 className="text-3xl font-bold max-sm:text-2xl">Favorites</h1>
+        <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">Favorites</h1>
 
         <p className="mt-1 text-sm text-text-secondary">
           Your favorite movies and series in one place.
