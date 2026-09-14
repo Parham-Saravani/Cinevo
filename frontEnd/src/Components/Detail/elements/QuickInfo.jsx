@@ -1,9 +1,8 @@
 import TimeFormatter from "../../../Utilities/TimeFormatter/TimeFormatter";
-import InfoItem from "./infoItem";
+import InfoItem from "./InfoItem";
 import { FaCalendar, FaClock, FaUser } from "react-icons/fa";
 import { LuClapperboard } from "react-icons/lu";
 import { FaStar, FaPlay } from "react-icons/fa6";
-import { MdOutlineEmail } from "react-icons/md";
 import InfoItemLoading from "./InfoItemLoading";
 
 function QuickInfo({ releaseYear, duration, genres, rating, director }) {

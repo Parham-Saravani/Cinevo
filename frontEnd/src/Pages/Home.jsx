@@ -53,7 +53,7 @@ function Home() {
 
   if (error) {
     return (
-      <NotFound error={false}>Something happend please refresh Page!</NotFound>
+      <NotFound error={false}>Please turn on your VPN and try again!</NotFound>
     );
   }
 
