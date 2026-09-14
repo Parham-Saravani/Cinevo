@@ -10,6 +10,7 @@ import {
   takeAllYears,
   takeAllGenres,
   filtering,
+  searchOnContent,
 } from "../controllers/discover.controller.js";
 const router = Router();
 
@@ -23,4 +24,5 @@ router.get("/types", takeAllTypes);
 router.get("/year", takeAllYears);
 router.get("/all", takeAllContent);
 router.get("/similar/:slug", takeSimilarContent);
+router.get("/search/:value", searchOnContent);
 export default router;

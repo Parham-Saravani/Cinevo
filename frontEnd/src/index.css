@@ -24,6 +24,7 @@
   background: transparent;
 }
 
+
 /* Home Page */
 .menu-item-active::before {
   content: "";

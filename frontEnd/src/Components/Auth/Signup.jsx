@@ -14,6 +14,8 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const signupHandler = async () => {
@@ -27,6 +29,7 @@ function Signup() {
     if (!data.success) {
       Toast({ children: data.error.issues[0].message });
     } else {
+      setIsLoading(true);
       try {
         const response = await fetch(`${baseUrl}/api/user`, {
           method: "POST",
@@ -36,6 +39,7 @@ function Signup() {
           body: JSON.stringify({ username, email, password }),
         });
         const data = await response.json();
+        setIsLoading(false);
         if (!response.ok) {
           throw new Error("Registration failed. Please try again.");
         }
@@ -115,11 +119,16 @@ function Signup() {
         </p>
 
         <button
+          disabled={isLoading}
           onClick={signupHandler}
-          className="animate-fadeInUp max-sm:text-xs mt-5 font-bold text-sm text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer signup-btn disabled:bg-cta-primary/40 disabled:cursor-default"
+          className={`${isLoading ? "flex justify-center items-center" : ""} animate-fadeInUp font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}
           type="button"
         >
-          Sign Up
+          {isLoading ? (
+            <div className="rounded-full aspect-square w-4 h-4 animate-loader"></div>
+          ) : (
+            "Sign Up"
+          )}
         </button>
       </form>
 

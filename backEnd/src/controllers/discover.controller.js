@@ -22,7 +22,6 @@ const takeSimilarContent = async (req, res) => {
   ]);
   res.json([...similaMovies, ...similarSeries]);
 };
-
 const takeTrendContent = async (req, res) => {
   const totalTrendSeries = await Serie.find(
     { trending: true },
@@ -220,7 +219,6 @@ const takeAllYears = async (req, res) => {
 };
 const filtering = async (req, res) => {
   const { genre, year, type } = req.body;
-  console.log(genre, year, type);
   const content = type === "series" ? Serie : Movie;
   if (!year && !genre && !type) {
     const movies = await Movie.find(
@@ -291,7 +289,6 @@ const filtering = async (req, res) => {
   const filters = {};
   if (year) filters.releaseYear = { $gte: Number(year) };
   if (genre) filters.genres = { $in: genre };
-  console.log(filters);
   if (!type) {
     const movies = await Movie.find(filters, {
       title: true,
@@ -349,11 +346,50 @@ const filtering = async (req, res) => {
   });
   return res.json(data);
 };
-// {
-// $in : []
-// }
-//
-//
+const searchOnContent = async (req, res) => {
+  const value = req.params.value;
+  const movies = await Movie.find(
+    { title: { $regex: value, $options: "i" } },
+    {
+      title: true,
+      slug: true,
+      type: true,
+      genres: true,
+      poster: true,
+      bannerDescription: true,
+      rating: true,
+      bannerDescription: true,
+      releaseYear: true,
+      duration: true,
+      ageRating: true,
+      seasons: true,
+      director: true,
+      featured: true,
+      trending: true,
+    },
+  );
+  const series = await Serie.find(
+    { title: { $regex: value, $options: "i" } },
+    {
+      title: true,
+      slug: true,
+      type: true,
+      genres: true,
+      poster: true,
+      bannerDescription: true,
+      rating: true,
+      bannerDescription: true,
+      releaseYear: true,
+      duration: true,
+      ageRating: true,
+      seasons: true,
+      director: true,
+      featured: true,
+      trending: true,
+    },
+  );
+  res.json([...movies, ...series]);
+};
 export {
   takeSimilarContent,
   takeTrendContent,
@@ -365,4 +401,5 @@ export {
   takeAllTypes,
   takeAllYears,
   filtering,
+  searchOnContent,
 };

@@ -14,11 +14,13 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rembember, setRemember] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const loginHandler = async () => {
     const data = LoginValidator.safeParse({ email, password });
     if (data.success) {
+      setIsLoading(true);
       try {
         const response = await fetch(`${baseUrl}/api/user/login`, {
           method: "POST",
@@ -31,6 +33,8 @@ function Login() {
           throw Error();
         }
         const data = await response.json();
+        setIsLoading(false);
+
         if (data.message === "WRONG_CREDENTIALS") {
           showToast({
             children:
@@ -110,11 +114,16 @@ function Login() {
         </div>
 
         <button
+          disabled={isLoading}
           onClick={loginHandler}
-          className="animate-fadeInUp font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default login-btn"
+          className={`${isLoading ? "flex justify-center items-center" : ""} animate-fadeInUp font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}
           type="button"
         >
-          Login
+          {isLoading ? (
+            <div className="rounded-full aspect-square w-4 h-4 animate-loader"></div>
+          ) : (
+            "Login"
+          )}
         </button>
       </form>
 

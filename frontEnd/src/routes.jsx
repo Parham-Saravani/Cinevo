@@ -40,7 +40,11 @@ const router = createBrowserRouter([
     element: <Movie />,
   },
   { path: "/genre", element: <Genre /> },
-  { path: "/search", element: <Search /> },
+  {
+    path: "/search",
+    element: <Search />,
+    handle: { from: "hide-header-searchBox" },
+  },
   { path: "/error", element: <ErrorPage /> },
   {
     element: <PrivateRoute />,

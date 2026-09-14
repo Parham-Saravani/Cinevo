@@ -61,8 +61,6 @@ const loginOperation = async (req, res) => {
         throw new Error("WRONG_CREDENTIALS");
       }
     } catch (error) {
-      console.log(error);
-
       res.json({ message: error.message });
     }
   }
@@ -94,9 +92,7 @@ const takeUserData = async (req, res) => {
           throw new Error("NOT_FOUND");
         }
       } catch (error) {
-        console.log(error);
-
-        // res.status(404).json({ message: error });
+        res.status(404).json({ message: error });
       }
     } catch (error) {
       res.json({ message: "INVALID_TOKEN" });

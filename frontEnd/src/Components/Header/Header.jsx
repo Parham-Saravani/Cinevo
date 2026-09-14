@@ -1,16 +1,25 @@
-import { NavLink, Link } from "react-router";
+import { NavLink, Link, useNavigate, useMatches } from "react-router";
 import { useEffect, useState } from "react";
 import ProfileDropDown from "./elements/ProfileDropDown";
 import { baseUrl } from "../../Utilities/constants";
 import removeCookie from "../../Utilities/Cookie/removeCookie";
 import getCookie from "../../Utilities/Cookie/getCookie";
 import Toast from "../Toast/Toast";
+import { FiSearch } from "react-icons/fi";
+import { FaSearch } from "react-icons/fa";
 
 function Header() {
+  const matches = useMatches();
+  const nessSearchBox = matches.some(
+    (item) => item.handle?.from === "hide-header-searchBox",
+  );
+
+  const navigate = useNavigate();
   const [isLogin, setIslogin] = useState(false);
   const [loading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [error, setError] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const token = getCookie("auth-token");
@@ -116,13 +125,36 @@ function Header() {
           </ul>
         </div>
         <div className="max-sm:hidden flex gap-10 items-center">
-          <div>
-            <input
-              type="text"
-              className="w-90 text-text-secondary text-sm bg-input-bg py-3 px-4 rounded-xl border hover:border-input-border-hover focus:border-input-border-focus border-input-border outline-hidden transition-colors duration-300"
-              placeholder="Search for movies, series..."
-            />
-          </div>
+          {!nessSearchBox && (
+            <div className="relative w-90">
+              <input
+                onKeyPress={(event) => {
+                  if (event.key === "Enter") {
+                    navigate(
+                      `/search${searchValue && `?q=${encodeURIComponent(searchValue)}`}`,
+                    );
+                  }
+                }}
+                value={searchValue}
+                onInput={(event) => setSearchValue(event.target.value)}
+                type="text"
+                className="w-full text-text-secondary text-sm bg-input-bg py-3 pl-4 pr-11 rounded-xl border border-input-border hover:border-input-border-hover focus:border-input-border-focus outline-hidden transition-colors duration-300"
+                placeholder="Search for movies, series..."
+              />
+
+              <button
+                onClick={() =>
+                  navigate(
+                    `/search${searchValue && `?q=${encodeURIComponent(searchValue)}`}`,
+                  )
+                }
+                type="submit"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary/50 hover:text-text-primary transition-colors duration-300 cursor-pointer"
+              >
+                <FaSearch className="size-4" />
+              </button>
+            </div>
+          )}
           {!error && isLogin ? (
             <ProfileDropDown
               {...userData}
