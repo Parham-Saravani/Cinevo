@@ -6,6 +6,14 @@ The platform provides a modern and responsive interface for discovering movies a
 
 ---
 
+## 🔗 Live Demo
+
+**Live Preview**
+
+https://cinevo-iota.vercel.app
+
+---
+
 ## 🛠️ Tech Stack
 
 ### Frontend

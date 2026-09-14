@@ -67,6 +67,7 @@ function MovieDetail({
           </div>
 
           <QuickInfo
+            loading={loading}
             releaseYear={releaseYear}
             duration={duration}
             genres={genres}
@@ -118,13 +119,17 @@ function MovieDetail({
       <Section needMB={true}>
         <Content value={"Comments"} nested={true} child={"(0)"}>
           <div className="mt-3">
-            {isLogin ? <CommentFrom
-              onStatusChange={onStatusChange}
-              onType={typeHandler}
-              newCommentMessage={newCommentMessage}
-              newCommentSpoil={newCommentSpoil}
-            /> : <LoginToComment/>}
-            
+            {isLogin ? (
+              <CommentFrom
+                onStatusChange={onStatusChange}
+                onType={typeHandler}
+                newCommentMessage={newCommentMessage}
+                newCommentSpoil={newCommentSpoil}
+              />
+            ) : (
+              <LoginToComment />
+            )}
+
             {loading ? (
               Array.from({ length: 4 }).map((_, index) => {
                 return <CommentLoading key={index} />;
