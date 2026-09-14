@@ -52,6 +52,7 @@ function Search() {
                     />
 
                     <button
+                      disabled={loading}
                       onClick={(event) => {
                         event.preventDefault();
                         if (!searchValue) {
@@ -66,9 +67,13 @@ function Search() {
                         searchRequest(setLoading, searchValue, setContent);
                       }}
                       type="submit  "
-                      className="absolute right-1.5 top-1/2 -translate-y-1/2 h-10 px-5 rounded-lg bg-cta-primary hover:bg-cta-primary/80 transition-colors duration-300 text-sm font-medium cursor-pointer"
+                      className={`${loading ? "px-9.5" : ""} absolute right-1.5 top-1/2 -translate-y-1/2 h-10 px-5 rounded-lg bg-cta-primary hover:bg-cta-primary/80 transition-colors duration-300 text-sm font-medium cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}
                     >
-                      Search
+                      {loading ? (
+                        <div className="rounded-full aspect-square w-3 h-3 animate-loader"></div>
+                      ) : (
+                        "Search"
+                      )}
                     </button>
                   </div>
                 </form>
