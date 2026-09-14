@@ -84,7 +84,13 @@ function Movie() {
   }, [slug]);
 
   if (error) {
-    return <h1 className="text-white text-2xl">Error</h1>;
+    return navigate("/error", {
+      state: {
+        hideStatusCode: true,
+        title: "Connection Failed",
+        desc: "Cinevo couldn't connect to the server. Please check your internet connection and make sure your VPN is enabled if you're accessing the service from a restricted region.",
+      },
+    });
   }
   return (
     <>

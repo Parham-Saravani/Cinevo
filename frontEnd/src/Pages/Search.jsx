@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useSearchParams } from "react-router";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { FiSearch } from "react-icons/fi";
 import Header from "../Components/Header/Header";
 import Card from "../Components/Card/Card";
@@ -9,20 +9,32 @@ import searchRequest from "../Utilities/SearchRequest/SearchRequest";
 import Toast from "../Components/Toast/Toast";
 
 function Search() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [content, setContent] = useState([]);
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showDefaulElement, setShowDefaultElement] = useState(true);
+
   useEffect(() => {
     if (searchParams.get("q")) {
       setShowDefaultElement(false);
       setSearchValue(searchParams.get("q"));
-      searchRequest(setLoading, searchParams.get("q"), setContent);
+      searchRequest(setLoading, searchParams.get("q"), setContent, setError);
     }
     document.title = "Search | Cinevo";
   }, []);
 
+  if (error) {
+    return navigate("/error", {
+      state: {
+        hideStatusCode: true,
+        title: "Connection Failed",
+        desc: "Cinevo couldn't connect to the server. Please check your internet connection and make sure your VPN is enabled if you're accessing the service from a restricted region.",
+      },
+    });
+  }
   return (
     <>
       <header>
@@ -64,7 +76,12 @@ function Search() {
                         }
                         setShowDefaultElement(false);
                         setSearchParams(`?q=${searchValue}`);
-                        searchRequest(setLoading, searchValue, setContent);
+                        searchRequest(
+                          setLoading,
+                          searchValue,
+                          setContent,
+                          setError,
+                        );
                       }}
                       type="submit  "
                       className={`${loading ? "px-9.5" : ""} absolute right-1.5 top-1/2 -translate-y-1/2 h-10 px-5 rounded-lg bg-cta-primary hover:bg-cta-primary/80 transition-colors duration-300 text-sm font-medium cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}

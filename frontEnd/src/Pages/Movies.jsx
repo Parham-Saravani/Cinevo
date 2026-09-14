@@ -5,11 +5,12 @@ import Card from "../Components/Card/Card";
 import { baseUrl } from "../Utilities/constants";
 import ListCard from "../Components/Card/ListCard";
 import LoadingCard from "../Components/Loader/LoadingCard";
-import { useSearchParams } from "react-router";
+import { useSearchParams, useNavigate } from "react-router";
 import EmptyFiltering from "../Components/Empty/EmptyFiltering";
 import filtering from "../Utilities/Filtering/Filtering";
 
 function Movies() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [movies, setMovies] = useState([]);
   const [years, setYears] = useState([]);
@@ -55,7 +56,7 @@ function Movies() {
   }, [isClear]);
   useEffect(() => {
     (async () => {
-      filtering(setLoading, "movie", setMovies, searchParams);
+      filtering(setLoading, "movie", setMovies, searchParams, setError);
     })();
   }, [searchParams]);
 
@@ -64,7 +65,13 @@ function Movies() {
   };
 
   if (error) {
-    return <h1>Try Again!</h1>;
+    return navigate("/error", {
+      state: {
+        hideStatusCode: true,
+        title: "Connection Failed",
+        desc: "Cinevo couldn't connect to the server. Please check your internet connection and make sure your VPN is enabled if you're accessing the service from a restricted region.",
+      },
+    });
   }
   return (
     <>
@@ -87,18 +94,16 @@ function Movies() {
 
           <section className="mt-7 pb-5">
             <div className="container mx-auto">
-              {movies.length === 0 ? (
+              {!loading && movies.length === 0 ? (
                 <EmptyFiltering />
               ) : (
                 <div
                   className={`grid ${layout === "grid" ? "grid-cols-7" : "grid-cols-1"} max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5 movies-page-movies-container`}
                 >
                   {loading
-                    ? [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 14, 15, 16].map(
-                        (item, index) => {
-                          return <LoadingCard key={index} />;
-                        },
-                      )
+                    ? Array.from({ length: 7 }).map((item, index) => {
+                        return <LoadingCard key={index} />;
+                      })
                     : movies.map((item, index) => {
                         return layout === "list" ? (
                           <ListCard key={item._id} {...item} />

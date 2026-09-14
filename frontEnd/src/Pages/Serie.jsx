@@ -52,9 +52,9 @@ function Serie() {
           fetch(`${baseUrl}/api/discover/similar/${slug}`),
           fetch(`${baseUrl}/api/comment/${slug}`),
         ]);
-        response.forEach((item) => {
-          if (!item.ok) throw Error();
-        });
+        // response.forEach((item) => {
+        //   if (!item.ok) throw Error();
+        // });
         const [detail, similarData, comments] = await Promise.all(
           response.map((res) => res.json()),
         );
@@ -68,13 +68,6 @@ function Serie() {
         }
       } catch (error) {
         setError(true);
-        navigate("/error", {
-          state: {
-            status: "404",
-            title: "Movie or Series Not Found",
-            desc: "We couldn't find the movie or series you're looking for.It may have been removed, renamed, or the link may be incorrect.",
-          },
-        });
       } finally {
         setLoading(false);
       }
@@ -82,7 +75,13 @@ function Serie() {
   }, [slug]);
 
   if (error) {
-    return <h1 className="text-white text-2xl">Error</h1>;
+    return navigate("/error", {
+      state: {
+        hideStatusCode: true,
+        title: "Connection Failed",
+        desc: "Cinevo couldn't connect to the server. Please check your internet connection and make sure your VPN is enabled if you're accessing the service from a restricted region.",
+      },
+    });
   }
   return (
     <>

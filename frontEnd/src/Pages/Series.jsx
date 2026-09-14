@@ -5,11 +5,12 @@ import Card from "../Components/Card/Card";
 import { baseUrl } from "../Utilities/constants";
 import ListCard from "../Components/Card/ListCard";
 import LoadingCard from "../Components/Loader/LoadingCard";
-import { useSearchParams } from "react-router";
+import { useSearchParams, useNavigate } from "react-router";
 import EmptyFiltering from "../Components/Empty/EmptyFiltering";
 import filtering from "../Utilities/Filtering/Filtering";
 
 function Series() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [series, setSeries] = useState([]);
   const [years, setYears] = useState([]);
@@ -20,6 +21,7 @@ function Series() {
   const [currentYear, setCurrentYear] = useState("All");
   const [currentGenre, setCurrentGenre] = useState("All");
   const [isClear, setIsClear] = useState(false);
+
   useEffect(() => {
     document.title = "Series | Cinevo";
     setSearchParams({});
@@ -31,11 +33,11 @@ function Series() {
           fetch(`${baseUrl}/api/series/genre`),
           fetch(`${baseUrl}/api/series/year`),
         ]);
-        response.forEach((item) => {
-          if (!item.ok) {
-            throw Error();
-          }
-        });
+        // response.forEach((item) => {
+        //   if (!item.ok) {
+        //     throw Error();
+        //   }
+        // });
         const [totalSeries, genres, years] = await Promise.all(
           response.map((res) => res.json()),
         );
@@ -70,7 +72,13 @@ function Series() {
   };
 
   if (error) {
-    return <h1>Try Again!</h1>;
+    return navigate("/error", {
+      state: {
+        hideStatusCode: true,
+        title: "Connection Failed",
+        desc: "Cinevo couldn't connect to the server. Please check your internet connection and make sure your VPN is enabled if you're accessing the service from a restricted region.",
+      },
+    });
   }
   return (
     <>
@@ -93,7 +101,7 @@ function Series() {
 
           <section className="mt-7">
             <div className="container mx-auto">
-              {series.length === 0 ? (
+              {!loading && series.length === 0 ? (
                 <EmptyFiltering />
               ) : (
                 <div

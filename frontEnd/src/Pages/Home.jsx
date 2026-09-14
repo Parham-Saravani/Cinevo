@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import NotFound from "./NotFound";
 import Section from "../Components/Home/Section";
 import { baseUrl } from "../Utilities/constants";
+import { useNavigate } from "react-router";
 
 function Home() {
+  const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [data, setData] = useState({
     banners: null,
@@ -30,9 +32,9 @@ function Home() {
           fetch(`${baseUrl}/api/discover/recommend`),
         ]);
 
-        responses.forEach((item) => {
-          if (!item.ok) throw new NotFound(`${item} take error!`);
-        });
+        // responses.forEach((item) => {
+        //   if (!item.ok) throw new NotFound(`${item} take error!`);
+        // });
 
         const [banners, trending, newRelease, popular, recommend] =
           await Promise.all(responses.map((responce) => responce.json()));
@@ -44,7 +46,6 @@ function Home() {
           recommend: recommend,
         });
       } catch (error) {
-        console.log(error);
         setError(true);
       } finally {
       }
@@ -52,9 +53,13 @@ function Home() {
   }, []);
 
   if (error) {
-    return (
-      <NotFound error={false}>Please turn on your VPN and try again!</NotFound>
-    );
+    return navigate("/error", {
+      state: {
+        hideStatusCode: true,
+        title: "Connection Failed",
+        desc: "Cinevo couldn't connect to the server. Please check your internet connection and make sure your VPN is enabled if you're accessing the service from a restricted region.",
+      },
+    });
   }
 
   return (

@@ -14,9 +14,7 @@ function NotFound({ children }) {
       </div>
       <div className="mt-10 text-text-primary text-center">
         <h2 className="font-bold text-3xl">Opps...</h2>
-        <p className="mt-5 leading-8 text-xl  w-100">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
+        <p className="mt-5 leading-8 text-xl  w-100">{children}</p>
       </div>
       <button
         onClick={() => {

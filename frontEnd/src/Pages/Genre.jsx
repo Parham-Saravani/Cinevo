@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../Components/Header/Header";
-import { useSearchParams } from "react-router";
+import { useSearchParams, useNavigate } from "react-router";
 import ListCard from "../Components/Card/ListCard";
 import LoadingCard from "../Components/Loader/LoadingCard";
 import { baseUrl } from "../Utilities/constants";
@@ -11,6 +11,8 @@ import EmptyFiltering from "../Components/Empty/EmptyFiltering";
 import filtering from "../Utilities/Filtering/Filtering";
 
 function Genre() {
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [types, setTypes] = useState([]);
   const [genres, setGenres] = useState([]);
@@ -46,9 +48,9 @@ function Genre() {
           fetch(`${baseUrl}/api/discover/types`),
           fetch(`${baseUrl}/api/discover/year`),
         ]);
-        const [genres, allContent, types, year] = await Promise.all(
-          response.map((res) => res.json()),
-        );
+        // const [genres, allContent, types, year] = await Promise.all(
+        //   response.map((res) => res.json()),
+        // );
         setContent([...allContent]);
         setGenres([...genres]);
         setYears([...year]);
@@ -60,9 +62,18 @@ function Genre() {
     })();
   }, []);
   useEffect(() => {
-    filtering(setLoading, undefined , setContent, searchParams);
+    filtering(setLoading, undefined, setContent, searchParams);
   }, [searchParams]);
 
+  if (error) {
+    return navigate("/error", {
+      state: {
+        hideStatusCode: true,
+        title: "Connection Failed",
+        desc: "Cinevo couldn't connect to the server. Please check your internet connection and make sure your VPN is enabled if you're accessing the service from a restricted region.",
+      },
+    });
+  }
   return (
     <>
       <header>
@@ -95,6 +106,7 @@ function Genre() {
                 types={types}
               />
               <GenreSlider
+                loading={loading}
                 currentGenre={currentGenre}
                 setCurrentGenre={setCurrentGenre}
                 searchParams={searchParams}
@@ -106,7 +118,7 @@ function Genre() {
 
           <section className="mt-7">
             <div className="container mx-auto">
-              {content.length === 0 ? (
+              {!loading && content.length === 0 ? (
                 <EmptyFiltering />
               ) : (
                 <div
