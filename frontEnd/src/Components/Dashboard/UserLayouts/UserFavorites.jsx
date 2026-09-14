@@ -1,6 +1,6 @@
 import { FaHeart, FaPlay, FaTrash } from "react-icons/fa6";
 
-function DashboardFavourit() {
+function UserFavorites() {
 
   const favorites = [
     {
@@ -104,4 +104,4 @@ function DashboardFavourit() {
 
 
 
-export default DashboardFavourit
+export default UserFavorites

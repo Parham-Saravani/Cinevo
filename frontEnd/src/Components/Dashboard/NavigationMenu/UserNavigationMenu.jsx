@@ -6,11 +6,10 @@ import {
   FaArrowRightFromBracket,
 } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
-import { useState } from "react";
 import { IoSettings } from "react-icons/io5";
-import removeCookie from "../../Utilities/Cookie/removeCookie";
+import removeCookie from "../../../Utilities/Cookie/removeCookie";
 
-function NavigationMenu() {
+function UserNavigationMenu() {
   const navigate = useNavigate();
   const menuItems = [
     {
@@ -87,4 +86,4 @@ function NavigationMenu() {
   );
 }
 
-export default NavigationMenu;
+export default UserNavigationMenu;

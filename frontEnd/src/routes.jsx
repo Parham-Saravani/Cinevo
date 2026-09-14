@@ -8,14 +8,21 @@ import Search from "./Pages/Search";
 import NotFound from "./Pages/NotFound";
 import Movie from "./Pages/Movie";
 import Serie from "./Pages/Serie";
-import DashboardHome from "./Components/Dashboard/DashboardHome";
-import DashbaordWatchlist from "./Components/Dashboard/DashbaordWatchlist";
-import DashboardFavourit from "./Components/Dashboard/DashboardFavourit";
 import ErrorPage from "./Pages/ErrorPage";
-
-import DashboardLayout from "./Components/Layouts/DashboardLayout";
-import DashboardSetting from "./Components/Dashboard/DashboardSetting";
 import PrivateRoute from "./Components/PrivateRoute";
+import DashboardLayout from "./Components/Layouts/DashboardLayout";
+
+import UserDashboard from "./Components/Dashboard/DashboardHome/UserDashboard";
+import UserFavorites from "./Components/Dashboard/UserLayouts/UserFavorites";
+import UserWatchList from "./Components/Dashboard/UserLayouts/UserWatchList";
+import UserSetting from "./Components/Dashboard/UserLayouts/UserSetting";
+
+import AdminDashboard from "./Components/Dashboard/DashboardHome/AdminDashboard";
+import AdminSeries from "./Components/Dashboard/AdminLayouts/AdminSeries";
+import AdminMovies from "./Components/Dashboard/AdminLayouts/AdminMovies";
+import AdminSetting from "./Components/Dashboard/AdminLayouts/AdminSetting";
+import AdminComments from "./Components/Dashboard/AdminLayouts/AdminComments";
+import AdminUsers from "./Components/Dashboard/AdminLayouts/AdminUsers";
 
 const router = createBrowserRouter([
   {
@@ -53,10 +60,27 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <DashboardLayout />,
         children: [
-          { index: true, element: <DashboardHome /> },
-          { path: "watchlist", element: <DashbaordWatchlist /> },
-          { path: "favorites", element: <DashboardFavourit /> },
-          { path: "settings", element: <DashboardSetting /> },
+          { index: true, element: <UserDashboard /> },
+          { path: "watchlist", element: <UserWatchList /> },
+          { path: "favorites", element: <UserFavorites /> },
+          { path: "settings", element: <UserSetting /> },
+        ],
+      },
+    ],
+  },
+  {
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: "/admin",
+        element: <DashboardLayout />,
+        children: [
+          { index: true, element: <AdminDashboard /> },
+          { path: "movies", element: <AdminMovies /> },
+          { path: "series", element: <AdminSeries /> },
+          { path: "users", element: <AdminUsers /> },
+          { path: "comments", element: <AdminComments /> },
+          { path: "settings", element: <AdminSetting /> },
         ],
       },
     ],

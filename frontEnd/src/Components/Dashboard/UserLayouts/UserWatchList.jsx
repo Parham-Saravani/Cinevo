@@ -1,6 +1,6 @@
 import { FaBookmark, FaPlay, FaTrash } from "react-icons/fa6";
 
-function DashbaordWatchlist() {
+function UserWatchList() {
 
   const movies = [
     {
@@ -92,4 +92,4 @@ function DashbaordWatchlist() {
 
 
 
-export default DashbaordWatchlist
+export default UserWatchList

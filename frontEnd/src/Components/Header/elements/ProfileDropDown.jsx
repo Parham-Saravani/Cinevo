@@ -46,7 +46,7 @@ function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
         className={`${isOpen ? "opacity-100 block" : "hidden opacity-0"} absolute text-text-secondary top-full right-0 mt-2 w-56 bg-input-bg border border-input-border rounded-xl overflow-hidden`}
       >
         <Link
-          to="/dashboard"
+          to={role === "admin" ? "/admin" : "/dashboard"}
           className="block px-4 py-3 text-sm hover:bg-white/5 hover:text-text-primary transition-colors duration-300"
         >
           Profile

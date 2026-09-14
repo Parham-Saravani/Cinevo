@@ -1,7 +1,9 @@
-function DashboardHome() {
+import { FaHeart, FaBookmark } from "react-icons/fa";
+import { IoPlayCircle } from "react-icons/io5";
+
+function UserDashboard() {
   return (
     <section className="space-y-8">
-      {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">
           Overview
@@ -12,22 +14,17 @@ function DashboardHome() {
         </p>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <div className="rounded-2xl border border-input-border/40 bg-input-bg/40 p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-text-secondary">
-                Favorites
-              </p>
+              <p className="text-sm text-text-secondary">Favorites</p>
 
-              <h2 className="mt-2 text-3xl font-bold text-text-primary">
-                24
-              </h2>
+              <h2 className="mt-2 text-3xl font-bold text-text-primary">24</h2>
             </div>
 
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-              {/* Icon */}
+              <FaHeart />
             </div>
           </div>
         </div>
@@ -35,17 +32,13 @@ function DashboardHome() {
         <div className="rounded-2xl border border-input-border/40 bg-input-bg/40 p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-text-secondary">
-                Watchlist
-              </p>
+              <p className="text-sm text-text-secondary">Watchlist</p>
 
-              <h2 className="mt-2 text-3xl font-bold text-text-primary">
-                18
-              </h2>
+              <h2 className="mt-2 text-3xl font-bold text-text-primary">18</h2>
             </div>
 
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-              {/* Icon */}
+              <FaBookmark />
             </div>
           </div>
         </div>
@@ -53,25 +46,19 @@ function DashboardHome() {
         <div className="rounded-2xl border border-input-border/40 bg-input-bg/40 p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-text-secondary">
-                Watched
-              </p>
+              <p className="text-sm text-text-secondary">Watched</p>
 
-              <h2 className="mt-2 text-3xl font-bold text-text-primary">
-                42
-              </h2>
+              <h2 className="mt-2 text-3xl font-bold text-text-primary">42</h2>
             </div>
 
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-              {/* Icon */}
+              <IoPlayCircle />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-        {/* Continue Watching */}
         <div className="rounded-2xl border border-input-border/40 bg-input-bg/40 p-5 xl:col-span-2">
           <div className="flex items-center justify-between">
             <div>
@@ -83,16 +70,11 @@ function DashboardHome() {
                 Pick up where you left off.
               </p>
             </div>
-
-            {/* View All */}
           </div>
 
-          <div className="mt-5 space-y-4">
-            {/* Movie / Series items */}
-          </div>
+          <div className="mt-5 space-y-4">{/* Movie / Series items */}</div>
         </div>
 
-        {/* Recent Activity */}
         <div className="rounded-2xl border border-input-border/40 bg-input-bg/40 p-5">
           <h2 className="text-lg font-semibold text-text-primary">
             Recent Activity
@@ -102,13 +84,10 @@ function DashboardHome() {
             Your latest activity.
           </p>
 
-          <div className="mt-5 space-y-5">
-            {/* Activity items */}
-          </div>
+          <div className="mt-5 space-y-5">{/* Activity items */}</div>
         </div>
       </div>
 
-      {/* Recommendations */}
       <div className="rounded-2xl border border-input-border/40 bg-input-bg/40 p-5">
         <div>
           <h2 className="text-lg font-semibold text-text-primary">
@@ -128,6 +107,4 @@ function DashboardHome() {
   );
 }
 
-
-
-export default DashboardHome;
+export default UserDashboard;
