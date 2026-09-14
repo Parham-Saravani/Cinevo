@@ -14,8 +14,10 @@ import EmptyComments from "../Empty/EmptyComments";
 import CastLoading from "./elements/CastLoading";
 import CommentLoading from "./elements/CommentLoading";
 import SimilarContentLoading from "./elements/SliderLoading";
+import LoginToComment from "./elements/LoginToComment"
 
 function SerieDetail({
+  isLogin,
   loading,
   typeHandler,
   onStatusChange,
@@ -146,15 +148,21 @@ function SerieDetail({
       </Section>
 
       {/* <!-- Comments --> */}
+      {/* <!-- Comments --> */}
       <Section needMB={true}>
         <Content value={"Comments"} nested={true} child={"(0)"}>
           <div className="mt-3">
-            <CommentFrom
-              onStatusChange={onStatusChange}
-              onType={typeHandler}
-              newCommentMessage={newCommentMessage}
-              newCommentSpoil={newCommentSpoil}
-            />
+            {isLogin ? (
+              <CommentFrom
+                onStatusChange={onStatusChange}
+                onType={typeHandler}
+                newCommentMessage={newCommentMessage}
+                newCommentSpoil={newCommentSpoil}
+              />
+            ) : (
+              <LoginToComment />
+            )}
+
             {loading ? (
               Array.from({ length: 4 }).map((_, index) => {
                 return <CommentLoading key={index} />;

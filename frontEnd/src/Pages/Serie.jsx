@@ -4,6 +4,7 @@ import Hero from "../Components/Hero/Hero";
 import Footer from "../Components/Footer/Footer";
 import SerieDetail from "../Components/Detail/SerieDetail";
 import { baseUrl } from "../Utilities/constants";
+import getCookie from "../Utilities/Cookie/getCookie";
 
 function Serie() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function Serie() {
   const [totalComments, setTotalComments] = useState([]);
   const [newCommentMessage, setNewCommentMessage] = useState("");
   const [newCommentSpoil, setNewCommentSpoil] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const removeSpilerCover = (_id) => {
     const newComments = totalComments.map((item) => {
@@ -33,6 +35,10 @@ function Serie() {
   };
 
   useEffect(() => {
+    const token = getCookie("auth-token");
+    if (token) {
+      setIsLogin(true);
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
     document.title = `${slug
       .split("-")
@@ -89,6 +95,7 @@ function Serie() {
       />
 
       <SerieDetail
+        isLogin={isLogin}
         loading={loading}
         typeHandler={typeHandler}
         onStatusChange={onStatusChange}

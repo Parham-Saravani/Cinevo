@@ -5,6 +5,7 @@ import Footer from "../Components/Footer/Footer";
 import MovieDetail from "../Components/Detail/MovieDetail";
 import { baseUrl } from "../Utilities/constants";
 import { useNavigate } from "react-router";
+import getCookie from "../Utilities/Cookie/getCookie";
 
 function Movie() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Movie() {
   const [totalComments, setTotalComments] = useState([]);
   const [newCommentMessage, setNewCommentMessage] = useState("");
   const [newCommentSpoil, setNewCommentSpoil] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const removeSpilerCover = (_id) => {
     const newComments = totalComments.map((item) => {
@@ -34,6 +36,10 @@ function Movie() {
   };
 
   useEffect(() => {
+    const token = getCookie("auth-token");
+    if (token) {
+      setIsLogin(true);
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
     document.title = `${slug
       .split("-")
@@ -90,6 +96,7 @@ function Movie() {
         bannerDescription={movie?.bannerDescription}
       />
       <MovieDetail
+        isLogin={isLogin}
         loading={loading}
         typeHandler={typeHandler}
         onStatusChange={onStatusChange}
