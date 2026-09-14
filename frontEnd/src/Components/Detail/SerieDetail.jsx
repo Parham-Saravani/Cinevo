@@ -1,8 +1,7 @@
 import QuickInfo from "./elements/QuickInfo";
-import { useId, useState } from "react";
+import { useId } from "react";
 import Cast from "./elements/Cast";
-import Season from "./elements/Season";
-import Episodes from "./elements/Episodes";
+
 import Trailer from "./elements/Trailer";
 import ScreenShot from "./elements/ScreenShot";
 import Slider from "../Slider/Slider";
@@ -14,7 +13,9 @@ import EmptyComments from "../Empty/EmptyComments";
 import CastLoading from "./elements/CastLoading";
 import CommentLoading from "./elements/CommentLoading";
 import SimilarContentLoading from "./elements/SliderLoading";
-import LoginToComment from "./elements/LoginToComment"
+import LoginToComment from "./elements/LoginToComment";
+import SeasonSection from "./elements/SeasonSection";
+import SeasonLoading from "./elements/SeasonLoading";
 
 function SerieDetail({
   isLogin,
@@ -37,18 +38,7 @@ function SerieDetail({
   seasons,
   screenshots,
 }) {
-  // const [totalSeason] = useState(seasons);
-  // const [currentSeason, setCurrentSeason] = useState(totalSeason[0]);
-  // const [activeSeason, setActiveSeason] = useState("Season 1");
-
-  const id = useId();
-  const changeCurrentSeason = (value) => {
-    const newSeason = totalSeason.find((item) => item.title === value);
-    if (newSeason) {
-      setCurrentSeason({ ...newSeason });
-      setActiveSeason(value);
-    }
-  };
+  const id = useId();  
   return (
     <main className="animate-fadeIn mt-8 max-lg:mt-10 max-md:mt-20 max-sm:mt-25">
       <Section>
@@ -118,21 +108,11 @@ function SerieDetail({
       </Section>
 
       {/* <!-- Seasons and Episodes --> */}
-      {/* <Section>
-        <Content value={"Seasons"}>
-          <Season
-            activeSeason={activeSeason}
-            onSmash={changeCurrentSeason}
-            seasons={totalSeason}
-          />
-        </Content>
-
-        <div className="mt-5">
-          <Content value={"Episodes"}>
-            <Episodes currentSeason={currentSeason} />
-          </Content>
-        </div>
-      </Section> */}
+      {!seasons ? (
+        <SeasonLoading />
+      ) : (
+        <SeasonSection seasons={seasons} />
+      )}
 
       {/* <!-- Similar Series --> */}
       <Section>
