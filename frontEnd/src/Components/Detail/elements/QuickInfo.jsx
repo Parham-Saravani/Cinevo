@@ -5,14 +5,27 @@ import { LuClapperboard } from "react-icons/lu";
 import { FaStar, FaPlay } from "react-icons/fa6";
 import InfoItemLoading from "./InfoItemLoading";
 
-function QuickInfo({ releaseYear, duration, genres, rating, director }) {
+function QuickInfo({
+  loading,
+  releaseYear,
+  duration,
+  genres,
+  rating,
+  director,
+}) {
   return (
     <div className="max-h-67 max-lg:order-1 col-span-12 flex flex-col lg:col-span-4 xl:col-span-3 bg-linear-to-br from-cta-primary/5 via-transparent to-cta-primary/5 relative border border-white/20 backdrop-blur-2xl rounded-xl px-5 py-6 mt-4">
       <h2 className="flex gap-2 items-center text-text-primary font-semibold text-2xl">
         Quick Info
       </h2>
       <div className="mt-2 text-[12px] max-lg:text-sm max-sm:text-xs">
-        {releaseYear ? (
+        {loading ? (
+          <InfoItemLoading
+            icon={<FaCalendar className="text-cta-primary size-5" />}
+          >
+            Release Date
+          </InfoItemLoading>
+        ) : releaseYear ? (
           <InfoItem
             icon={<FaCalendar className="text-cta-primary size-5" />}
             value={releaseYear}
@@ -20,14 +33,21 @@ function QuickInfo({ releaseYear, duration, genres, rating, director }) {
             Release Date
           </InfoItem>
         ) : (
-          <InfoItemLoading
+          <InfoItem
             icon={<FaCalendar className="text-cta-primary size-5" />}
+            value={"NA"}
           >
             Release Date
-          </InfoItemLoading>
+          </InfoItem>
         )}
 
-        {duration ? (
+        {loading ? (
+          <InfoItemLoading
+            icon={<FaClock className="text-cta-primary size-5" />}
+          >
+            Duration
+          </InfoItemLoading>
+        ) : duration ? (
           <InfoItem
             icon={<FaClock className="text-cta-primary size-5" />}
             value={TimeFormatter(duration)}
@@ -35,13 +55,21 @@ function QuickInfo({ releaseYear, duration, genres, rating, director }) {
             Duration
           </InfoItem>
         ) : (
-          <InfoItemLoading
+          <InfoItem
             icon={<FaClock className="text-cta-primary size-5" />}
+            value={"NA"}
           >
             Duration
-          </InfoItemLoading>
+          </InfoItem>
         )}
-        {genres ? (
+
+        {loading ? (
+          <InfoItemLoading
+            icon={<LuClapperboard className="text-cta-primary size-5" />}
+          >
+            Genres
+          </InfoItemLoading>
+        ) : genres.lenght !== 0 ? (
           <InfoItem
             icon={<LuClapperboard className="text-cta-primary size-5" />}
             value={genres.slice(0, 2).map((item, index) => (
@@ -56,13 +84,21 @@ function QuickInfo({ releaseYear, duration, genres, rating, director }) {
             Genres
           </InfoItem>
         ) : (
-          <InfoItemLoading
+          <InfoItem
             icon={<LuClapperboard className="text-cta-primary size-5" />}
+            value={"NA"}
           >
             Genres
-          </InfoItemLoading>
+          </InfoItem>
         )}
-        {rating ? (
+
+        {loading ? (
+          <InfoItemLoading
+            icon={<FaStar className="text-cta-primary size-5" />}
+          >
+            Rating
+          </InfoItemLoading>
+        ) : rating ? (
           <InfoItem
             icon={<FaStar className="text-cta-primary size-5" />}
             value={`${rating}/10`}
@@ -70,14 +106,21 @@ function QuickInfo({ releaseYear, duration, genres, rating, director }) {
             Rating
           </InfoItem>
         ) : (
-          <InfoItemLoading
+          <InfoItem
             icon={<FaStar className="text-cta-primary size-5" />}
+            value={"NA"}
           >
             Rating
-          </InfoItemLoading>
+          </InfoItem>
         )}
 
-        {director ? (
+        {loading ? (
+          <InfoItemLoading
+            icon={<FaUser className="text-cta-primary size-5" />}
+          >
+            Director
+          </InfoItemLoading>
+        ) : director ? (
           <InfoItem
             icon={<FaUser className="text-cta-primary size-5" />}
             value={director}
@@ -85,11 +128,12 @@ function QuickInfo({ releaseYear, duration, genres, rating, director }) {
             Director
           </InfoItem>
         ) : (
-          <InfoItemLoading
+          <InfoItem
             icon={<FaUser className="text-cta-primary size-5" />}
+            value={"NA"}
           >
             Director
-          </InfoItemLoading>
+          </InfoItem>
         )}
       </div>
     </div>

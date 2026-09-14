@@ -1,4 +1,4 @@
-import SeasonSlider from "./SeasonSlider";
+import Season from "./Season";
 import Episodes from "./Episodes";
 import { useState } from "react";
 import Section from "../Section";
@@ -19,7 +19,7 @@ function SeasonSection({ seasons }) {
   return (
     <Section>
       <Content value={"Seasons"}>
-        <SeasonSlider
+        <Season
           activeSeason={activeSeason}
           onSmash={changeCurrentSeason}
           seasons={totalSeason}

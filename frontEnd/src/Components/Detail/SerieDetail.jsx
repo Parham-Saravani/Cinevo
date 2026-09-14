@@ -38,7 +38,7 @@ function SerieDetail({
   seasons,
   screenshots,
 }) {
-  const id = useId();  
+  const id = useId();
   return (
     <main className="animate-fadeIn mt-8 max-lg:mt-10 max-md:mt-20 max-sm:mt-25">
       <Section>
@@ -73,6 +73,7 @@ function SerieDetail({
           </div>
 
           <QuickInfo
+            loading={loading}
             releaseYear={releaseYear}
             duration={duration}
             genres={genres}
@@ -108,11 +109,7 @@ function SerieDetail({
       </Section>
 
       {/* <!-- Seasons and Episodes --> */}
-      {!seasons ? (
-        <SeasonLoading />
-      ) : (
-        <SeasonSection seasons={seasons} />
-      )}
+      {!seasons ? <SeasonLoading /> : <SeasonSection seasons={seasons} />}
 
       {/* <!-- Similar Series --> */}
       <Section>
