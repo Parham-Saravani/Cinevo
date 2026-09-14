@@ -48,9 +48,9 @@ function Genre() {
           fetch(`${baseUrl}/api/discover/types`),
           fetch(`${baseUrl}/api/discover/year`),
         ]);
-        // const [genres, allContent, types, year] = await Promise.all(
-        //   response.map((res) => res.json()),
-        // );
+        const [genres, allContent, types, year] = await Promise.all(
+          response.map((res) => res.json()),
+        );
         setContent([...allContent]);
         setGenres([...genres]);
         setYears([...year]);
