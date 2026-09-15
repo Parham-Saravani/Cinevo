@@ -24,7 +24,9 @@
   background: transparent;
 }
 
-
+.hide-scroll::-webkit-scrollbar {
+  width: 0 !important;
+}
 /* Home Page */
 .menu-item-active::before {
   content: "";
@@ -351,8 +353,6 @@
   --animate-fadeInUp: fadeInUp 500ms ease-in;
   --animate-fadeOut: fadeOut 300ms ease-out;
   --animate-loader: loading 600ms infinite linear alternate;
-
-
 }
 
 @utility container {

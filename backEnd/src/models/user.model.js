@@ -5,6 +5,28 @@ const userSchema = new mongoose.Schema(
     role: { type: String, enum: ["admin", "user"], default: "user" },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    favorites: [
+      {
+        title: String,
+        slug: String,
+        poster: String,
+        type: String,
+        rating: String,
+        genres: [String],
+        releaseYear: String,
+      },
+    ],
+    watchlist: [
+      {
+        title: String,
+        slug: String,
+        poster: String,
+        type: String,
+        rating: String,
+        genres: [String],
+        releaseYear: String,
+      },
+    ],
     imageUrl: { type: String, default: null },
     isLogin: { type: Boolean, default: true },
   },

@@ -3,7 +3,7 @@ import AdminNavigationMenu from "../Dashboard/NavigationMenu/AdminNavigationMenu
 import { useEffect, useState } from "react";
 import getCookie from "../../Utilities/Cookie/getCookie";
 import UserNavigationMenu from "../Dashboard/NavigationMenu/UserNavigationMenu";
-
+import { baseUrl } from "../../Utilities/constants";
 function DashboardLayout() {
   const [role, setRole] = useState("");
 
@@ -22,17 +22,16 @@ function DashboardLayout() {
           });
           if (!response.ok) throw Error();
           const data = await response.json();
-          console.log(data);
           setRole(data.role);
         } catch (error) {}
       })();
     }
-    [];
-  } , []);
+  }, []);
+  
   return (
-    <div className="relative flex h-screen animate-fadeIn">
-      {role === 'admin' ? <AdminNavigationMenu/> : <UserNavigationMenu/>}
-      <main className="ml-66 mr-6 w-full overflow-auto py-5 custom-scroll">
+    <div className="relative max-md:px-5 flex h-screen animate-fadeIn">
+      {role === "admin" ? <AdminNavigationMenu /> : <UserNavigationMenu />}
+      <main className="ml-66 max-md:ml-0 mr-6 max-md:mr-0 w-full overflow-auto py-5 hide-scroll">
         <Outlet />
       </main>
     </div>
