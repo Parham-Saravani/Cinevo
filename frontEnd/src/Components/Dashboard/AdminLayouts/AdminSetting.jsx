@@ -1,6 +1,6 @@
 function AdminSettings() {
   return (
-    <section>
+    <section className="animate-fadeIn">
       <h1 className="text-3xl font-bold text-text-primary">
         Platform Settings
       </h1>

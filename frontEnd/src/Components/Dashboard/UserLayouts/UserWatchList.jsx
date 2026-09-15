@@ -1,7 +1,7 @@
-import { FaBookmark, FaPlay, FaTrash } from "react-icons/fa6";
+import { FaPlay, FaTrash , FaStar } from "react-icons/fa6";
+import { Link } from "react-router";
 
 function UserWatchList() {
-
   const movies = [
     {
       id: 1,
@@ -46,9 +46,11 @@ function UserWatchList() {
   ];
 
   return (
-    <section>
+    <section className="animate-fadeIn">
       <div>
-        <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">Watchlist</h1>
+        <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">
+          Watchlist
+        </h1>
 
         <p className="mt-1 text-sm text-text-secondary">
           Movies and series you've saved to watch later.
@@ -59,34 +61,34 @@ function UserWatchList() {
         {movies.map((movie) => (
           <article
             key={movie.id}
-            className="group h-full w-fit overflow-hidden rounded-xl border border-input-border/40 bg-input-bg/40"
+            className="h-full w-fit overflow-hidden rounded-xl border border-input-border/40 bg-input-bg/40"
           >
-            <div className="relative overflow-hidden">
+            <Link
+              to={`/movie/the-dark-knight`}
+              className="cursor-pointer relative overflow-hidden"
+            >
               <img
                 src={movie.poster}
                 alt={movie.title}
-                className="object-cover transition duration-300 group-hover:scale-105"
+                className="object-cover transition duration-300 hover:scale-105"
               />
 
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition group-hover:opacity-100">
-                <button className="flex h-11 w-11 items-center justify-center rounded-full bg-primary">
-                  <FaPlay />
-                </button>
-              </div>
-            </div>
+            </Link>
 
             <div className="p-4">
-              <h2 className="truncate font-semibold text-text-primary">{movie.title}</h2>
+              <h2 className="truncate font-semibold text-text-primary">
+                {movie.title}
+              </h2>
 
-              <div className="mt-2 flex items-center justify-between text-xs text-text-secondary">
+              <div className="flex items-center justify-between text-xs text-text-secondary">
                 <span>
                   {movie.type} • {movie.year}
                 </span>
 
-                <span>★ {movie.rating}</span>
+                <span className="flex items-center gap-1 bg-yellow-500/20 rounded-md text-yellow-600 px-2 py-1"><FaStar/>{movie.rating}</span>
               </div>
 
-              <button className="cursor-pointer mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-input-border/50 py-2 text-xs text-text-secondary transition-colors duration-200 hover:border-red-600/40 hover:text-red-500">
+              <button className="cursor-pointer mt-2.5 flex w-full items-center justify-center gap-2 rounded-lg border border-input-border/50 py-2 text-xs text-text-secondary transition-colors duration-200 hover:border-red-600/40 hover:text-red-500">
                 <FaTrash />
                 Remove
               </button>
@@ -98,6 +100,4 @@ function UserWatchList() {
   );
 }
 
-
-
-export default UserWatchList
+export default UserWatchList;

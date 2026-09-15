@@ -3,7 +3,7 @@ import { IoPlayCircle } from "react-icons/io5";
 
 function UserDashboard() {
   return (
-    <section className="space-y-8">
+    <section className="space-y-8 animate-fadeIn">
       <div>
         <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">
           Overview
@@ -23,8 +23,8 @@ function UserDashboard() {
               <h2 className="mt-2 text-3xl font-bold text-text-primary">24</h2>
             </div>
 
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-              <FaHeart />
+            <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-red-500/10 items-center justify-center rounded-xl bg-primary/10">
+              <FaHeart className="text-red-600 text-2xl max-sm:text-xl"/>
             </div>
           </div>
         </div>
@@ -37,8 +37,8 @@ function UserDashboard() {
               <h2 className="mt-2 text-3xl font-bold text-text-primary">18</h2>
             </div>
 
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-              <FaBookmark />
+            <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-blue-500/10 items-center justify-center rounded-xl bg-primary/10">
+              <FaBookmark className="text-blue-600 text-2xl max-sm:text-xl"/>
             </div>
           </div>
         </div>
@@ -51,8 +51,8 @@ function UserDashboard() {
               <h2 className="mt-2 text-3xl font-bold text-text-primary">42</h2>
             </div>
 
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-              <IoPlayCircle />
+            <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-yellow-500/10 items-center justify-center rounded-xl bg-primary/10">
+              <IoPlayCircle className="text-yellow-600 text-2xl max-sm:text-xl"/>
             </div>
           </div>
         </div>

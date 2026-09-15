@@ -20,7 +20,7 @@ function NotFound({ children }) {
         onClick={() => {
           navigate("/", { replace: true });
         }}
-        className="font-semibold mt-5 w-50 h-13 rounded-xl bg-cta-primary hover:bg-cta-primary/50 text-text-primary transition-colors duration-300 cursor-pointer reload-btn"
+        className="font-semibold mt-5 w-50 h-13 rounded-xl bg-cta-primary hover:bg-cta-primary/70 text-text-primary transition-colors duration-300 cursor-pointer reload-btn"
       >
         Go Home
       </button>

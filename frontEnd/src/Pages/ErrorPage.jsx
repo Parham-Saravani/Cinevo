@@ -27,7 +27,7 @@ function ErrorPage() {
 
         <div className="mt-7 flex justify-center gap-3">
           <button
-            className="bg-cta-primary/70 w-60 h-13 cursor-pointer transition-colors duration-300 hover:bg-cta-primary/50 text-text-primary rounded-xl"
+            className="bg-cta-primary w-60 h-13 cursor-pointer transition-colors duration-300 hover:bg-cta-primary/70 text-text-primary rounded-xl"
             onClick={() => navigate(-1, { replace: true })}
           >
             Go Back

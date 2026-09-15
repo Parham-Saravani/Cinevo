@@ -120,9 +120,12 @@ function Signup() {
 
         <button
           disabled={isLoading}
-          onClick={signupHandler}
+          onClick={(event) => {
+            event.preventDefault();
+            signupHandler();
+          }}
           className={`${isLoading ? "flex justify-center items-center" : ""} animate-fadeInUp font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}
-          type="button"
+          type="submit"
         >
           {isLoading ? (
             <div className="rounded-full aspect-square w-4 h-4 animate-loader"></div>

@@ -1,7 +1,7 @@
-import { FaHeart, FaPlay, FaTrash } from "react-icons/fa6";
+import { FaHeart, FaPlay, FaTrash, FaStar } from "react-icons/fa6";
+import { Link } from "react-router";
 
 function UserFavorites() {
-
   const favorites = [
     {
       id: 1,
@@ -9,7 +9,7 @@ function UserFavorites() {
       type: "Series",
       year: 2008,
       rating: 9.5,
-      poster: "/images/breaking-bad.jpg",
+      poster: "https://ik.imagekit.io/Cinevo/Posters/ThePassionOfTheChrist.jpg",
       genres: ["Crime", "Drama"],
     },
     {
@@ -18,7 +18,7 @@ function UserFavorites() {
       type: "Movie",
       year: 2008,
       rating: 9.0,
-      poster: "/images/dark-knight.jpg",
+      poster: "https://ik.imagekit.io/Cinevo/Posters/ThePassionOfTheChrist.jpg",
       genres: ["Action", "Crime"],
     },
     {
@@ -27,15 +27,17 @@ function UserFavorites() {
       type: "Movie",
       year: 2014,
       rating: 8.7,
-      poster: "/images/interstellar.jpg",
+      poster: "https://ik.imagekit.io/Cinevo/Posters/ThePassionOfTheChrist.jpg",
       genres: ["Sci-Fi", "Drama"],
     },
   ];
 
   return (
-    <section>
+    <section className="animate-fadeIn">
       <div>
-        <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">Favorites</h1>
+        <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">
+          Favorites
+        </h1>
 
         <p className="mt-1 text-sm text-text-secondary">
           Your favorite movies and series in one place.
@@ -51,20 +53,24 @@ function UserFavorites() {
             <img
               src={movie.poster}
               alt={movie.title}
-              className="h-32 w-22 rounded-lg object-cover"
+              className="h-34 w-25 rounded-lg object-cover"
             />
 
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h2 className="font-semibold">{movie.title}</h2>
+                  <h2 className="font-semibold text-text-primary">
+                    {movie.title}
+                  </h2>
 
                   <p className="mt-1 text-xs text-text-secondary">
                     {movie.type} • {movie.year}
                   </p>
                 </div>
 
-                <FaHeart className="shrink-0 text-primary" />
+                <span className="bg-red-500/10 rounded-md w-9 h-8.5 flex items-center justify-center">
+                  <FaHeart className="text-red-600 text-primary" />
+                </span>
               </div>
 
               <div className="mt-3 flex flex-wrap gap-2">
@@ -79,17 +85,17 @@ function UserFavorites() {
               </div>
 
               <div className="mt-auto flex items-center justify-between pt-4">
-                <span className="text-xs text-text-secondary">
-                  ★ {movie.rating}
+                <span className="flex items-center bg-yellow-500/20 text-[13px] text-yellow-600 rounded-md px-2 py-1">
+                  <FaStar className="text-[13px] mr-1" /> {movie.rating}
                 </span>
 
                 <div className="flex gap-2">
-                  <button className="flex items-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs">
+                  <Link to={`/movie/the-passion-of-the-christ`} className="flex items-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs border border-input-border/50 text-text-secondary cursor-pointer hover:text-text-secondary/70 hover:border-input-border/70 transition-colors duration-300">
                     <FaPlay />
                     Watch
-                  </button>
+                  </Link>
 
-                  <button className="rounded-lg border border-input-border/50 px-3 py-2 text-xs text-text-secondary hover:text-red-400">
+                  <button className="rounded-lg border border-input-border/50 px-3 py-2 text-xs text-text-secondary hover:text-red-600 hover:border-red-600 transition-colors duration-200 cursor-pointer">
                     <FaTrash />
                   </button>
                 </div>
@@ -102,6 +108,4 @@ function UserFavorites() {
   );
 }
 
-
-
-export default UserFavorites
+export default UserFavorites;
