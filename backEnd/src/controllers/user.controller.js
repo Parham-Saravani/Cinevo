@@ -4,6 +4,20 @@ import { createToken, decompressToken } from "../utilities/token.js";
 
 const emailRegex = /[a-zA-Z1-9]+@[a-zA-Z]+\.[a-zA-Z]+/;
 
+const takeAllUsers = async (req, res) => {
+  const data = await User.find(
+    {},
+    {
+      _id: true,
+      username: true,
+      role: true,
+      email: true,
+      createdAt: true,
+    },
+  );
+  res.json(data);
+};
+
 const registerNewUser = async (req, res) => {
   const {
     username: userUsername,
@@ -101,4 +115,10 @@ const takeUserData = async (req, res) => {
     res.status(400).json({ message: "INVALID_DATA" });
   }
 };
-export { registerNewUser, loginOperation, logoutHandler, takeUserData };
+export {
+  registerNewUser,
+  loginOperation,
+  logoutHandler,
+  takeUserData,
+  takeAllUsers,
+};

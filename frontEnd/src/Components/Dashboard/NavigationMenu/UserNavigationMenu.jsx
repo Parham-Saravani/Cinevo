@@ -48,7 +48,7 @@ function UserNavigationMenu() {
       </button>
 
       <aside
-        className={`${isOpen ? "left-0! opacity-100" : "-left-60 opacity-0"} max-md:z-20 max-md:-left-60 md:left-0! md:opacity-100! transition-all duration-300 absolute left-0 h-full w-60 border-l border-input-border/40 bg-input-bg px-4 py-6`}
+        className={`${isOpen ? "left-0! opacity-100" : "-left-60 opacity-0"} max-md:z-20 max-md:-left-60 md:left-0! md:opacity-100! transition-all duration-300 absolute left-0 h-full w-60 max-lg:w-55 border-l border-input-border/40 bg-input-bg px-4 py-6`}
       >
         <div className="mb-8 px-3">
           <h2 className="text-xl font-bold text-text-primary">Dashboard</h2>

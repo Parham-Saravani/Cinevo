@@ -36,8 +36,6 @@ function Header() {
           });
           if (!response.ok) throw Error();
           const data = await response.json();
-          console.log(data);
-
           if (data.message === "INVALID_TOKEN") {
             throw Error("Invalid token. Please log in again.");
           } else if (data.message === "INVALID_DATA") {

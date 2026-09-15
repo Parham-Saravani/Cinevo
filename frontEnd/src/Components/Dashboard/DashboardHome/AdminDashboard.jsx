@@ -4,11 +4,11 @@ import { MdMovie } from "react-icons/md";
 function AdminDashboard() {
   return (
     <section className="animate-fadeIn">
-      <h1 className="text-3xl font-bold text-text-primary">
+      <h1 className="text-3xl max-sm:text-2xl font-bold text-text-primary">
         Dashboard Overview
       </h1>
 
-      <p className="mt-2 text-text-secondary">
+      <p className="mt-2 max-sm:text-sm text-text-secondary">
         Monitor platform activity and content statistics.
       </p>
 
