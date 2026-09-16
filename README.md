@@ -299,13 +299,10 @@ Cinevo was built to practice and demonstrate:
 
 ## 🔮 Future Improvements
 
-* [ ] Advanced search
-* [ ] Advanced filtering
 * [ ] Rating system
 * [ ] Video player
 * [ ] Infinite scrolling
 * [ ] Performance optimization
-* [ ] Production deployment
 
 ---
 
