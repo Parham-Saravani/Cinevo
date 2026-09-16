@@ -58,10 +58,6 @@ https://cinevo-iota.vercel.app
 
 ![Cinevo Movie Page](Images/Movie-Page.png)
 
-### Serie Page
-
-![Cinevo Serie Page](Images/Serie-Page.png)
-
 ### Admin Dashboard
 
 ## ![Cindevo Admin Dashboard](Images/Admin-Dashboard.png)
