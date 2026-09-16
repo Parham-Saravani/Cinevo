@@ -70,32 +70,43 @@ https://cinevo-iota.vercel.app
 * Browse movies and TV series
 * Explore trending content
 * Discover new releases
-* Browse popular movies and series
+* Browse popular content
 * Personalized recommendations
 * Dynamic hero banners
-* Movie and TV series detail pages
+* Detailed movie and TV series pages
 * TV series seasons and episodes
-* Genre-based content filtering
+* Genre-based filtering
+* Search functionality
 
 ### 👤 User Features
 
-* User authentication
-* User profile
-* Favorites
-* Watchlist
-* Account information
-* Protected routes
+* JWT Authentication
+* User Profiles
+* Favorites System
+* Watchlist System
+* Protected Routes
+* Account Management
+
+### 🛡️ Admin Dashboard
+
+* Role-Based Authorization
+* Admin Protected Routes
+* Users Management
+* Movies Management
+* Series Management
+* Comments Moderation
+* Dashboard Statistics
 
 ### ⚡ User Experience
 
-* Responsive design
-* Dark-themed modern UI
-* Loading states
-* Error states
-* Empty states
-* Toast notifications with React Hot Toast
-* Responsive content sliders
-* Form validation with Zod
+* Responsive Design
+* Dark-Themed Modern UI
+* Loading States
+* Error States
+* Empty States
+* Toast Notifications
+* Responsive Sliders
+* Client-Side Validation with Zod
 
 ---
 
@@ -164,6 +175,16 @@ User forms require validation before submitting data to the backend.
 Zod is used to define validation schemas and validate user input on the client side.
 
 This keeps validation rules centralized and provides clearer feedback when submitted data does not meet the expected format.
+
+---
+
+### 🛡️ Implementing Role-Based Authorization
+
+The application contains both public and protected sections, including a dedicated admin dashboard.
+
+Role-based authorization was implemented on frontend.
+
+Protected admin routes validate user permissions before rendering dashboard content.
 
 ---
 
@@ -275,25 +296,6 @@ Cinevo is designed to provide a responsive experience across:
 * 💻 Laptop
 * 📱 Tablet
 * 📲 Mobile
-
----
-
-## 🎯 Project Goals
-
-Cinevo was built to practice and demonstrate:
-
-* Modern React development
-* Component-based architecture
-* React Router and nested routing
-* REST API integration
-* Asynchronous data fetching
-* Form validation with Zod
-* Authentication and protected routes
-* State management with React Hooks
-* Reusable component design
-* Responsive UI development
-* Error and loading state handling
-* Full-stack application development
 
 ---
 
