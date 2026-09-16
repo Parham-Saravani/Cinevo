@@ -38,6 +38,7 @@ function PrivateRoute() {
       })();
     } else {
       removeCookie("auth-token");
+      navigate("/auth", { raplace: true });
     }
   }, []);
   return <Outlet />;

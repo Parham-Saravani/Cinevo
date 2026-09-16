@@ -49,6 +49,7 @@ function AdminRoute() {
       })();
     } else {
       removeCookie("auth-token");
+      navigate("/auth", { raplace: true });
     }
   }, []);
   return <Outlet />;
