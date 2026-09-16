@@ -54,6 +54,13 @@ https://cinevo-iota.vercel.app
 
 ![Cinevo Home](Images/Home.png)
 
+### Movie Page
+
+![Cinevo Movie Page](Images/Movie-Page.png)
+
+### Serie Page
+
+![Cinevo Serie Page](Images/Serie-Page.png)
 ---
 
 ## ✨ Features
