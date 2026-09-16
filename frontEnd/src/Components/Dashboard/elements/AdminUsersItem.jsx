@@ -7,7 +7,7 @@ function AdminUsers({ _id, username, email, role, createdAt }) {
       <td className="py-3 px-3">{username}</td>
       <td className="py-3 px-3 truncate max-w-40">{email}</td>
       <td className="py-3 px-3 text-center">
-        <span className="bg-cta-primary/10 rounded-xl py-1 px-2 text-cta-primary">
+        <span className={`${role === 'admin' ? 'bg-cta-primary/10 text-cta-primary' : 'bg-blue-500/10 text-blue-500'} rounded-xl py-1 px-2 `}>
           {role}
         </span>
       </td>

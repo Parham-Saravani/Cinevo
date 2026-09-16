@@ -1,5 +1,8 @@
 import Serie from "../models/series.model.js";
 import Movie from "../models/movie.model.js";
+import User from "../models/user.model.js";
+import Comment from "../models/comment.model.js";
+
 const takeSimilarContent = async (req, res) => {
   const dataSlug = req.params.slug;
   const [movie, series] = await Promise.all([
@@ -390,6 +393,18 @@ const searchOnContent = async (req, res) => {
   );
   res.json([...movies, ...series]);
 };
+const countTotalContent = async (req, res) => {
+  const moviesCount = await Movie.countDocuments({});
+  const seriesCount = await Serie.countDocuments({});
+  const usersCount = await User.countDocuments({});
+  const commentsCount = await Comment.countDocuments({});
+  res.json({
+    movies: moviesCount,
+    series: seriesCount,
+    users: usersCount,
+    comments: commentsCount,
+  });
+};
 export {
   takeSimilarContent,
   takeTrendContent,
@@ -402,4 +417,5 @@ export {
   takeAllYears,
   filtering,
   searchOnContent,
+  countTotalContent,
 };

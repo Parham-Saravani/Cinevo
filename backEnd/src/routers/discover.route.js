@@ -11,6 +11,7 @@ import {
   takeAllGenres,
   filtering,
   searchOnContent,
+  countTotalContent,
 } from "../controllers/discover.controller.js";
 const router = Router();
 
@@ -23,6 +24,7 @@ router.get("/genre", takeAllGenres);
 router.get("/types", takeAllTypes);
 router.get("/year", takeAllYears);
 router.get("/all", takeAllContent);
+router.get("/content/count", countTotalContent);
 router.get("/similar/:slug", takeSimilarContent);
 router.get("/search/:value", searchOnContent);
 export default router;

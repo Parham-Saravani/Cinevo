@@ -235,6 +235,13 @@
   opacity: 0.6;
 }
 
+.featured-checkbox:has(input:checked){
+  @apply bg-cta-primary text-text-primary
+}
+.trending-checkbox:has(input:checked){
+  @apply bg-cta-primary text-text-primary
+}
+
 /* Fonts */
 @font-face {
   font-family: "Poppins";

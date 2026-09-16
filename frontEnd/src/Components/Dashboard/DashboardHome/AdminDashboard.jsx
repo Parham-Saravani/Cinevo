@@ -1,7 +1,34 @@
+import { useEffect, useState } from "react";
 import { FaUsers, FaFilm, FaComments } from "react-icons/fa6";
 import { MdMovie } from "react-icons/md";
+import { baseUrl } from "../../../Utilities/constants";
 
 function AdminDashboard() {
+  const [totalData, setTotalData] = useState({
+    movies: null,
+    series: null,
+    users: null,
+    comments: null,
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/discover/content/count`);
+        if (!response.ok) {
+          console.log(response);
+          return;
+        }
+        const data = await response.json();
+        setTotalData({
+          movies: data.movies,
+          series: data.series,
+          users: data.users,
+          comments: data.comments,
+        });
+      } catch (error) {}
+    })();
+  }, []);
   return (
     <section className="animate-fadeIn">
       <h1 className="text-3xl max-sm:text-2xl font-bold text-text-primary">
@@ -16,7 +43,13 @@ function AdminDashboard() {
         <div className="flex justify-between items-center rounded-xl bg-input-bg p-5">
           <div>
             <h3 className="text-text-secondary">Movies</h3>
-            <p className="mt-2 text-3xl font-bold text-text-primary">120</p>
+            {totalData.movies !== null ? (
+              <p className="mt-2 text-3xl font-bold text-text-primary">
+                {totalData.movies}
+              </p>
+            ) : (
+              <div className="bg-gray-900 animate-pulse w-25 h-8 rounded-xl"></div>
+            )}
           </div>
           <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-blue-500/10 items-center justify-center rounded-xl bg-primary/10">
             <MdMovie className="text-blue-600 text-2xl max-sm:text-xl" />
@@ -26,7 +59,13 @@ function AdminDashboard() {
         <div className="flex items-center justify-between rounded-xl bg-input-bg p-5">
           <div>
             <h3 className="text-text-secondary">Series</h3>
-            <p className="mt-2 text-3xl font-bold text-text-primary">80</p>
+            {totalData.series !== null ? (
+              <p className="mt-2 text-3xl font-bold text-text-primary">
+                {totalData.series}
+              </p>
+            ) : (
+              <div className="bg-gray-900 animate-pulse w-25 h-8 rounded-xl"></div>
+            )}
           </div>
           <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-yellow-500/10 items-center justify-center rounded-xl bg-primary/10">
             <FaFilm className="text-yellow-600 text-2xl max-sm:text-xl" />
@@ -36,7 +75,13 @@ function AdminDashboard() {
         <div className="flex items-center justify-between rounded-xl bg-input-bg p-5">
           <div>
             <h3 className="text-text-secondary">Users</h3>
-            <p className="mt-2 text-3xl font-bold text-text-primary">340</p>
+            {totalData.users !== null ? (
+              <p className="mt-2 text-3xl font-bold text-text-primary">
+                {totalData.users}
+              </p>
+            ) : (
+              <div className="bg-gray-900 animate-pulse w-25 h-8 rounded-xl"></div>
+            )}
           </div>
           <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-pink-500/10 items-center justify-center rounded-xl bg-primary/10">
             <FaUsers className="text-pink-600 text-2xl max-sm:text-xl" />
@@ -46,7 +91,13 @@ function AdminDashboard() {
         <div className="flex items-center justify-between rounded-xl bg-input-bg p-5">
           <div>
             <h3 className="text-text-secondary">Comments</h3>
-            <p className="mt-2 text-3xl font-bold text-text-primary">1520</p>
+            {totalData.comments !== null ? (
+              <p className="mt-2 text-3xl font-bold text-text-primary">
+                {totalData.comments}
+              </p>
+            ) : (
+              <div className="bg-gray-900 animate-pulse w-25 h-8 rounded-xl"></div>
+            )}
           </div>
           <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-purple-500/10 items-center justify-center rounded-xl bg-primary/10">
             <FaComments className="text-purple-600 text-2xl max-sm:text-xl" />

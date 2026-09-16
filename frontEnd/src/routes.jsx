@@ -10,6 +10,7 @@ import Movie from "./Pages/Movie";
 import Serie from "./Pages/Serie";
 import ErrorPage from "./Pages/ErrorPage";
 import PrivateRoute from "./Components/PrivateRoute";
+import AdminRoute from "./Components/AdminRoute";
 import DashboardLayout from "./Components/Layouts/DashboardLayout";
 
 import UserDashboard from "./Components/Dashboard/DashboardHome/UserDashboard";
@@ -69,7 +70,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <PrivateRoute />,
+    element: <AdminRoute />,
     children: [
       {
         path: "/admin",
