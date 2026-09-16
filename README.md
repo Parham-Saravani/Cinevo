@@ -61,41 +61,44 @@ https://cinevo-iota.vercel.app
 ### Serie Page
 
 ![Cinevo Serie Page](Images/Serie-Page.png)
----
+
+### Admin Dashboard
+
+## ![Cindevo Admin Dashboard](Images/Admin-Dashboard.png)
 
 ## ✨ Features
 
 ### 🎬 Content Discovery
 
-* Browse movies and TV series
-* Explore trending content
-* Discover new releases
-* Browse popular movies and series
-* Personalized recommendations
-* Dynamic hero banners
-* Movie and TV series detail pages
-* TV series seasons and episodes
-* Genre-based content filtering
+- Browse movies and TV series
+- Explore trending content
+- Discover new releases
+- Browse popular movies and series
+- Personalized recommendations
+- Dynamic hero banners
+- Movie and TV series detail pages
+- TV series seasons and episodes
+- Genre-based content filtering
 
 ### 👤 User Features
 
-* User authentication
-* User profile
-* Favorites
-* Watchlist
-* Account information
-* Protected routes
+- User authentication
+- User profile
+- Favorites
+- Watchlist
+- Account information
+- Protected routes
 
 ### ⚡ User Experience
 
-* Responsive design
-* Dark-themed modern UI
-* Loading states
-* Error states
-* Empty states
-* Toast notifications with React Hot Toast
-* Responsive content sliders
-* Form validation with Zod
+- Responsive design
+- Dark-themed modern UI
+- Loading states
+- Error states
+- Empty states
+- Toast notifications with React Hot Toast
+- Responsive content sliders
+- Form validation with Zod
 
 ---
 
@@ -105,17 +108,17 @@ The frontend is built with React and organized into reusable components and feat
 
 The application uses:
 
-* React components and props
-* React Hooks
-* React Router
-* Nested routes and layouts
-* Protected routes
-* Reusable UI components
-* Controlled forms
-* Client-side validation with Zod
-* Asynchronous data fetching
-* Loading, error, and empty states
-* Responsive UI with Tailwind CSS
+- React components and props
+- React Hooks
+- React Router
+- Nested routes and layouts
+- Protected routes
+- Reusable UI components
+- Controlled forms
+- Client-side validation with Zod
+- Asynchronous data fetching
+- Loading, error, and empty states
+- Responsive UI with Tailwind CSS
 
 ---
 
@@ -271,10 +274,10 @@ The frontend will then be available through the local Vite development server.
 
 Cinevo is designed to provide a responsive experience across:
 
-* 🖥️ Desktop
-* 💻 Laptop
-* 📱 Tablet
-* 📲 Mobile
+- 🖥️ Desktop
+- 💻 Laptop
+- 📱 Tablet
+- 📲 Mobile
 
 ---
 
@@ -282,30 +285,30 @@ Cinevo is designed to provide a responsive experience across:
 
 Cinevo was built to practice and demonstrate:
 
-* Modern React development
-* Component-based architecture
-* React Router and nested routing
-* REST API integration
-* Asynchronous data fetching
-* Form validation with Zod
-* Authentication and protected routes
-* State management with React Hooks
-* Reusable component design
-* Responsive UI development
-* Error and loading state handling
-* Full-stack application development
+- Modern React development
+- Component-based architecture
+- React Router and nested routing
+- REST API integration
+- Asynchronous data fetching
+- Form validation with Zod
+- Authentication and protected routes
+- State management with React Hooks
+- Reusable component design
+- Responsive UI development
+- Error and loading state handling
+- Full-stack application development
 
 ---
 
 ## 🔮 Future Improvements
 
-* [ ] Advanced search
-* [ ] Advanced filtering
-* [ ] Rating system
-* [ ] Video player
-* [ ] Infinite scrolling
-* [ ] Performance optimization
-* [ ] Production deployment
+- [ ] Advanced search
+- [ ] Advanced filtering
+- [ ] Rating system
+- [ ] Video player
+- [ ] Infinite scrolling
+- [ ] Performance optimization
+- [ ] Production deployment
 
 ---
 
@@ -315,5 +318,5 @@ Cinevo was built to practice and demonstrate:
 
 Junior Frontend Developer focused on React and modern frontend development.
 
-* GitHub: [Parham-Saravani](https://github.com/Parham-Saravani)
-* LinkedIn: [Parham Saravani](https://www.linkedin.com/in/parham-saravani-63b56a374)
+- GitHub: [Parham-Saravani](https://github.com/Parham-Saravani)
+- LinkedIn: [Parham Saravani](https://www.linkedin.com/in/parham-saravani-63b56a374)
