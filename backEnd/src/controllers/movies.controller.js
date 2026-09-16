@@ -1,4 +1,10 @@
 import Movie from "../models/movie.model.js";
+const registerNewMovie = async (req, res) => {
+  const data = req.body;
+  console.log(data);
+
+  res.json(data);
+};
 const takeAllMovies = async (req, res) => {
   const movies = await Movie.find(
     {},
@@ -97,4 +103,11 @@ const filters = async (req, res) => {
   }
 };
 
-export { takeAllMovies, takeMovieData, takeAllYears, takeAllGenres, filters };
+export {
+  takeAllMovies,
+  takeMovieData,
+  takeAllYears,
+  takeAllGenres,
+  filters,
+  registerNewMovie,
+};

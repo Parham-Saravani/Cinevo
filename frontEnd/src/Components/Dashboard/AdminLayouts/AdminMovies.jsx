@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { baseUrl } from "../../../Utilities/constants";
 import LoadingCard from "../../Loader/LoadingCard";
 import ContentCard from "../elements/ContentCard";

@@ -1,6 +1,8 @@
 import { FaCheck, FaCloud } from "react-icons/fa";
-import { useId } from "react";
+import { useEffect, useId } from "react";
 import { useState } from "react";
+import { baseUrl } from "../../../Utilities/constants";
+import { upload } from "@imagekit/react";
 
 function AddMovieModal({ isAddModalOpen, setModalStatus }) {
   const id = useId();
@@ -10,6 +12,55 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
   const [duration, setDuration] = useState("");
   const [rating, setRating] = useState("");
   const [ageRating, setAgeRating] = useState("");
+  const [posterFile, setPosterFile] = useState(null);
+  const [posterFileTitle, setPoserFileTitle] = useState("");
+  const [bannerFile, setBannerFile] = useState(null);
+  const [bannerFileTitle, setBannerFileTitle] = useState("");
+  const [totalGenres, setTotalGenres] = useState([]);
+
+  useEffect(() => {
+    setTitle("");
+    setReleaseYear("");
+    setDirector("");
+    setDuration("");
+    setRating("");
+    setAgeRating("");
+    setPosterFile(null);
+    setPoserFileTitle("");
+    setBannerFile(null);
+    setBannerFileTitle("");
+    setTotalGenres([]);
+  }, []);
+
+  const registernNewMovie = async () => {
+    try {
+      const imagekitData1 = await fetch(`${baseUrl}/api/discover/imagekit`);
+      const imagekitData2 = await fetch(`${baseUrl}/api/discover/imagekit`);
+      const { token1, expire1, publicKey1, signature1 } =
+        await imagekitData1.json();
+      const { token2, expire2, publicKey2, signature2 } =
+        await imagekitData2.json();
+      const upload1 = await upload({
+        token1,
+        expire1,
+        publicKey1,
+        signature1,
+        file: posterFile,
+        fileName: posterFileTitle,
+      });
+      const upload2 = await upload({
+        token2,
+        expire2,
+        publicKey2,
+        signature2,
+        file: bannerFile,
+        fileName: bannerFileTitle,
+      });
+      console.log(upload1);
+      console.log(upload2);
+    } catch (error) {}
+  };
+
   return (
     <div
       className={`${isAddModalOpen ? "animate-fadeIn fixed" : "hidden"} fixed inset-0  flex items-center transition-all duration-300 justify-center bg-black/70 p-4 backdrop-blur-sm`}
@@ -137,7 +188,8 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="flex items-center gap-2">
                 <input
-                  className="focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border rounded-xl outline-hidden placeholder:text-text-secondary/50"
+                  value={posterFileTitle}
+                  className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border rounded-xl outline-hidden placeholder:text-text-secondary/50"
                   placeholder="Upload poster"
                   readOnly
                 ></input>
@@ -146,13 +198,22 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                   className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
                 >
                   Upload
-                  <input id={id + "poster"} hidden type="file" />
+                  <input
+                    onChange={(event) => {
+                      setPoserFileTitle(event.target.files[0].name);
+                      setPosterFile(event.target.files[0]);
+                    }}
+                    id={id + "poster"}
+                    hidden
+                    type="file"
+                  />
                 </label>
               </div>
 
               <div className="flex items-center gap-2">
                 <input
-                  className="focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border outline-hidden rounded-xl placeholder:text-text-secondary/50"
+                  value={bannerFileTitle}
+                  className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border outline-hidden rounded-xl placeholder:text-text-secondary/50"
                   placeholder="Upload banner"
                   readOnly
                 ></input>
@@ -161,7 +222,15 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                   className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
                 >
                   Upload
-                  <input id={id + "banner"} hidden type="file" />
+                  <input
+                    onChange={(event) => {
+                      setBannerFileTitle(event.target.files[0].name);
+                      setBannerFile(event.target.files[0]);
+                    }}
+                    id={id + "banner"}
+                    hidden
+                    type="file"
+                  />
                 </label>
               </div>
 
@@ -354,6 +423,7 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
             </button>
 
             <button
+              onClick={registernNewMovie}
               type="button"
               className="cursor-pointer bg-cta-primary hover:bg-cta-primary/70 rounded-xl bg-primary px-6 py-2.5 text-sm font-medium text-white transition-colors duration-300"
             >

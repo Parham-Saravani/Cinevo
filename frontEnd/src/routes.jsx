@@ -25,6 +25,8 @@ import AdminSetting from "./Components/Dashboard/AdminLayouts/AdminSetting";
 import AdminComments from "./Components/Dashboard/AdminLayouts/AdminComments";
 import AdminUsers from "./Components/Dashboard/AdminLayouts/AdminUsers";
 
+import { baseUrl } from "./Utilities/constants";
+
 const router = createBrowserRouter([
   {
     index: true,
@@ -76,7 +78,20 @@ const router = createBrowserRouter([
         path: "/admin",
         element: <DashboardLayout />,
         children: [
-          { index: true, element: <AdminDashboard /> },
+          {
+            index: true,
+            element: <AdminDashboard />,
+            loader: async () => {
+              try {
+                const response = await fetch(
+                  `${baseUrl}/api/discover/dashboard/home`,
+                );
+                return await response.json();
+              } catch (error) {
+                console.log(error);
+              }
+            },
+          },
           { path: "movies", element: <AdminMovies /> },
           { path: "series", element: <AdminSeries /> },
           { path: "users", element: <AdminUsers /> },

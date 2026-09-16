@@ -2,7 +2,23 @@ import Serie from "../models/series.model.js";
 import Movie from "../models/movie.model.js";
 import User from "../models/user.model.js";
 import Comment from "../models/comment.model.js";
+import crypto from "crypto";
 
+const getImageKitData = async (req, res) => {
+  const test = process.env.IMAGEKEY_PRIVATE_KEY;
+  const token = crypto.randomUUID();
+  const expire = Math.floor(Date.now() / 1000) + 30 * 60;
+  const signature = crypto
+    .createHmac("sha1", test)
+    .update(token + expire)
+    .digest("hex");
+  res.json({
+    token,
+    expire,
+    signature,
+    publicKey: process.env.IMAGEKEY_PUBLIC_KEY,
+  });
+};
 const takeSimilarContent = async (req, res) => {
   const dataSlug = req.params.slug;
   const [movie, series] = await Promise.all([
@@ -393,19 +409,30 @@ const searchOnContent = async (req, res) => {
   );
   res.json([...movies, ...series]);
 };
-const countTotalContent = async (req, res) => {
+const tekeDashboardData = async (req, res) => {
   const moviesCount = await Movie.countDocuments({});
   const seriesCount = await Serie.countDocuments({});
   const usersCount = await User.countDocuments({});
   const commentsCount = await Comment.countDocuments({});
+  const lastMovies = await Movie.find({}).sort({ createdAt: -1 }).limit(5);
+  const lastSeries = await Serie.find({}).sort({ createdAt: -1 }).limit(5);
+  const lastUsers = await User.find({}).sort({ createdAt: -1 }).limit(5);
   res.json({
-    movies: moviesCount,
-    series: seriesCount,
-    users: usersCount,
-    comments: commentsCount,
+    stats: {
+      moviesCount,
+      seriesCount,
+      usersCount,
+      commentsCount,
+    },
+    recentData: {
+      lastMovies,
+      lastSeries,
+      lastUsers,
+    },
   });
 };
 export {
+  getImageKitData,
   takeSimilarContent,
   takeTrendContent,
   takeNewContent,
@@ -417,5 +444,5 @@ export {
   takeAllYears,
   filtering,
   searchOnContent,
-  countTotalContent,
+  tekeDashboardData,
 };

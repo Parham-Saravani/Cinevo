@@ -31,7 +31,7 @@ function DashboardLayout() {
   return (
     <div className="relative max-md:px-5 flex h-screen animate-fadeIn">
       {role === "admin" ? <AdminNavigationMenu /> : <UserNavigationMenu />}
-      <main className="ml-66 max-lg:ml-60 max-md:ml-0 mr-6 max-md:mr-0 w-full overflow-auto py-5 hide-scroll">
+      <main className="ml-66 max-lg:ml-60 max-md:ml-0 mr-6 max-md:mr-0 w-full overflow-auto py-5  hide-scroll">
         <Outlet />
       </main>
     </div>

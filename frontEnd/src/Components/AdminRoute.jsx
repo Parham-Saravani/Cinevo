@@ -30,26 +30,30 @@ function AdminRoute() {
 
           if (data.message === "INVALID_TOKEN") {
             Toast({ children: "Invalid token. Please log in again." });
+            navigate("/", { replace: true });
             return;
           } else if (data.message === "INVALID_DATA") {
             Toast({ children: "Invalid user data." });
+            removeCookie("auth-token");
             return;
           }
           if (data.role === "admin") {
             setIsAdmin(true);
           }
-          if (!isAdmin) {
+          if (data.role !== "admin") {
             navigate("/", { replace: true });
             Toast({ children: "Access denied!" });
+            return;
           }
         } catch (error) {
           navigate("/auth", { replace: true });
           removeCookie("auth-token");
+          return;
         }
       })();
     } else {
       removeCookie("auth-token");
-      navigate("/auth", { raplace: true });
+      navigate("/auth", { replace: true });
     }
   }, []);
   return <Outlet />;

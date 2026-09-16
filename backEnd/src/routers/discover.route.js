@@ -1,5 +1,7 @@
 import Router from "express";
+
 import {
+  getImageKitData,
   takeSimilarContent,
   takeTrendContent,
   takeAllContent,
@@ -11,7 +13,7 @@ import {
   takeAllGenres,
   filtering,
   searchOnContent,
-  countTotalContent,
+  tekeDashboardData,
 } from "../controllers/discover.controller.js";
 const router = Router();
 
@@ -24,7 +26,8 @@ router.get("/genre", takeAllGenres);
 router.get("/types", takeAllTypes);
 router.get("/year", takeAllYears);
 router.get("/all", takeAllContent);
-router.get("/content/count", countTotalContent);
+router.get("/dashboard/home", tekeDashboardData);
+router.get("/imagekit", getImageKitData);
 router.get("/similar/:slug", takeSimilarContent);
 router.get("/search/:value", searchOnContent);
 export default router;
