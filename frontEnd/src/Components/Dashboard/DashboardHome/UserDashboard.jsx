@@ -7,8 +7,6 @@ function UserDashboard() {
       {/* Welcome Banner */}
       <div className="relative overflow-hidden rounded-2xl border border-input-border/40 bg-input-bg p-6">
         <div className="relative z-10">
-          <p className="text-sm text-text-secondary">Welcome back 👋</p>
-
           <h1 className="mt-2 text-3xl font-bold text-text-primary max-sm:text-2xl">
             Ready for your next movie night?
           </h1>

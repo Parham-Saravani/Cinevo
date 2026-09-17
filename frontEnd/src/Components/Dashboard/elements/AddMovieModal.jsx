@@ -1,8 +1,9 @@
-import { FaCheck, FaCloud } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import { useEffect, useId } from "react";
 import { useState } from "react";
 import { baseUrl } from "../../../Utilities/constants";
 import { upload } from "@imagekit/react";
+import Toast from "../../Toast/Toast";
 
 function AddMovieModal({ isAddModalOpen, setModalStatus }) {
   const id = useId();
@@ -16,6 +17,7 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
   const [posterFileTitle, setPoserFileTitle] = useState("");
   const [bannerFile, setBannerFile] = useState(null);
   const [bannerFileTitle, setBannerFileTitle] = useState("");
+  const [genre, setGenre] = useState("");
   const [totalGenres, setTotalGenres] = useState([]);
 
   useEffect(() => {
@@ -58,10 +60,15 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
           fileName: bannerFileTitle,
         }),
       ]);
-      console.log(uploads);
     } catch (error) {}
   };
-
+  useEffect(() => {
+    console.log(totalGenres);
+  }, [totalGenres]);
+  const removeGenreItem = (id) => {
+    const newData = totalGenres.filter((item) => item.id !== id);
+    setTotalGenres(newData);
+  };
   return (
     <div
       className={`${isAddModalOpen ? "animate-fadeIn fixed" : "hidden"} fixed inset-0  flex items-center transition-all duration-300 justify-center bg-black/70 p-4 backdrop-blur-sm`}
@@ -298,12 +305,25 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
 
             <div className="flex gap-2">
               <input
+                value={genre}
+                onInput={(event) => setGenre(event.target.value)}
                 type="text"
                 placeholder="e.g. Sci-Fi"
                 className="focus:border-input-border-focus transition-colors duration-300 h-11 flex-1 rounded-xl border border-input-border bg-input-bg px-4 text-sm text-text-primary outline-none placeholder:text-text-secondary/50 focus:border-primary"
               />
 
               <button
+                onClick={() => {
+                  if (!genre) {
+                    Toast({ children: "Please enter a genre first" });
+                    return;
+                  }
+                  setGenre("");
+                  setTotalGenres((prev) => [
+                    ...prev,
+                    { id: crypto.randomUUID(), title: genre },
+                  ]);
+                }}
                 type="button"
                 className="rounded-xl bg-primary px-5 text-sm font-medium text-white transition-colors duration-300 hover:bg-cta-primary/70 bg-cta-primary cursor-pointer"
               >
@@ -312,7 +332,24 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
             </div>
 
             <div className="mt-3 flex flex-wrap gap-2">
-              <span className="flex items-center gap-2 rounded-lg bg-input-bg/50 text-text-secondary   px-3 py-1.5 text-sm text-primary">
+              {totalGenres.map((item) => {
+                return (
+                  <span
+                    key={item.id}
+                    className="animate-fadeIn flex items-center gap-2 rounded-lg bg-input-bg/50 text-text-secondary   px-3 py-1.5 text-sm text-primary"
+                  >
+                    {item.title}
+                    <button
+                      onClick={() => removeGenreItem(item.id)}
+                      className="hover:bg-input-border/40 rounded-full w-6 h-6 inline-flex justify-center items-center text-xs transition-colors duration-300 cursor-pointer"
+                      type="button"
+                    >
+                      ✕
+                    </button>
+                  </span>
+                );
+              })}
+              {/* <span className="flex items-center gap-2 rounded-lg bg-input-bg/50 text-text-secondary   px-3 py-1.5 text-sm text-primary">
                 Sci-Fi
                 <button
                   className="hover:bg-input-border/40 rounded-full w-6 h-6 inline-flex justify-center items-center text-xs transition-colors duration-300 cursor-pointer"
@@ -329,7 +366,7 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                 >
                   ✕
                 </button>
-              </span>
+              </span> */}
             </div>
           </section>
 

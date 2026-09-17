@@ -1,11 +1,14 @@
-import { Outlet } from "react-router";
+import { data, Outlet } from "react-router";
 import AdminNavigationMenu from "../Dashboard/NavigationMenu/AdminNavigationMenu";
 import { useEffect, useState } from "react";
 import getCookie from "../../Utilities/Cookie/getCookie";
 import UserNavigationMenu from "../Dashboard/NavigationMenu/UserNavigationMenu";
 import { baseUrl } from "../../Utilities/constants";
+import AdminTopBar from "../Dashboard/elements/AdminTopBar";
+import UserTopBar from "../Dashboard/elements/UserTopBar";
 function DashboardLayout() {
   const [role, setRole] = useState("");
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     document.title = "Dashboard | Cinevo";
@@ -22,17 +25,28 @@ function DashboardLayout() {
           });
           if (!response.ok) throw Error();
           const data = await response.json();
+          console.log(data);
+          
+          setUserData(data);
           setRole(data.role);
         } catch (error) {}
       })();
     }
   }, []);
-  
+
   return (
-    <div className="relative max-md:px-5 flex h-screen animate-fadeIn">
+    <div className="relative flex h-screen animate-fadeIn">
       {role === "admin" ? <AdminNavigationMenu /> : <UserNavigationMenu />}
-      <main className="ml-66 max-lg:ml-60 max-md:ml-0 mr-6 max-md:mr-0 w-full overflow-auto py-5  hide-scroll">
-        <Outlet />
+      <main className="max-lg:ml-55 max-md:ml-0 w-full overflow-auto hide-scroll">
+        {role === "admin" ? (
+          <AdminTopBar {...userData} />
+        ) : (
+          <UserTopBar {...userData} />
+        )}
+
+        <section className="px-5 max-lg:ml-0 max-md:mr-0 ml-60 py-5">
+          <Outlet />
+        </section>
       </main>
     </div>
   );
