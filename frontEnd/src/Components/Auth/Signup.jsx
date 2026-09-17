@@ -74,16 +74,16 @@ function Signup() {
     }
   };
   return (
-    <>
-      <h2 className="animate-fadeInUp font-bold text-2xl max-sm:text-xl">
+    <div className="animate-fadeInUp">
+      <h2 className="font-bold text-2xl max-sm:text-xl">
         Create Your Account
       </h2>
-      <p className="animate-fadeInUp text-text-secondary text-sm max-sm:text-xs">
+      <p className="text-text-secondary text-sm max-sm:text-xs">
         Join Cinevo and start exploring
       </p>
 
       <form className="mt-6">
-        <div className="animate-fadeInUp relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
+        <div className="relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
           <FaRegUser className="absolute size-5 left-2 bottom-0 top-0 my-auto fill-current" />
           <input
             onInput={(event) => setUsername(event.target.value)}
@@ -93,7 +93,7 @@ function Signup() {
             type="text"
           />
         </div>
-        <div className="animate-fadeInUp relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
+        <div className="relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
           <MdOutlineMail className="absolute size-5 left-2 bottom-0 top-0 my-auto fill-current" />
 
           <input
@@ -124,7 +124,7 @@ function Signup() {
             event.preventDefault();
             signupHandler();
           }}
-          className={`${isLoading ? "flex justify-center items-center" : ""} animate-fadeInUp font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}
+          className={`${isLoading ? "flex justify-center items-center" : ""} font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}
           type="submit"
         >
           {isLoading ? (
@@ -135,13 +135,13 @@ function Signup() {
         </button>
       </form>
 
-      <p className="animate-fadeInUp max-sm:text-[10px] text-xs mt-10 text-center">
+      <p className="max-sm:text-[10px] text-xs mt-10 text-center">
         Already have an account?
         <span className="ml-1.5 text-cta-primary hover:text-cta-hover transition-colors duration-300 cursor-pointer login-footer-btn">
           Login
         </span>
       </p>
-    </>
+    </div>
   );
 }
 

@@ -8,7 +8,7 @@ function PasswordInput({ children, passwordValue, passwordSetState }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="animate-fadeInUp relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
+    <div className="relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
       <MdLockOutline className="absolute left-2 size-5 top-0 bottom-0 my-auto fill-current" />
       <input
         onInput={(event) => passwordSetState(event.target.value)}

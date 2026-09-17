@@ -414,9 +414,21 @@ const tekeDashboardData = async (req, res) => {
   const seriesCount = await Serie.countDocuments({});
   const usersCount = await User.countDocuments({});
   const commentsCount = await Comment.countDocuments({});
-  const lastMovies = await Movie.find({}).sort({ createdAt: -1 }).limit(5);
-  const lastSeries = await Serie.find({}).sort({ createdAt: -1 }).limit(5);
-  const lastUsers = await User.find({}).sort({ createdAt: -1 }).limit(5);
+  const lastMovies = await Movie.find(
+    {},
+    { genres: true, title: true, createdAt: true, poster: true },
+  )
+    .sort({ createdAt: -1 })
+    .limit(5);
+  const lastSeries = await Serie.find(
+    {},
+    { genres: true, poster: true, title: true, createdAt: true },
+  )
+    .sort({ createdAt: -1 })
+    .limit(5);
+  const lastUsers = await User.find({ role: "user" })
+    .sort({ createdAt: -1 })
+    .limit(5);
   res.json({
     stats: {
       moviesCount,

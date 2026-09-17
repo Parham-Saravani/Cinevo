@@ -66,16 +66,16 @@ function Login() {
 
   const id = useId();
   return (
-    <>
-      <h2 className="animate-fadeInUp font-bold text-2xl max-sm:text-xl">
+    <div className="animate-fadeInUp">
+      <h2 className="font-bold text-2xl max-sm:text-xl">
         Welcome Back
       </h2>
-      <p className="animate-fadeInUp text-text-secondary text-sm max-sm:text-xs">
+      <p className="text-text-secondary text-sm max-sm:text-xs">
         Glad to see you again! Please login to continue
       </p>
 
       <form className="mt-7">
-        <div className="animate-fadeInUp relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
+        <div className="relative mt-2 flex items-center bg-input-bg text-text-secondary border-2 border-input-border/50 rounded-xl h-14 focus-within:border-input-border-focus transition-colors duration-300">
           <MdOutlineMail className="absolute size-5 left-2 bottom-0 top-0 my-auto fill-current" />
           <input
             onInput={(event) => setEmail(event.target.value)}
@@ -90,7 +90,7 @@ function Login() {
           Enter your password
         </PasswordInput>
 
-        <div className="animate-fadeInUp mt-3 flex items-center justify-between">
+        <div className="mt-3 flex items-center justify-between">
           <div className="flex items-center text-xs max-sm:text-[10px]">
             <label
               className="flex items-center justify-center mr-1.5 w-4 h-4 text-transparent rounded-sm bg-input-border/50 cursor-pointer remember-checkbox transition-colors duration-300"
@@ -119,7 +119,7 @@ function Login() {
             event.preventDefault();
             loginHandler();
           }}
-          className={`${isLoading ? "flex justify-center items-center" : ""} animate-fadeInUp font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}
+          className={`${isLoading ? "flex justify-center items-center" : ""} font-bold max-sm:text-xs text-sm mt-4 text-center w-full h-12 rounded-xl bg-cta-primary hover:bg-cta-hover transform-colors duration-300 cursor-pointer disabled:bg-cta-primary/40 disabled:cursor-default`}
           type="submit"
         >
           {isLoading ? (
@@ -130,13 +130,13 @@ function Login() {
         </button>
       </form>
 
-      <p className="animate-fadeInUp text-xs max-sm:text-[10px] mt-10 text-center">
+      <p className="text-xs max-sm:text-[10px] mt-10 text-center">
         Don't have an account?
         <span className="ml-1.5 text-cta-primary hover:text-cta-hover transition-colors duration-300 cursor-pointer signup-footer-btn">
           Sign Up
         </span>
       </p>
-    </>
+    </div>
   );
 }
 

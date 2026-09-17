@@ -43,7 +43,7 @@ function AdminDashboard() {
               <h3 className="text-text-secondary">Movies</h3>
 
               <p className="mt-2 text-3xl font-bold text-text-primary">
-                {stats.movies}
+                {stats.moviesCount}
               </p>
             </div>
             <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-blue-500/10 items-center justify-center rounded-xl bg-primary/10">
@@ -56,7 +56,7 @@ function AdminDashboard() {
               <h3 className="text-text-secondary">Series</h3>
 
               <p className="mt-2 text-3xl font-bold text-text-primary">
-                {stats.series}
+                {stats.seriesCount}
               </p>
             </div>
             <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-yellow-500/10 items-center justify-center rounded-xl bg-primary/10">
@@ -69,7 +69,7 @@ function AdminDashboard() {
               <h3 className="text-text-secondary">Users</h3>
 
               <p className="mt-2 text-3xl font-bold text-text-primary">
-                {stats.users}
+                {stats.usersCount}
               </p>
             </div>
             <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-pink-500/10 items-center justify-center rounded-xl bg-primary/10">
@@ -81,7 +81,7 @@ function AdminDashboard() {
             <div>
               <h3 className="text-text-secondary">Comments</h3>
               <p className="mt-2 text-3xl font-bold text-text-primary">
-                {stats.comments}
+                {stats.commentsCount}
               </p>
             </div>
             <div className="flex h-13 w-13 max-sm:h-11 max-sm:w-11 bg-purple-500/10 items-center justify-center rounded-xl bg-primary/10">
@@ -97,7 +97,10 @@ function AdminDashboard() {
             Content Distribution
           </h2>
           <div className="w-full h-full flex max-xl:flex-col max-lg:flex-row max-md:flex-col max-sm:flex-row items-center max-lg:pr-10">
-            <PieChart responsive className="w-full h-full max-xl:h-55 max-md:h-50 max-xl:ml-10 max-md:ml-15 max-sm:ml-0">
+            <PieChart
+              responsive
+              className="w-full h-full max-xl:h-55 max-md:h-50 max-xl:ml-10 max-md:ml-15 max-sm:ml-0"
+            >
               <Pie
                 data={pieChartData}
                 dataKey="value"
@@ -152,7 +155,7 @@ function AdminDashboard() {
           </div>
           <AreaChart
             data={lineChartData}
-            style={{ height: "100%", width: "100%" , paddingRight:'1rem'}}
+            style={{ height: "100%", width: "100%", paddingRight: "1rem" }}
             responsive
           >
             <XAxis
@@ -215,7 +218,7 @@ function AdminDashboard() {
 
             <Link
               to={"movies"}
-              className="max-sm:text-xs text-sm text-cta-primary"
+              className="max-sm:text-xs text-sm text-cta-primary transition-colors duration-300 hover:text-cta-primary/70"
             >
               View All
             </Link>
@@ -268,7 +271,7 @@ function AdminDashboard() {
 
             <Link
               to={"series"}
-              className="max-sm:text-xs text-sm text-cta-primary"
+              className="max-sm:text-xs text-sm text-cta-primary transition-colors duration-300 hover:text-cta-primary/70"
             >
               View All
             </Link>
@@ -318,7 +321,7 @@ function AdminDashboard() {
 
             <Link
               to={"users"}
-              className="text-sm text-cta-primary max-sm:text-xs"
+              className="text-sm text-cta-primary max-sm:text-xs transition-colors duration-300 hover:text-cta-primary/70"
             >
               View All
             </Link>
@@ -345,7 +348,9 @@ function AdminDashboard() {
                   </p>
                 </div>
 
-                <span className={`max-w-14 truncate text-xs px-2 py-1 rounded-full ${user.role === 'admin' ? 'bg-cta-primary/10 text-cta-primary' : 'bg-blue-500/10 text-blue-500'}`}>
+                <span
+                  className={`max-w-14 truncate text-xs px-2 py-1 rounded-full ${user.role === "admin" ? "bg-cta-primary/10 text-cta-primary" : "bg-blue-500/10 text-blue-500"}`}
+                >
                   {user.role}
                 </span>
               </div>
