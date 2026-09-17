@@ -5,10 +5,12 @@ import {
   logoutHandler,
   takeUserData,
   takeAllUsers,
+  updateUserData,
 } from "../controllers/user.controller.js";
 const router = Router();
 
 router.get("/", takeAllUsers);
+router.post("/update", updateUserData);
 router.post("/", registerNewUser);
 router.post("/login", loginOperation);
 router.post("/signout", logoutHandler);

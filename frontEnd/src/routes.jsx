@@ -95,7 +95,18 @@ const router = createBrowserRouter([
           { path: "movies", element: <AdminMovies /> },
           { path: "series", element: <AdminSeries /> },
           { path: "users", element: <AdminUsers /> },
-          { path: "comments", element: <AdminComments /> },
+          {
+            path: "comments",
+            element: <AdminComments />,
+            loader: async () => {
+              try {
+                const response = await fetch(`${baseUrl}/api/comment`);
+                return await response.json();
+              } catch (error) {
+                console.log(error);
+              }
+            },
+          },
           { path: "settings", element: <AdminSetting /> },
         ],
       },

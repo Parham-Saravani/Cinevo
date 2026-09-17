@@ -1,9 +1,58 @@
 import PasswordInput from "../../PasswordInput";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
+import getCookie from "../../../Utilities/Cookie/getCookie";
+import { getUserData } from "../../../Utilities/uploadProfileImage";
+import { baseUrl } from "../../../Utilities/constants";
+import Toast from "../../Toast/Toast";
 
 function AdminSettings() {
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [profileImagePreview, setProfileImagePreview] = useState(null);
+  const [adminUsername, setAdminUsername] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [updatedData, setUpdatedData] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = getCookie("auth-token");
+        const repsonse = await fetch(`${baseUrl}/api/user/update`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token, data: updatedData }),
+        });
+        if (!repsonse.ok) {
+          console.log("errorr");
+          return;
+        }
+        setLoading(false);
+        const data = await repsonse.json();
+        setProfileImagePreview(null);
+        setAdminUsername("");
+        setAdminEmail("");
+        Toast({ children: "Profile updated successfully.", isError: false });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [updatedData]);
+
+  const updateAccountDetail = async () => {
+    if (profileImageFile) {
+      setLoading(true);
+      const value = await getUserData(profileImageFile);
+      setUpdatedData((prev) => ({ ...prev, imageUrl: value }));
+    } else if (adminUsername) {
+      setUpdatedData((prev) => ({ ...prev, username: adminUsername }));
+    } else if (adminEmail) {
+      setUpdatedData((prev) => ({ ...prev, email: adminEmail }));
+    } else {
+      Toast({ children: "No changes detected." });
+    }
+  };
 
   const id = useId();
   return (
@@ -37,6 +86,8 @@ function AdminSettings() {
               </label>
 
               <input
+                value={adminUsername}
+                onInput={(event) => setAdminUsername(event.target.value)}
                 type="text"
                 placeholder="Administrator username"
                 className="w-full h-14 rounded-xl border-2 border-input-border/50 px-4 text-text-primary outline-hidden focus-within:border-input-border-focus transition-colors duration-300"
@@ -49,6 +100,8 @@ function AdminSettings() {
               </label>
 
               <input
+                value={adminEmail}
+                onInput={(event) => setAdminEmail(event.target.value)}
                 type="email"
                 placeholder="Administrator email"
                 className="w-full h-14 rounded-xl border-2 border-input-border/50 px-4 text-text-primary outline-hidden focus-within:border-input-border-focus transition-colors duration-300"
@@ -90,8 +143,16 @@ function AdminSettings() {
               </div>
             </div>
 
-            <button className="w-full h-11 rounded-lg bg-cta-primary text-white cursor-pointer">
-              Save Changes
+            <button
+              disabled={loading}
+              onClick={updateAccountDetail}
+              className={`transition-colors duration-300 w-full h-11 rounded-lg bg-cta-primary text-white cursor-pointer disabled:bg-cta-primary/50 ${loading ? "flex justify-center items-center" : ""}`}
+            >
+              {loading ? (
+                <div className="aspect-square w-3 h-3 animate-loader rounded-full"></div>
+              ) : (
+                "Save Changes"
+              )}
             </button>
           </div>
         </div>
@@ -227,7 +288,11 @@ function AdminSettings() {
                 className="rounded-full bg-bg-primary/70 relative w-12 h-6 cursor-pointer before:bg-white before:absolute before:w-4.5 before:h-4.5 before:rounded-full before:top-0 before:bottom-0 before:my-auto before:left-1 before:transition-all before:duration-300 has-checked:bg-cta-primary has-checked:before:left-6.5 transition-colors duration-300"
                 htmlFor={id + "auto-approve-comments"}
               >
-                <input id={id + "auto-approve-comments"} type="checkbox" hidden />
+                <input
+                  id={id + "auto-approve-comments"}
+                  type="checkbox"
+                  hidden
+                />
               </label>{" "}
             </div>
 
@@ -269,8 +334,6 @@ function AdminSettings() {
           </div>
         </div>
       </section>
-
-      
     </main>
   );
 }

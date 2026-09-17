@@ -5,11 +5,11 @@ import Comment from "../models/comment.model.js";
 import crypto from "crypto";
 
 const getImageKitData = async (req, res) => {
-  const test = process.env.IMAGEKEY_PRIVATE_KEY;
+  const pubKey = process.env.IMAGEKEY_PRIVATE_KEY;
   const token = crypto.randomUUID();
   const expire = Math.floor(Date.now() / 1000) + 30 * 60;
   const signature = crypto
-    .createHmac("sha1", test)
+    .createHmac("sha1", pubKey)
     .update(token + expire)
     .digest("hex");
   res.json({

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const commentSchema = new mongoose.Schema(
   {
     contentID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    contentName: { type: String, required: true },
     comments: [
       {
         author: String,

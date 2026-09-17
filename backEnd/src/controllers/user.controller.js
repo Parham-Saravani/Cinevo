@@ -115,10 +115,30 @@ const takeUserData = async (req, res) => {
     res.status(400).json({ message: "INVALID_DATA" });
   }
 };
+
+const updateUserData = async (req, res) => {
+  const { token, data } = req.body;
+  if (token) {
+    const userID = decompressToken(token);
+    if (data) {
+      try {
+        const currentUser = await User.updateOne({ _id: userID }, data);
+        res.json({ message: "UPDATE_SUCCESSFUL" });
+      } catch (error) {
+        res.json({ message: "USER_NOT_FOUND" });
+      }
+    } else {
+      res.json({ message: "WRONG_DATA" });
+    }
+  } else {
+    res.json({ message: "TOKEN_NOT_FOUND" });
+  }
+};
 export {
   registerNewUser,
   loginOperation,
   logoutHandler,
   takeUserData,
   takeAllUsers,
+  updateUserData,
 };

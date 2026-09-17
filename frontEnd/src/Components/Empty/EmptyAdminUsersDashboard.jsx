@@ -12,7 +12,7 @@ function EmptyAdminUsersDashboard() {
       </h2>
 
       <p className="max-w-md text-text-secondary leading-7 mb-8">
-        There are not users currently!
+        There are no users available at the moment.
       </p>
     </div>
   );

@@ -1,6 +1,8 @@
+import { useState } from "react";
 import DefaultUserProfileImage from "/profile/default.webp";
 
 function AdminTopBar({ username, role, imageUrl }) {
+  const [imageLoading, setImageLoading] = useState(true);
   return (
     <header className="sticky top-0 z-40 flex py-2 border-b border-input-border bg-input-bg px-6">
       <div className="flex items-center justify-between max-md:ml-0 max-md:mr-0 ml-60 w-full">
@@ -15,9 +17,13 @@ function AdminTopBar({ username, role, imageUrl }) {
         </div>
         <div className="flex items-center gap-3">
           <img
+            onLoad={() => setImageLoading(false)}
+            onError={(event) => {
+              event.target.src = DefaultUserProfileImage;
+            }}
             src={imageUrl && imageUrl ? imageUrl : DefaultUserProfileImage}
-            alt=""
-            className="size-9 rounded-full"
+            alt="profile-Image"
+            className={`${imageLoading ? "bg-gray-900 animate-pulse" : ""} object-cover size-9 rounded-full`}
           />
 
           <div>
