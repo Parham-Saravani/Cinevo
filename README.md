@@ -137,7 +137,6 @@ https://cinevo-iota.vercel.app
 * Toast Notifications
 * Responsive Sliders
 * Client-Side Validation with Zod
->>>>>>> 47b1563fa47a9e1e85889e901fe39ca0e1d73433
 
 ---
 
