@@ -36,28 +36,29 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
     try {
       const imagekitData1 = await fetch(`${baseUrl}/api/discover/imagekit`);
       const imagekitData2 = await fetch(`${baseUrl}/api/discover/imagekit`);
-      const { token1, expire1, publicKey1, signature1 } =
+      const { token, expire, publicKey, signature } =
         await imagekitData1.json();
       const { token2, expire2, publicKey2, signature2 } =
-        await imagekitData2.json();
-      const upload1 = await upload({
-        token1,
-        expire1,
-        publicKey1,
-        signature1,
-        file: posterFile,
-        fileName: posterFileTitle,
-      });
-      const upload2 = await upload({
-        token2,
-        expire2,
-        publicKey2,
-        signature2,
-        file: bannerFile,
-        fileName: bannerFileTitle,
-      });
-      console.log(upload1);
-      console.log(upload2);
+        await imagekitData1.json();
+      const uploads = await Promise.all([
+        upload({
+          token,
+          expire,
+          publicKey,
+          signature,
+          file: posterFile,
+          fileName: posterFileTitle,
+        }),
+        upload({
+          token2,
+          expire2,
+          publicKey2,
+          signature2,
+          file: bannerFile,
+          fileName: bannerFileTitle,
+        }),
+      ]);
+      console.log(uploads);
     } catch (error) {}
   };
 

@@ -5,7 +5,7 @@ import Button from "../Components/Auth/Button";
 import checkCookie from "../Utilities/Cookie/checkCookie";
 import { useNavigate } from "react-router";
 import { FaArrowLeft } from "react-icons/fa6";
-
+import authPageBackgrounImage from "/public/auth-background.png";
 function Auth() {
   const [status, setStatus] = useState("login");
   const [active, setActive] = useState("Login");
@@ -42,11 +42,7 @@ function Auth() {
           >
             <FaArrowLeft />
           </button>
-          <img
-            className="w-full h-full"
-            src="/src/assets/Images/auth-background.png"
-            alt=""
-          />
+          <img className="w-full h-full" src={authPageBackgrounImage} alt="" />
           <div className="w-full h-full absolute z-10 top-0 auth-overlay"></div>
           <section className="z-20 absolute top-0 bottom-0 h-fit  m-auto left-0 right-0 px-5 pt-5 pb-10 w-110 bg-input-bg/60 backdrop-blur-xl rounded-xl border border-white/10 auth-form">
             {/* <!-- Navigations --> */}

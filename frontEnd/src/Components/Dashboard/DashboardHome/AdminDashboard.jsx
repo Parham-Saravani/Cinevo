@@ -1,4 +1,4 @@
-import { FaUsers, FaFilm, FaComments } from "react-icons/fa6";
+import { FaUsers, FaFilm, FaComments, FaArrowRight } from "react-icons/fa6";
 import { MdMovie } from "react-icons/md";
 import { Link } from "react-router";
 import { Area, Line, XAxis, YAxis, CartesianGrid, AreaChart } from "recharts";
@@ -218,9 +218,9 @@ function AdminDashboard() {
 
             <Link
               to={"movies"}
-              className="max-sm:text-xs text-sm text-cta-primary transition-colors duration-300 hover:text-cta-primary/70"
+              className="flex items-center gap-1.5 text-xs text-cta-primary transform-colors duration-300 hover:text-cta-primary/70"
             >
-              View All
+              View All <FaArrowRight />
             </Link>
           </div>
 
@@ -268,12 +268,11 @@ function AdminDashboard() {
             <h2 className="max-sm:text-[16px] text-lg font-bold text-text-primary">
               Latest Series
             </h2>
-
             <Link
               to={"series"}
-              className="max-sm:text-xs text-sm text-cta-primary transition-colors duration-300 hover:text-cta-primary/70"
+              className="flex items-center gap-1.5 text-xs text-cta-primary transform-colors duration-300 hover:text-cta-primary/70"
             >
-              View All
+              View All <FaArrowRight />
             </Link>
           </div>
 
@@ -321,9 +320,9 @@ function AdminDashboard() {
 
             <Link
               to={"users"}
-              className="text-sm text-cta-primary max-sm:text-xs transition-colors duration-300 hover:text-cta-primary/70"
+              className="flex items-center gap-1.5 text-xs text-cta-primary transform-colors duration-300 hover:text-cta-primary/70"
             >
-              View All
+              View All <FaArrowRight />
             </Link>
           </div>
 

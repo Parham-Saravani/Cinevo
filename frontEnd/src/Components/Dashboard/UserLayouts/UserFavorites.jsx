@@ -33,72 +33,123 @@ function UserFavorites() {
   ];
 
   return (
-    <section className="animate-fadeIn">
-      <div>
-        <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">
-          Favorites
-        </h1>
+    <section className="space-y-6 animate-fadeIn">
+      {/* Header */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold max-sm:text-2xl text-text-primary">
+            Favorites
+          </h1>
 
-        <p className="mt-1 text-sm text-text-secondary">
-          Your favorite movies and series in one place.
-        </p>
+          <p className="mt-1 text-sm text-text-secondary">
+            Your favorite movies and series collection.
+          </p>
+        </div>
+
+        <div className="flex gap-3">
+          <div className="rounded-xl bg-input-bg px-4 py-3">
+            <p className="text-xs text-text-secondary">Movies</p>
+            <p className="mt-1 text-xl font-bold text-text-primary">14</p>
+          </div>
+
+          <div className="rounded-xl bg-input-bg px-4 py-3">
+            <p className="text-xs text-text-secondary">Series</p>
+            <p className="mt-1 text-xl font-bold text-text-primary">10</p>
+          </div>
+
+          <div className="rounded-xl bg-input-bg px-4 py-3">
+            <p className="text-xs text-text-secondary">Total</p>
+            <p className="mt-1 text-xl font-bold text-text-primary">24</p>
+          </div>
+        </div>
       </div>
 
-      <div className="mt-8 space-y-4">
+      {/* Search & Filters */}
+      <div className="rounded-2xl bg-input-bg p-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <input
+            type="text"
+            placeholder="Search favorites..."
+            className="h-11 w-full lg:max-w-sm rounded-xl border border-input-border bg-bg-primary px-4 text-text-primary outline-hidden"
+          />
+
+          <div className="flex flex-wrap gap-2">
+            <button className="rounded-lg bg-cta-primary px-4 py-2 text-sm text-white">
+              All
+            </button>
+
+            <button className="rounded-lg border border-input-border px-4 py-2 text-sm text-text-secondary">
+              Movies
+            </button>
+
+            <button className="rounded-lg border border-input-border px-4 py-2 text-sm text-text-secondary">
+              Series
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Favorites Grid */}
+      <div className="grid grid-cols-5 gap-4">
         {favorites.map((movie) => (
           <article
             key={movie.id}
-            className="flex gap-4 rounded-xl border border-input-border/40 bg-input-bg/40 p-4"
+            className="col-span-1 group overflow-hidden rounded-2xl bg-input-bg"
           >
-            <img
-              src={movie.poster}
-              alt={movie.title}
-              className="h-34 w-25 rounded-lg object-cover"
-            />
+            <div className="relative overflow-hidden">
+              <img
+                src={movie.poster}
+                alt={movie.title}
+                className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
 
-            <div className="flex min-w-0 flex-1 flex-col">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <h2 className="font-semibold text-text-primary">
-                    {movie.title}
-                  </h2>
+              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <Link
+                  to={`/movie/the-passion-of-the-christ`}
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-black"
+                >
+                  <FaPlay />
+                </Link>
+              </div>
 
-                  <p className="mt-1 text-xs text-text-secondary">
-                    {movie.type} • {movie.year}
-                  </p>
-                </div>
+              <button className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/60">
+                <FaHeart className="text-red-500" />
+              </button>
+            </div>
 
-                <span className="bg-red-500/10 rounded-md w-9 h-8.5 flex items-center justify-center">
-                  <FaHeart className="text-red-600 text-primary" />
+            <div className="p-4">
+              <div className="flex items-start justify-between gap-2">
+                <h2 className="line-clamp-1 font-semibold text-text-primary">
+                  {movie.title}
+                </h2>
+
+                <span className="text-xs text-text-secondary">
+                  {movie.year}
                 </span>
               </div>
 
-              <div className="mt-3 flex flex-wrap gap-2">
-                {movie.genres.map((genre) => (
+              <p className="mt-1 text-xs text-text-secondary">{movie.type}</p>
+
+              <div className="mt-3 flex flex-wrap gap-1">
+                {movie.genres.slice(0, 2).map((genre) => (
                   <span
                     key={genre}
-                    className="rounded-md bg-input-border/30 px-2 py-1 text-[11px] text-text-secondary"
+                    className="rounded-md bg-bg-primary px-2 py-1 text-[10px] text-text-secondary"
                   >
                     {genre}
                   </span>
                 ))}
               </div>
 
-              <div className="mt-auto flex items-center justify-between pt-4">
-                <span className="flex items-center bg-yellow-500/20 text-[13px] text-yellow-600 rounded-md px-2 py-1">
-                  <FaStar className="text-[13px] mr-1" /> {movie.rating}
+              <div className="mt-4 flex items-center justify-between">
+                <span className="text-sm flex items-center gap-1 rounded-md bg-yellow-500/20 px-2 py-1 text-yellow-500">
+                  <FaStar />
+                  {movie.rating}
                 </span>
 
-                <div className="flex gap-2">
-                  <Link to={`/movie/the-passion-of-the-christ`} className="flex items-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs border border-input-border/50 text-text-secondary cursor-pointer hover:text-text-secondary/70 hover:border-input-border/70 transition-colors duration-300">
-                    <FaPlay />
-                    Watch
-                  </Link>
-
-                  <button className="rounded-lg border border-input-border/50 px-3 py-2 text-xs text-text-secondary hover:text-red-600 hover:border-red-600 transition-colors duration-200 cursor-pointer">
-                    <FaTrash />
-                  </button>
-                </div>
+                <button className="rounded-lg border border-input-border px-2 py-2 text-text-secondary transition-colors hover:border-red-500 hover:text-red-500">
+                  <FaTrash />
+                </button>
               </div>
             </div>
           </article>

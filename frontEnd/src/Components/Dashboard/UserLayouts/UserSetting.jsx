@@ -96,7 +96,7 @@ function UserSetting() {
         </div>
 
         {/* Security */}
-        <div className="rounded-xl bg-input-bg p-5">
+        <form className="rounded-xl bg-input-bg p-5">
           <h2 className="text-lg font-semibold text-text-primary">
             Password & Security
           </h2>
@@ -134,7 +134,7 @@ function UserSetting() {
               Update Password
             </button>
           </div>
-        </div>
+        </form>
       </section>
 
       <section className="grid grid-cols-1 xl:grid-cols-2 gap-6">

@@ -1,7 +1,8 @@
-import { Link } from "react-router";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import removeCookie from "../../../Utilities/Cookie/removeCookie";
+import AdminDropDownMenu from "./AdminDropDownMenu";
+import UserDropDownMenu from "./UserDropDownMenu";
 
 function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,44 +43,11 @@ function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
         <MdKeyboardArrowDown className="text-text-secondary size-5" />
       </button>
 
-      <div
-        className={`${isOpen ? "opacity-100 block" : "hidden opacity-0"} absolute text-text-secondary top-full right-0 mt-2 w-56 bg-input-bg border border-input-border rounded-xl overflow-hidden`}
-      >
-        <Link
-          to={role === "admin" ? "/admin" : "/dashboard"}
-          className="block px-4 py-3 text-sm hover:bg-white/5 hover:text-text-primary transition-colors duration-300"
-        >
-          Profile
-        </Link>
-
-        <Link
-          to="/dashboard/watchlist"
-          className="block px-4 py-3 text-sm hover:bg-white/5 hover:text-text-primary transition-colors duration-300"
-        >
-          Watchlist
-        </Link>
-
-        <Link
-          to="/dashboard/favorites"
-          className="block px-4 py-3 text-sm hover:bg-white/5 hover:text-text-primary transition-colors duration-300"
-        >
-          Favorites
-        </Link>
-
-        <Link
-          to="/dashboard/settings"
-          className="block px-4 py-3 text-sm hover:bg-white/5 hover:text-text-primary transition-colors duration-300"
-        >
-          Settings
-        </Link>
-
-        <button
-          onClick={logOut}
-          className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 cursor-pointer transition-colors duration-300"
-        >
-          Logout
-        </button>
-      </div>
+      {role === "admin" ? (
+        <AdminDropDownMenu isOpen={isOpen} onLogout={logOut} />
+      ) : (
+        <UserDropDownMenu isOpen={isOpen}  onLogout={logOut}/>
+      )}
     </div>
   );
 }
