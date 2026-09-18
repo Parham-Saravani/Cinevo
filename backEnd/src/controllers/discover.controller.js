@@ -33,11 +33,11 @@ const takeSimilarContent = async (req, res) => {
     Serie.find({
       _id: { $ne: current._id },
       genres: { $in: current.genres },
-    }).limit(5),
+    }, {poster:true, genres:true}).limit(5),
     Movie.find({
       _id: { $ne: current._id },
       genres: { $in: current.genres },
-    }).limit(5),
+    }, {poster:true, genres:true}).limit(5),
   ]);
   res.json([...similaMovies, ...similarSeries]);
 };

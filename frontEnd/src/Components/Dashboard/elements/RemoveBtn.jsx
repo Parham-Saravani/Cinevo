@@ -12,7 +12,6 @@ function RemoveBtn({ data, onRemove }) {
   return (
     <Modal
       onSubmit={() => onRemove(data._id)}
-      data={data}
       Trigger={RemoveBtn}
       title={"Delete Content"}
     >

@@ -7,11 +7,13 @@ import {
   filters,
   registerNewMovie,
   removeMovie,
+  updateMovie,
 } from "../controllers/movies.controller.js";
 const router = Router();
 
 router.post("/", registerNewMovie);
 router.get("/", takeAllMovies);
+router.put("/", updateMovie);
 router.delete("/", removeMovie);
 router.get("/year", takeAllYears);
 router.get("/genre", takeAllGenres);

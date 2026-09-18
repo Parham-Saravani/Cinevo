@@ -1,10 +1,13 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import Modal from "../../Modal/Modal";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaSearch } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
+import { uploadImage } from "../../../Utilities/uploadImage";
+import Toast from "../../Toast/Toast";
+import MovieValidator from "../../../Validators/MovieValidator";
+import { updateContent } from "../../../Utilities/updateContent";
 
 function EditBtn({ data }) {
-
   const [title, setTitle] = useState(data.title);
   const [releaseYear, setReleaseYear] = useState(data.releaseYear);
   const [director, setDirector] = useState(data.director);
@@ -18,7 +21,7 @@ function EditBtn({ data }) {
   const [bannerFile, setBannerFile] = useState(null);
   const [bannerFileTitle, setBannerFileTitle] = useState(data.banner);
   const [trailerFile, setTrailerFile] = useState(null);
-  const [trailerFileTitle, setTrailerFileTitle] = useState(data.banner);
+  const [trailerFileTitle, setTrailerFileTitle] = useState(data.trailer);
   const [genre, setGenre] = useState("");
   const [totalGenres, setTotalGenres] = useState(data.genres);
   const [totalScreenshots, setTotalScreenshots] = useState(data.screenshots);
@@ -33,9 +36,104 @@ function EditBtn({ data }) {
       </button>
     );
   };
+  const editHandler = async () => {
+    const validator = MovieValidator.safeParse({
+      title,
+      releaseYear,
+      director,
+      duration,
+      bannerDesc,
+      overview,
+      rating,
+      ageRating,
+      // posterFile,
+      // bannerFile,
+      // trailerFile,
+      totalGenres,
+      totalScreenshots,
+      isFeatured,
+      isTrend,
+    });
+    if (validator.success) {
+      const updatedData = {
+        title,
+        releaseYear,
+        director,
+        duration,
+        bannerDescription: bannerDesc,
+        overview,
+        rating,
+        ageRating,
+        genres: totalGenres,
+        screenshots: totalScreenshots,
+        featured: isFeatured,
+        trending: isTrend,
+      };
+      if (posterFile) {
+        const newPoster = await uploadImage(
+          posterFile,
+          title.split(" ").join(""),
+        );
+        if (!newPoster) {
+          Toast({
+            children: "Something went wrong. Please try again.",
+            isError: true,
+          });
+          return;
+        }
 
+        updatedData.poster = newPoster;
+      }
+      if (bannerFile) {
+        const newBanner = await uploadImage(
+          bannerFile,
+          title.split(" ").join(""),
+        );
+        if (!newBanner) {
+          Toast({
+            children: "Something went wrong. Please try again.",
+            isError: true,
+          });
+          return;
+        }
+
+        updatedData.banner = newBanner;
+      }
+      if (trailerFile) {
+        const newTrailer = await uploadImage(
+          trailerFile,
+          title.split(" ").join(""),
+        );
+        if (!newTrailer) {
+          Toast({
+            children: "Something went wrong. Please try again.",
+            isError: true,
+          });
+          return;
+        }
+
+        updatedData.trailer = newTrailer;
+      }
+      const updateStatus = await updateContent(
+        data._id,
+        updatedData,
+        "/api/movies",
+      );
+      Toast(updateStatus);
+      return;
+    }
+    Toast({ children: validator.error.issues[0].message });
+  };
+  const removeScreenshot = (value) => {
+    const newScreenshots = totalScreenshots.filter((item) => item !== value);
+    setTotalScreenshots(newScreenshots);
+  };
+  const removeGenre = (value) => {
+    const newGenres = totalGenres.filter((item) => item !== value);
+    setTotalGenres(newGenres);
+  };
   return (
-    <Modal data={data} Trigger={EditBtn} title={"Edit Content"}>
+    <Modal onSubmit={editHandler} Trigger={EditBtn} title={"Edit Content"}>
       <div className="space-y-5">
         {/* Basic Information */}
         <section>
@@ -127,54 +225,64 @@ function EditBtn({ data }) {
         {/* Media */}
         <section>
           <div className="grid grid-cols-1 gap-4 text-sm">
-            <div className="flex items-center gap-2">
-              <input
-                value={posterFileTitle}
-                className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border rounded-xl outline-hidden placeholder:text-text-secondary/50"
-                placeholder="Upload poster"
-                readOnly
-              ></input>
-              <label
-                htmlFor={id + "poster"}
-                className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
-              >
-                Upload
-                <input
-                  accept="image/*"
-                  onChange={(event) => {
-                    setPoserFileTitle(event.target.files[0].name);
-                    setPosterFile(event.target.files[0]);
-                  }}
-                  id={id + "poster"}
-                  hidden
-                  type="file"
-                />
+            <div>
+              <label className="mb-2 block text-sm font-medium text-text-primary">
+                Poster
               </label>
+              <div className="flex items-center gap-2">
+                <input
+                  value={posterFileTitle}
+                  className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border rounded-xl outline-hidden placeholder:text-text-secondary/50"
+                  placeholder="Upload poster"
+                  readOnly
+                ></input>
+                <label
+                  htmlFor={id + "poster"}
+                  className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
+                >
+                  Upload
+                  <input
+                    accept="image/*"
+                    onChange={(event) => {
+                      setPoserFileTitle(event.target.files[0].name);
+                      setPosterFile(event.target.files[0]);
+                    }}
+                    id={id + "poster"}
+                    hidden
+                    type="file"
+                  />
+                </label>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <input
-                value={bannerFileTitle}
-                className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border outline-hidden rounded-xl placeholder:text-text-secondary/50"
-                placeholder="Upload banner"
-                readOnly
-              ></input>
-              <label
-                htmlFor={id + "banner"}
-                className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
-              >
-                Upload
-                <input
-                  accept="image/*"
-                  onChange={(event) => {
-                    setBannerFileTitle(event.target.files[0].name);
-                    setBannerFile(event.target.files[0]);
-                  }}
-                  id={id + "banner"}
-                  hidden
-                  type="file"
-                />
+            <div>
+              <label className="mb-2 block text-sm font-medium text-text-primary">
+                Banner
               </label>
+              <div className="flex items-center gap-2">
+                <input
+                  value={bannerFileTitle}
+                  className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border outline-hidden rounded-xl placeholder:text-text-secondary/50"
+                  placeholder="Upload banner"
+                  readOnly
+                ></input>
+                <label
+                  htmlFor={id + "banner"}
+                  className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
+                >
+                  Upload
+                  <input
+                    accept="image/*"
+                    onChange={(event) => {
+                      setBannerFileTitle(event.target.files[0].name);
+                      setBannerFile(event.target.files[0]);
+                    }}
+                    id={id + "banner"}
+                    hidden
+                    type="file"
+                  />
+                </label>
+              </div>
             </div>
 
             {/* <div>
@@ -188,29 +296,34 @@ function EditBtn({ data }) {
                   />
                 </div>*/}
 
-            <div className="flex items-center gap-2">
-              <input
-                value={trailerFileTitle}
-                className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border outline-hidden rounded-xl placeholder:text-text-secondary/50"
-                placeholder="Upload trailer"
-                readOnly
-              ></input>
-              <label
-                htmlFor={id + "banner"}
-                className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
-              >
-                Upload
-                <input
-                  accept="video/*"
-                  onChange={(event) => {
-                    setTrailerFileTitle(event.target.files[0].name);
-                    setTrailerFile(event.target.files[0]);
-                  }}
-                  id={id + "banner"}
-                  hidden
-                  type="file"
-                />
+            <div>
+              <label className="mb-2 block text-sm font-medium text-text-primary">
+                Trailer
               </label>
+              <div className="flex items-center gap-2">
+                <input
+                  value={trailerFileTitle}
+                  className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border outline-hidden rounded-xl placeholder:text-text-secondary/50"
+                  placeholder="Upload trailer"
+                  readOnly
+                ></input>
+                <label
+                  htmlFor={id + "trailer"}
+                  className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
+                >
+                  Upload
+                  <input
+                    accept="video/*"
+                    onChange={async (event) => {
+                      setTrailerFileTitle(event.target.files[0].name);
+                      setTrailerFile(event.target.files[0]);
+                    }}
+                    id={id + "trailer"}
+                    hidden
+                    type="file"
+                  />
+                </label>
+              </div>
             </div>
           </div>
         </section>
@@ -248,9 +361,22 @@ function EditBtn({ data }) {
 
         {/* Genres */}
         <section>
+          <label className="mb-2 block text-sm font-medium text-text-primary">
+            Genres
+          </label>
           <div className="flex gap-2">
             <input
               value={genre}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  if (!genre) {
+                    Toast({ children: "Please enter a genre first" });
+                    return;
+                  }
+                  setGenre("");
+                  setTotalGenres((prev) => [...prev, genre]);
+                }
+              }}
               onInput={(event) => setGenre(event.target.value)}
               type="text"
               placeholder="e.g. Sci-Fi"
@@ -264,7 +390,7 @@ function EditBtn({ data }) {
                   return;
                 }
                 setGenre("");
-                setTotalGenres((prev) => [...prev, { title: genre }]);
+                setTotalGenres((prev) => [...prev, genre]);
               }}
               type="button"
               className="rounded-xl bg-primary px-5 text-sm font-medium text-white transition-colors duration-300 hover:bg-cta-primary/70 bg-cta-primary cursor-pointer"
@@ -273,16 +399,17 @@ function EditBtn({ data }) {
             </button>
           </div>
 
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="max-sm:text-[10px]! text-sm mt-3 flex flex-wrap gap-2">
             {totalGenres.map((item, index) => {
               return (
                 <span
                   key={index}
-                  className="animate-fadeIn flex items-center gap-2 rounded-lg bg-input-bg/50 text-text-secondary   px-3 py-1.5 text-sm text-primary"
+                  className="animate-fadeIn flex items-center gap-2 rounded-lg bg-input-bg/50 text-text-secondary px-3 max-sm:px-2 max-sm:py-1 py-1.5 text-primary"
                 >
                   {item}
                   <button
-                    className="hover:bg-input-border/40 rounded-full w-6 h-6 inline-flex justify-center items-center text-xs transition-colors duration-300 cursor-pointer"
+                    onClick={() => removeGenre(item)}
+                    className="hover:bg-input-border/40 max-sm:w-4 max-sm:h-4 rounded-full w-6 h-6 inline-flex justify-center items-center transition-colors duration-300 cursor-pointer"
                     type="button"
                   >
                     ✕
@@ -313,38 +440,87 @@ function EditBtn({ data }) {
 
         {/* Screenshots */}
         <section>
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex flex-wrap gap-2">
-              {totalScreenshots.map((item, index) => {
-                return (
-                  <span
-                    key={index}
-                    className="max-w-40 truncate flex items-center gap-2 rounded-lg bg-input-bg/50 text-text-secondary   px-3 py-1.5 text-sm text-primary"
-                  >
-                    {item}
-                    <button
-                      className="hover:bg-input-border/40 rounded-full w-6 h-6 inline-flex justify-center items-center text-xs transition-colors duration-300 cursor-pointer"
-                      type="button"
+          <label className="mb-2 block text-sm font-medium text-text-primary">
+            Screenshots
+          </label>
+          <div className="flex flex-col items-center justify-between gap-2">
+            {totalScreenshots.length !== 0 ? (
+              <div className="grid grid-cols-1 flex-wrap gap-2">
+                {totalScreenshots.map((item, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className="group text-text-secondary relative col-span-1 flex w-full items-center gap-2 truncate rounded-lg bg-input-bg/50 px-3 py-3 text-sm text-primary max-sm:text-xs max-sm:leading-2"
                     >
-                      ✕
-                    </button>
-                  </span>
-                );
-              })}
-            </div>
+                      {item}
+
+                      <div className="ml-auto inline-flex items-center justify-center rounded-lg text-xs transition-all duration-300 opacity-0 group-hover:opacity-100 hover:bg-input-border/50 absolute inset-0 h-full w-full">
+                        <button
+                          onClick={() => removeScreenshot(item)}
+                          className="hover:bg-bg-primary/50 rounded-full transition-colors duration-300 cursor-pointer h-6 w-6"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    </span>
+                  );
+                })}
+              </div>
+            ) : (
+              <span className="w-full rounded-lg text-center py-3 bg-linear-to-br from-cta-primary/10 via-transparent to-cta-primary/10 text-sm text-text-primary">
+                No screenshots added yet.
+              </span>
+            )}
 
             <label
               htmlFor={id + "screenshot"}
-              className="flex items-center justify-center px-3 py-2 rounded-xl bg-primary text-sm font-medium text-white transition-colors duration-300 hover:bg-cta-primary/70 bg-cta-primary cursor-pointer"
+              className="w-full flex items-center justify-center px-3 py-2 rounded-xl bg-primary text-sm font-medium text-white transition-colors duration-300 hover:bg-cta-primary/70 bg-cta-primary cursor-pointer"
             >
               Upload
-              <input hidden type="file" id={id + "screenshot"} />
+              <input
+                onChange={async (event) => {
+                  if (totalScreenshots.length === 4) {
+                    Toast({
+                      children: "You can upload up to 4 screenshots only.",
+                    });
+                    return;
+                  }
+                  if (!title) {
+                    Toast({
+                      children: "Please enter the content title first.",
+                    });
+                    return;
+                  }
+                  const newScreenShot = await uploadImage(
+                    event.target.files[0],
+                    title.split(" ").join(""),
+                  );
+                  if (!newScreenShot) {
+                    Toast({
+                      children:
+                        "Failed to upload the screenshot. Please try again.",
+                    });
+                    return;
+                  }
+                  setTotalScreenshots((prev) => [...prev, newScreenShot]);
+                  Toast({
+                    children: "Screenshot added successfully.",
+                    isError: false,
+                  });
+                }}
+                hidden
+                type="file"
+                id={id + "screenshot"}
+              />
             </label>
           </div>
         </section>
 
         {/* Options */}
         <section>
+          <label className="mb-4 block text-sm font-medium text-text-primary">
+            Options
+          </label>
           <div className="flex gap-6">
             <div className="flex items-center text-text-secondary text-xs">
               <label

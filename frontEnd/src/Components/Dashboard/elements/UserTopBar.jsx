@@ -6,7 +6,7 @@ function UserTopBar({ username, role, imageUrl, loading }) {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <header className="max-md:ml-0 max-md:mr-0 sticky top-0 z-40 flex h-15 items-center justify-between border-b border-input-border bg-input-bg px-6">
+    <header className="max-sm:hidden max-md:ml-0 max-md:mr-0 sticky top-0 z-40 flex h-15 items-center justify-between border-b border-input-border bg-input-bg px-6">
       <div className="flex items-center justify-between  ml-60 w-full">
         <div>
           <h1 className="text-lg font-semibold text-white">Welcome Back 👋</h1>

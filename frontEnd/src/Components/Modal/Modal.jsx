@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Modal({ children, Trigger, title, data, onSubmit }) {
+function Modal({ children, Trigger, title, onSubmit }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>

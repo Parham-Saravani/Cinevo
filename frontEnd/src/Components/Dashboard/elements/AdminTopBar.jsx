@@ -4,7 +4,7 @@ import DefaultUserProfileImage from "/profile/default.webp";
 function AdminTopBar({ username, role, imageUrl, loading }) {
   const [imageLoading, setImageLoading] = useState(true);
   return (
-    <header className="sticky top-0 z-40 flex py-2 border-b border-input-border bg-input-bg px-6">
+    <header className="max-sm:hidden sticky top-0 z-40 flex py-2 border-b border-input-border bg-input-bg px-6">
       <div className="flex items-center justify-between max-md:ml-0 max-md:mr-0 ml-60 w-full">
         <div className="flex items-center gap-4">
           <div className="hidden lg:block">

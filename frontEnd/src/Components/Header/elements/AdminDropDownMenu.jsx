@@ -3,7 +3,7 @@ import { Link } from "react-router";
 function AdminDropDownMenu({isOpen , onLogout}) {
   return (
     <div
-      className={`${isOpen ? "opacity-100 block" : "hidden opacity-0"} absolute text-text-secondary top-full right-0 mt-2 w-56 bg-input-bg border border-input-border rounded-xl overflow-hidden`}
+      className={`${isOpen ? "opacity-100 block" : "hidden opacity-0"} z-100 absolute text-text-secondary top-full right-0 mt-2 w-56 bg-input-bg border border-input-border rounded-xl overflow-hidden`}
     >
       <Link
         to={"/admin"}

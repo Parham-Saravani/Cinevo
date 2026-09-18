@@ -2,8 +2,9 @@ import { FaCheck } from "react-icons/fa";
 import { useEffect, useId } from "react";
 import { useState } from "react";
 import { baseUrl } from "../../../Utilities/constants";
-import { upload } from "@imagekit/react";
 import Toast from "../../Toast/Toast";
+import { uploadImage } from "../../../Utilities/uploadImage";
+import MovieValidator from "../../../Validators/MovieValidator";
 
 function AddMovieModal({ isAddModalOpen, setModalStatus }) {
   const id = useId();
@@ -19,6 +20,15 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
   const [bannerFileTitle, setBannerFileTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [totalGenres, setTotalGenres] = useState([]);
+  const [totalScreenshots, setTotalScreenshots] = useState([]);
+  const [bannerDesc, setBannerDesc] = useState("");
+  const [overview, setOverview] = useState("");
+  const [trailerFile, setTrailerFile] = useState(null);
+  const [trailerFileTitle, setTrailerFileTitle] = useState("");
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [isTrend, setIsTrend] = useState(false);
+
+  const [finalUpdatedData, setFinalUpdatedData] = useState({});
 
   useEffect(() => {
     setTitle("");
@@ -32,35 +42,50 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
     setBannerFile(null);
     setBannerFileTitle("");
     setTotalGenres([]);
+
+    setTotalScreenshots([]);
+    setBannerDesc("");
+    setOverview("");
+    setTrailerFile(null);
+    setTrailerFileTitle("");
+    setIsFeatured(false);
+    setIsTrend(false);
   }, []);
 
   const registernNewMovie = async () => {
-    try {
-      const imagekitData1 = await fetch(`${baseUrl}/api/discover/imagekit`);
-      const imagekitData2 = await fetch(`${baseUrl}/api/discover/imagekit`);
-      const { token, expire, publicKey, signature } =
-        await imagekitData1.json();
-      const { token2, expire2, publicKey2, signature2 } =
-        await imagekitData1.json();
-      const uploads = await Promise.all([
-        upload({
-          token,
-          expire,
-          publicKey,
-          signature,
-          file: posterFile,
-          fileName: posterFileTitle,
-        }),
-        upload({
-          token2,
-          expire2,
-          publicKey2,
-          signature2,
-          file: bannerFile,
-          fileName: bannerFileTitle,
-        }),
-      ]);
-    } catch (error) {}
+    const data = addMovieValidator.safeParse({
+      title,
+      releaseYear: Number(releaseYear),
+      director,
+      duration,
+      rating: Number(rating),
+      ageRating,
+      posterFile,
+      bannerFile,
+      trailerFile,
+      totalGenres,
+      totalScreenshots,
+      bannerDesc,
+      overview,
+      isFeatured,
+      isTrend,
+    });
+    console.log(data);
+
+    if (data.success) {
+      const posterUrl = await uploadImage(
+        posterFile,
+        title.split(" ").join(""),
+      );
+      return;
+    }
+
+    Toast({ children: data.error.issues[0].message });
+  };
+
+  const removeScreenshot = (id) => {
+    const newData = totalScreenshots.filter((item) => item.id !== id);
+    setTotalScreenshots(newData);
   };
   const removeGenreItem = (id) => {
     const newData = totalGenres.filter((item) => item.id !== id);
@@ -141,7 +166,7 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
 
               <div>
                 <label className="mb-2 block text-sm font-medium text-text-primary">
-                  Duration{" "}
+                  Duration
                   <span className="text-xs text-text-secondary">
                     (must be in minutes)
                   </span>
@@ -160,6 +185,7 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                   Rating
                 </label>
                 <input
+                  inputMode="numeric"
                   value={rating}
                   onInput={(event) => setRating(event.target.value)}
                   type="text"
@@ -204,6 +230,7 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                 >
                   Upload
                   <input
+                    accept="image/*"
                     onChange={(event) => {
                       setPoserFileTitle(event.target.files[0].name);
                       setPosterFile(event.target.files[0]);
@@ -228,6 +255,7 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                 >
                   Upload
                   <input
+                    accept="image/*"
                     onChange={(event) => {
                       setBannerFileTitle(event.target.files[0].name);
                       setBannerFile(event.target.files[0]);
@@ -248,18 +276,32 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                     placeholder="https://..."
                     className="h-11 w-full rounded-xl border border-input-border bg-input-bg px-4 text-sm text-text-primary outline-none transition placeholder:text-text-secondary/50 focus:border-primary"
                   />
-                </div>
+                </div>*/}
 
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-text-primary">
-                    Trailer URL
-                  </label>
+              <div className="flex items-center gap-2">
+                <input
+                  value={trailerFileTitle}
+                  className="text-text-primary focus:border-input-border-focus transition-colors duration-300 py-3 px-4 w-full bg-input-bg border border-input-border outline-hidden rounded-xl placeholder:text-text-secondary/50"
+                  placeholder="Upload trailer"
+                  readOnly
+                ></input>
+                <label
+                  htmlFor={id + "banner"}
+                  className="py-2 px-2 bg-cta-primary rounded-xl hover:bg-cta-primary/70 transition-colors duration-300 cursor-pointer block text-sm font-medium text-text-primary"
+                >
+                  Upload
                   <input
-                    type="text"
-                    placeholder="https://..."
-                    className="h-11 w-full rounded-xl border border-input-border bg-input-bg px-4 text-sm text-text-primary outline-none transition placeholder:text-text-secondary/50 focus:border-primary"
+                    accept=".mp4"
+                    onChange={(event) => {
+                      setTrailerFileTitle(event.target.files[0].name);
+                      setTrailerFile(event.target.files[0]);
+                    }}
+                    id={id + "banner"}
+                    hidden
+                    type="file"
                   />
-                </div> */}
+                </label>
+              </div>
             </div>
           </section>
 
@@ -275,7 +317,9 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                   Overview
                 </label>
                 <textarea
-                  rows="4"
+                  value={overview}
+                  onInput={(event) => setOverview(event.target.value)}
+                  rows="6"
                   placeholder="Write a short description about the movie..."
                   className="focus:border-input-border-focus transition-colors duration-300 w-full resize-none rounded-xl border border-input-border bg-input-bg p-4 text-sm text-text-primary outline-none placeholder:text-text-secondary/50 focus:border-primary"
                 />
@@ -286,7 +330,9 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                   Banner Description
                 </label>
                 <textarea
-                  rows="4"
+                  value={bannerDesc}
+                  onInput={(event) => setBannerDesc(event.target.value)}
+                  rows="6"
                   placeholder="Description displayed on the hero banner..."
                   className="focus:border-input-border-focus transition-colors duration-300 w-full resize-none rounded-xl border border-input-border bg-input-bg p-4 text-sm text-text-primary outline-none placeholder:text-text-secondary/50 focus:border-primary"
                 />
@@ -303,6 +349,19 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
             <div className="flex gap-2">
               <input
                 value={genre}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    if (!genre) {
+                      Toast({ children: "Please enter a genre first" });
+                      return;
+                    }
+                    setGenre("");
+                    setTotalGenres((prev) => [
+                      ...prev,
+                      { id: crypto.randomUUID(), title: genre },
+                    ]);
+                  }
+                }}
                 onInput={(event) => setGenre(event.target.value)}
                 type="text"
                 placeholder="e.g. Sci-Fi"
@@ -374,26 +433,24 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
             </h3>
 
             <div className="flex items-center justify-between gap-2">
-              <div className="flex flex-wrap gap-2">
-                <span className="flex items-center gap-2 rounded-lg bg-input-bg/50 text-text-secondary   px-3 py-1.5 text-sm text-primary">
-                  Screenshot 1
-                  <button
-                    className="hover:bg-input-border/40 rounded-full w-6 h-6 inline-flex justify-center items-center text-xs transition-colors duration-300 cursor-pointer"
-                    type="button"
-                  >
-                    ✕
-                  </button>
-                </span>
-
-                <span className="flex items-center gap-2 rounded-lg bg-input-bg/50 text-text-secondary   px-3 py-1.5 text-sm text-primary">
-                  Screenshot 2
-                  <button
-                    className="hover:bg-input-border/40 rounded-full w-6 h-6 inline-flex justify-center items-center text-xs transition-colors duration-300 cursor-pointer"
-                    type="button"
-                  >
-                    ✕
-                  </button>
-                </span>
+              <div className="flex flex-wrap gap-2 rounded-xl border border-input-border bg-input-bg px-4 py-2 text-sm text-text-primary min-h-11 h-fit w-full">
+                {totalScreenshots.map((item, index) => {
+                  return (
+                    <span
+                      key={item.id}
+                      className="flex items-center gap-2 rounded-lg bg-bg-primary/50 text-text-secondary px-3 py-1.5 text-sm text-primary"
+                    >
+                      Screenshot {index + 1}
+                      <button
+                        onClick={() => removeScreenshot(item.id)}
+                        className="hover:bg-input-border/40 rounded-full w-6 h-6 inline-flex justify-center items-center text-xs transition-colors duration-300 cursor-pointer"
+                        type="button"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  );
+                })}
               </div>
 
               <label
@@ -401,7 +458,18 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                 className="flex items-center justify-center px-3 py-2 rounded-xl bg-primary text-sm font-medium text-white transition-colors duration-300 hover:bg-cta-primary/70 bg-cta-primary cursor-pointer"
               >
                 Upload
-                <input hidden type="file" id={id + "screenshot"} />
+                <input
+                  accept="image/*"
+                  onChange={(event) => {
+                    setTotalScreenshots((prev) => [
+                      ...prev,
+                      { id: crypto.randomUUID(), file: event.target.files[0] },
+                    ]);
+                  }}
+                  hidden
+                  type="file"
+                  id={id + "screenshot"}
+                />
               </label>
             </div>
           </section>
@@ -419,6 +487,8 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                   className="h-4 w-4 bg-input-border/50 rounded-md text-transparent flex cursor-pointer justify-center items-center gap-3 text-sm transition-colors featured-checkbox mr-1.5"
                 >
                   <input
+                    checked={isFeatured}
+                    onChange={(event) => setIsFeatured(event.target.checked)}
                     id={id + "featured"}
                     hidden
                     type="checkbox"
@@ -435,6 +505,8 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
                   className="h-4 w-4 bg-input-border/50 rounded-md text-transparent flex cursor-pointer justify-center items-center gap-3 text-sm transition-colors trending-checkbox mr-1.5"
                 >
                   <input
+                    checked={isTrend}
+                    onChange={(event) => setIsTrend(event.target.checked)}
                     id={id + "trending"}
                     hidden
                     type="checkbox"
