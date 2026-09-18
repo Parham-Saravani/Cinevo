@@ -2,7 +2,7 @@ import { FaComments } from "react-icons/fa6";
 
 function EmptyAdminCommentsDashboard() {
   return (
-    <div className="absolute right-0 left-0 animate-fadeIn flex flex-col items-center justify-center px-6 py-20 text-center">
+    <div className="animate-fadeIn flex flex-col items-center justify-center px-6 py-20 text-center">
       <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-input-border/30">
         <FaComments className="text-3xl text-text-secondary" />
       </div>

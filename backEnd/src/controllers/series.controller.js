@@ -3,7 +3,7 @@ const takeAllSeries = async (req, res) => {
   const series = await Serie.find(
     {},
     {
-         title: true,
+      title: true,
       slug: true,
       type: true,
       genres: true,
@@ -29,10 +29,10 @@ const takeSerie = async (req, res) => {
   const title = req.params.title;
   try {
     const serieData = await Serie.findOne({ slug: title });
-    if(!serieData) throw new Error('NOT_FOUND')
+    if (!serieData) throw new Error("NOT_FOUND");
     res.json(serieData);
   } catch (error) {
-    res.json({ message: error.message});
+    res.json({ message: error.message });
   }
 };
 
@@ -100,5 +100,17 @@ const filters = async (req, res) => {
     res.json(data);
   }
 };
-
-export { takeAllSeries, takeSerie, takeAllYears, takeAllGenres, filters };
+const removeSeries = async (req, res) => {
+  const { id } = req.body;
+  if (id) {
+    try {
+      await Serie.deleteOne({ _id: id });
+      res.json({ message: "CONTENT_DELETED" });
+    } catch (error) {
+      res.json({ message: "TRY_AGAIN" });
+    }
+  } else {
+    res.json({ message: "ID_NOT_FOUND" });
+  }
+};
+export { takeAllSeries, takeSerie, takeAllYears, takeAllGenres, filters , removeSeries};

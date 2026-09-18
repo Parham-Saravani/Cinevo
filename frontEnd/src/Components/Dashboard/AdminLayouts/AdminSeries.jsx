@@ -2,11 +2,21 @@ import { useEffect, useState } from "react";
 import { baseUrl } from "../../../Utilities/constants";
 import LoadingCard from "../../Loader/LoadingCard";
 import ContentCard from "../elements/ContentCard";
+import { removeContent as removeSeries } from "../../../Utilities/removeContent";
+import Toast from "../../Toast/Toast";
+import EmptyAdminSeriesDashboard from "../../Empty/EmptyAdminSeriesDashboard";
 
 function AdminSeries() {
   const [series, setSeries] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const removeContent = async (_id) => {
+    const value = await removeSeries(_id, "/api/series");
+    Toast(value);
+    const filteredMovies = series.filter((item) => item._id !== _id);
+    setSeries(filteredMovies);
+  };
 
   useEffect(() => {
     (async () => {
@@ -37,15 +47,24 @@ function AdminSeries() {
           Manage all TV series and episodes.
         </p>
       </div>
-      <div className="grid gap-3 grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-4 max-sm:grid-cols-3">
-        {series.length === 0
-          ? Array.from({ length: 7 }).map((_, index) => {
-              return <LoadingCard key={index} />;
-            })
-          : series.map((item) => {
-              return <ContentCard key={item._id} data={item} />;
-            })}
-      </div>
+      {series.length !== 0 && (
+        <div className="grid gap-3 grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-4 max-sm:grid-cols-3">
+          {loading && series.length === 0
+            ? Array.from({ length: 7 }).map((_, index) => {
+                return <LoadingCard key={index} />;
+              })
+            : series.map((item) => {
+                return (
+                  <ContentCard
+                    onRemove={removeContent}
+                    key={item._id}
+                    data={item}
+                  />
+                );
+              })}
+        </div>
+      )}
+      {series.length === 0 && <EmptyAdminSeriesDashboard />}
     </section>
   );
 }
