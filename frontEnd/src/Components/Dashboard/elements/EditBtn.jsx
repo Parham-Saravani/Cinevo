@@ -443,7 +443,7 @@ function EditBtn({ data }) {
           <label className="mb-2 block text-sm font-medium text-text-primary">
             Screenshots
           </label>
-          <div className="flex flex-col items-center justify-between gap-2">
+          <div className="flex w-full flex-col items-center justify-between gap-2">
             {totalScreenshots.length !== 0 ? (
               <div className="grid grid-cols-1 flex-wrap gap-2">
                 {totalScreenshots.map((item, index) => {
@@ -565,38 +565,4 @@ function EditBtn({ data }) {
 }
 
 export default EditBtn;
-{
-  /* <form className="space-y-4">
-        <div>
-          <label className="mb-2 block text-sm text-gray-300">Title</label>
 
-          <input
-            type="text"
-            defaultValue="Stranger Things"
-            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none focus:border-cta-primary"
-          />
-        </div>
-
-        <div>
-          <label className="mb-2 block text-sm text-gray-300">Genre</label>
-
-          <input
-            type="text"
-            defaultValue="Sci-Fi"
-            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none focus:border-cta-primary"
-          />
-        </div>
-
-        <div>
-          <label className="mb-2 block text-sm text-gray-300">
-            Description
-          </label>
-
-          <textarea
-            rows={5}
-            className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none focus:border-cta-primary"
-            defaultValue="A group of kids uncover supernatural mysteries in their small town."
-          />
-        </div>
-      </form> */
-}

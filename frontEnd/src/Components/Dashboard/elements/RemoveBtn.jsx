@@ -15,13 +15,19 @@ function RemoveBtn({ data, onRemove }) {
       Trigger={RemoveBtn}
       title={"Delete Content"}
     >
-      <p className="mt-3  text-gray-400 text-center leading-8">
-        Are you sure you want to delete
-        <kbd className=" ml-2 font-semibold text-red-600 bg-red-600/10 rounded-md px-2 py-1">
-          {data.title}
-        </kbd>
-        This action cannot be undone.
-      </p>
+      <div className="mt-4 text-center">
+        <p className="text-sm text-text-secondary">
+          You are about to permanently delete:
+        </p>
+
+        <div className="mt-3 rounded-xl border border-red-500/20 bg-red-500/10 p-3">
+          <p className="truncate font-medium text-red-500">{data.title}</p>
+        </div>
+
+        <p className="mt-3 text-xs text-text-secondary">
+          This action cannot be undone.
+        </p>
+      </div>
     </Modal>
   );
 }

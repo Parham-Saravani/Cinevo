@@ -95,9 +95,9 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
     <div
       className={`${isAddModalOpen ? "animate-fadeIn fixed" : "hidden"} z-100 fixed inset-0  flex items-center transition-all duration-300 justify-center bg-black/70 p-4 backdrop-blur-sm`}
     >
-      <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-input-border bg-bg-primary p-6 shadow-2xl hide-scroll">
+      <div className="max-h-[90vh] w-full max-w-4xl overflow-hidden flex flex-col rounded-2xl border border-input-border bg-bg-primary shadow-2xl hide-scroll">
         {/* Header */}
-        <div className="mb-7 flex items-center justify-between">
+        <div className="border-b border-input-border p-5 flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-text-primary">
               Add New Movie
@@ -117,7 +117,7 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
           </button>
         </div>
 
-        <div className="space-y-5">
+        <main className="space-y-5 p-6 overflow-y-auto hide-scroll">
           {/* Basic Information */}
           <section>
             <h3 className="mb-4 text-lg font-semibold text-text-primary">
@@ -518,26 +518,25 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
               </div>
             </div>
           </section>
+        </main>
 
-          {/* Footer */}
-          <div className="flex justify-end gap-3 border-t border-input-border pt-5">
-            <button
-              onClick={() => setModalStatus(false)}
-              type="button"
-              className="cursor-pointer rounded-xl border border-input-border px-5 py-2.5 text-sm font-medium text-text-secondary transition-colors duration-300 hover:bg-input-border/20 hover:text-text-primary"
-            >
-              Cancel
-            </button>
+        <footer className="flex justify-end gap-3 border-t border-input-border p-6 pt-5">
+          <button
+            onClick={() => setModalStatus(false)}
+            type="button"
+            className="cursor-pointer rounded-xl border border-input-border px-5 py-2.5 text-sm font-medium text-text-secondary transition-colors duration-300 hover:bg-input-border/20 hover:text-text-primary"
+          >
+            Cancel
+          </button>
 
-            <button
-              onClick={registernNewMovie}
-              type="button"
-              className="cursor-pointer bg-cta-primary hover:bg-cta-primary/70 rounded-xl bg-primary px-6 py-2.5 text-sm font-medium text-white transition-colors duration-300"
-            >
-              Create Movie
-            </button>
-          </div>
-        </div>
+          <button
+            onClick={registernNewMovie}
+            type="button"
+            className="cursor-pointer bg-cta-primary hover:bg-cta-primary/70 rounded-xl bg-primary px-6 py-2.5 text-sm font-medium text-white transition-colors duration-300"
+          >
+            Create Movie
+          </button>
+        </footer>
       </div>
     </div>
   );
