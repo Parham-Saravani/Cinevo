@@ -14,30 +14,32 @@ function AdminSettings() {
   const [updatedData, setUpdatedData] = useState({});
 
   useEffect(() => {
-    (async () => {
-      try {
-        const token = getCookie("auth-token");
-        const repsonse = await fetch(`${baseUrl}/api/user/update`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token, data: updatedData }),
-        });
-        if (!repsonse.ok) {
-          console.log("errorr");
-          return;
+    if (Boolean(Object.keys(updatedData).length)) {
+      (async () => {
+        try {
+          const token = getCookie("auth-token");
+          const repsonse = await fetch(`${baseUrl}/api/user/update`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token, data: updatedData }),
+          });
+          if (!repsonse.ok) {
+            console.log("errorr");
+            return;
+          }
+          setLoading(false);
+          const data = await repsonse.json();
+          setProfileImagePreview(null);
+          setAdminUsername("");
+          setAdminEmail("");
+          Toast({ children: "Profile updated successfully.", isError: false });
+        } catch (error) {
+          console.log(error);
         }
-        setLoading(false);
-        const data = await repsonse.json();
-        setProfileImagePreview(null);
-        setAdminUsername("");
-        setAdminEmail("");
-        Toast({ children: "Profile updated successfully.", isError: false });
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+      })();
+    }
   }, [updatedData]);
 
   const updateAccountDetail = async () => {

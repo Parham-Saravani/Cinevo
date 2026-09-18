@@ -3,10 +3,12 @@ import { useState } from "react";
 import removeCookie from "../../../Utilities/Cookie/removeCookie";
 import AdminDropDownMenu from "./AdminDropDownMenu";
 import UserDropDownMenu from "./UserDropDownMenu";
+import DefaultProfileImage from "/profile/default.webp"
 
 function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const changeMenuStatus = () => {
     setIsOpen(!isOpen);
@@ -27,8 +29,10 @@ function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
         className="max-w-40 cursor-pointer flex items-center gap-3 bg-input-bg border border-input-border hover:border-input-border-hover px-2.5 py-1.5 rounded-full transition-colors duration-300"
       >
         <img
-          src={imageUrl ? imageUrl : "/profile/default.webp"}
-          className="size-8 rounded-full object-cover"
+          onLoad={() => setIsLoading(false)}
+          onError={(event) => event.target.src = DefaultProfileImage}
+          src={imageUrl}
+          className={`size-8 rounded-full object-cover ${isLoading ? "bg-gray-700 animate-pulse" : ""}`}
           alt="Profile"
         />
 
@@ -46,7 +50,7 @@ function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
       {role === "admin" ? (
         <AdminDropDownMenu isOpen={isOpen} onLogout={logOut} />
       ) : (
-        <UserDropDownMenu isOpen={isOpen}  onLogout={logOut}/>
+        <UserDropDownMenu isOpen={isOpen} onLogout={logOut} />
       )}
     </div>
   );

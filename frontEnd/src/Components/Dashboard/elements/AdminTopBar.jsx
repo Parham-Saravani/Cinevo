@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DefaultUserProfileImage from "/profile/default.webp";
 
-function AdminTopBar({ username, role, imageUrl }) {
+function AdminTopBar({ username, role, imageUrl, loading }) {
   const [imageLoading, setImageLoading] = useState(true);
   return (
     <header className="sticky top-0 z-40 flex py-2 border-b border-input-border bg-input-bg px-6">
@@ -23,14 +23,20 @@ function AdminTopBar({ username, role, imageUrl }) {
             }}
             src={imageUrl && imageUrl ? imageUrl : DefaultUserProfileImage}
             alt="profile-Image"
-            className={`${imageLoading ? "bg-gray-900 animate-pulse" : ""} object-cover size-9 rounded-full`}
+            className={`${imageLoading ? "bg-gray-700 animate-pulse" : ""} object-cover size-9 rounded-full`}
           />
 
           <div>
-            <h3 className="text-sm font-medium text-white">
+            <h3
+              className={`text-sm font-medium text-white ${loading ? "w-15 h-4 rounded-md bg-gray-700 animate-pulse" : ""}`}
+            >
               {username && username}
             </h3>
-            <p className="text-xs text-text-secondary">Administrator</p>
+            <p
+              className={`text-xs text-text-secondary ${loading ? "w-20 h-4 rounded-md bg-gray-700 animate-pulse" : ""}`}
+            >
+              Administrator
+            </p>
           </div>
         </div>
       </div>

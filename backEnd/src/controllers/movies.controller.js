@@ -16,6 +16,10 @@ const takeAllMovies = async (req, res) => {
       poster: true,
       rating: true,
       bannerDescription: true,
+      trailer: true,
+      screenshots: true,
+      banner: true,
+      overview: true,
       releaseYear: true,
       duration: true,
       ageRating: true,
@@ -103,6 +107,19 @@ const filters = async (req, res) => {
   }
 };
 
+const removeMovie = async (req, res) => {
+  const { id } = req.body;
+  if (id) {
+    try {
+      await Movie.deleteOne({ _id: id });
+      res.json({ message: "CONTENT_DELETED" });
+    } catch (error) {
+      res.json({ message: "TRY_AGAIN" });
+    }
+  } else {
+    res.json({ message: "ID_NOT_FOUND" });
+  }
+};
 export {
   takeAllMovies,
   takeMovieData,
@@ -110,4 +127,5 @@ export {
   takeAllGenres,
   filters,
   registerNewMovie,
+  removeMovie,
 };

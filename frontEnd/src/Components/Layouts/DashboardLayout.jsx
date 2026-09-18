@@ -9,6 +9,7 @@ import UserTopBar from "../Dashboard/elements/UserTopBar";
 function DashboardLayout() {
   const [role, setRole] = useState("");
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = "Dashboard | Cinevo";
@@ -25,11 +26,12 @@ function DashboardLayout() {
           });
           if (!response.ok) throw Error();
           const data = await response.json();
-          console.log(data);
-          
           setUserData(data);
           setRole(data.role);
-        } catch (error) {}
+        } catch (error) {
+        } finally {
+          setLoading(false);
+        }
       })();
     }
   }, []);
@@ -39,9 +41,9 @@ function DashboardLayout() {
       {role === "admin" ? <AdminNavigationMenu /> : <UserNavigationMenu />}
       <main className="max-lg:ml-55 max-md:ml-0 w-full overflow-auto hide-scroll">
         {role === "admin" ? (
-          <AdminTopBar {...userData} />
+          <AdminTopBar loading={loading} {...userData} />
         ) : (
-          <UserTopBar {...userData} />
+          <UserTopBar loading={loading} {...userData} />
         )}
 
         <section className="px-5 max-lg:ml-0 max-md:mr-0 ml-60 py-5">

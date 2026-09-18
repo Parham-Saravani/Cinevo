@@ -3,6 +3,9 @@ import { baseUrl } from "../../../Utilities/constants";
 import LoadingCard from "../../Loader/LoadingCard";
 import ContentCard from "../elements/ContentCard";
 import AddMovieModal from "../elements/AddMovieModal";
+import { removeContent as removeMovie } from "../../../Utilities/removeContent";
+import Toast from "../../Toast/Toast";
+import EmptyAdminMoviesDashboard from "../../Empty/EmptyAdminMoviesDashboard";
 
 function AdminMovies() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -10,7 +13,12 @@ function AdminMovies() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
 
-
+  const removeContent = async (_id) => {
+    const value = await removeMovie(_id, "/api/movies");
+    Toast(value);
+    const filteredMovies = movies.filter((item) => item._id !== _id);
+    setMovies(filteredMovies);
+  };
 
   useEffect(() => {
     (async () => {
@@ -59,15 +67,24 @@ function AdminMovies() {
             Manage all movies available on Cinevo.
           </p>
         </div>
-        <div className="grid gap-3 grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-4 max-sm:grid-cols-3">
-          {loading && movies.length === 0
-            ? Array.from({ length: 6 }).map((_, index) => {
-                return <LoadingCard key={index} />;
-              })
-            : movies.map((item) => {
-                return <ContentCard key={item._id} {...item} />;
-              })}
-        </div>
+        {movies.length !== 0 && (
+          <div className="grid gap-3 grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-4 max-sm:grid-cols-3">
+            {loading && movies.length === 0
+              ? Array.from({ length: 7 }).map((_, index) => {
+                  return <LoadingCard key={index} />;
+                })
+              : movies.map((item) => {
+                  return (
+                    <ContentCard
+                      onRemove={removeContent}
+                      key={item._id}
+                      data={item}
+                    />
+                  );
+                })}
+          </div>
+        )}
+        {movies.length === 0 && <EmptyAdminMoviesDashboard />}
       </section>
       <AddMovieModal
         isAddModalOpen={isAddModalOpen}

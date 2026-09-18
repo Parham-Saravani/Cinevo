@@ -18,7 +18,6 @@ const lineChartData = [
 ];
 function AdminDashboard() {
   const { stats, recentData } = useLoaderData();
-  console.log(recentData);
 
   const pieChartData = [
     { name: "movies", value: stats.moviesCount, fill: "#7c4dff" },

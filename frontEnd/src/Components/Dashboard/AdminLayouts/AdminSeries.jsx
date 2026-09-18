@@ -24,7 +24,9 @@ function AdminSeries() {
   return (
     <section className="space-y-5 animate-fadeIn">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl max-sm:text-2xl font-bold text-text-primary">Series</h1>
+        <h1 className="text-3xl max-sm:text-2xl font-bold text-text-primary">
+          Series
+        </h1>
 
         <button className="bg-cta-primary text-text-primary px-5 py-3 rounded-xl text-sm cursor-pointer hover:bg-cta-primary/70 transition-colors duration-300">
           Add Series
@@ -37,13 +39,13 @@ function AdminSeries() {
       </div>
       <div className="grid gap-3 grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-4 max-sm:grid-cols-3">
         {series.length === 0
-          ? Array.from({ length: 6 }).map((_, index) => {
+          ? Array.from({ length: 7 }).map((_, index) => {
               return <LoadingCard key={index} />;
             })
           : series.map((item) => {
-              return <ContentCard key={item._id} {...item} />;
+              return <ContentCard key={item._id} data={item} />;
             })}
-      </div>{" "}
+      </div>
     </section>
   );
 }

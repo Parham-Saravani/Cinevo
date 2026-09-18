@@ -62,16 +62,13 @@ function AddMovieModal({ isAddModalOpen, setModalStatus }) {
       ]);
     } catch (error) {}
   };
-  useEffect(() => {
-    console.log(totalGenres);
-  }, [totalGenres]);
   const removeGenreItem = (id) => {
     const newData = totalGenres.filter((item) => item.id !== id);
     setTotalGenres(newData);
   };
   return (
     <div
-      className={`${isAddModalOpen ? "animate-fadeIn fixed" : "hidden"} fixed inset-0  flex items-center transition-all duration-300 justify-center bg-black/70 p-4 backdrop-blur-sm`}
+      className={`${isAddModalOpen ? "animate-fadeIn fixed" : "hidden"} z-100 fixed inset-0  flex items-center transition-all duration-300 justify-center bg-black/70 p-4 backdrop-blur-sm`}
     >
       <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl border border-input-border bg-bg-primary p-6 shadow-2xl hide-scroll">
         {/* Header */}
