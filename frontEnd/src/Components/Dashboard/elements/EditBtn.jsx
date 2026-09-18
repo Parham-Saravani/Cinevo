@@ -7,7 +7,7 @@ import Toast from "../../Toast/Toast";
 import MovieValidator from "../../../Validators/MovieValidator";
 import { updateContent } from "../../../Utilities/updateContent";
 
-function EditBtn({ data }) {
+function EditBtn({ data, endPoint }) {
   const [title, setTitle] = useState(data.title);
   const [releaseYear, setReleaseYear] = useState(data.releaseYear);
   const [director, setDirector] = useState(data.director);
@@ -46,14 +46,12 @@ function EditBtn({ data }) {
       overview,
       rating,
       ageRating,
-      // posterFile,
-      // bannerFile,
-      // trailerFile,
       totalGenres,
       totalScreenshots,
       isFeatured,
       isTrend,
     });
+
     if (validator.success) {
       const updatedData = {
         title,
@@ -114,11 +112,7 @@ function EditBtn({ data }) {
 
         updatedData.trailer = newTrailer;
       }
-      const updateStatus = await updateContent(
-        data._id,
-        updatedData,
-        "/api/movies",
-      );
+      const updateStatus = await updateContent(data._id, updatedData, endPoint);
       Toast(updateStatus);
       return;
     }
@@ -565,4 +559,3 @@ function EditBtn({ data }) {
 }
 
 export default EditBtn;
-

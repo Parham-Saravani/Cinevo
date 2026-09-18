@@ -56,6 +56,7 @@ function AdminSeries() {
             : series.map((item) => {
                 return (
                   <ContentCard
+                    endPoint={"/api/series"}
                     onRemove={removeContent}
                     key={item._id}
                     data={item}

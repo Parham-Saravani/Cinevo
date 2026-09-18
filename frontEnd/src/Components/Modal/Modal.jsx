@@ -12,8 +12,8 @@ function Modal({ children, Trigger, title, onSubmit }) {
 
         <div
           className={`${
-            isOpen ? "fixed" : "hidden"
-          }  inset-0 z-100 flex items-center justify-center bg-black/40 p-4 backdrop-blur-md transition-all duration-300`}
+            isOpen ? "visible opacity-100" : "invisible opacity-0"
+          }  inset-0 fixed z-100 flex items-center justify-center bg-black/40 p-4 backdrop-blur-md transition-all duration-300`}
         >
           <div className="flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-input-border bg-bg-primary shadow-2xl">
             {/* Header */}

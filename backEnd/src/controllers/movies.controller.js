@@ -122,7 +122,7 @@ const removeMovie = async (req, res) => {
 };
 const updateMovie = async (req, res) => {
   const { _id: contentID, updateData } = req.body;
-    if (Object.keys(updateData).length) {
+  if (Object.keys(updateData).length) {
     if (contentID) {
       try {
         await Movie.updateOne({ _id: contentID }, updateData);

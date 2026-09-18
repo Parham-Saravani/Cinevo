@@ -113,4 +113,29 @@ const removeSeries = async (req, res) => {
     res.json({ message: "ID_NOT_FOUND" });
   }
 };
-export { takeAllSeries, takeSerie, takeAllYears, takeAllGenres, filters , removeSeries};
+const updateSerie = async (req, res) => {
+  const { _id: contentID, updateData } = req.body;
+  if (Object.keys(updateData).length) {
+    if (contentID) {
+      try {
+        await Serie.updateOne({ _id: contentID }, updateData);
+        res.json({ message: "UPDATE_SUCCESSFUL" });
+      } catch (error) {
+        res.json({ message: "SOMETHING_HAPPEND" });
+      }
+    } else {
+      res.json({ message: "CONTENT_NOT_FOUND" });
+    }
+  } else {
+    res.json({ message: "INVALID_DATA" });
+  }
+};
+export {
+  takeAllSeries,
+  takeSerie,
+  takeAllYears,
+  takeAllGenres,
+  filters,
+  removeSeries,
+  updateSerie,
+};

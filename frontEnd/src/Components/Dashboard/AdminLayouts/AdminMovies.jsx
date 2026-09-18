@@ -76,6 +76,7 @@ function AdminMovies() {
               : movies.map((item) => {
                   return (
                     <ContentCard
+                      endPoint={"/api/movies"}
                       onRemove={removeContent}
                       key={item._id}
                       data={item}

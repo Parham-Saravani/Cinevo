@@ -25,18 +25,6 @@ const MovieValidator = z.object({
 
   ageRating: z.string().min(1, "Age rating is required"),
 
-  // posterFile: z.file({
-  //   error: "Poster file is required",
-  // }),
-
-  // bannerFile: z.file({
-  //   error: "Banner file is required",
-  // }),
-
-  // trailerFile: z.file({
-  //   error: "Trailer file is required",
-  // }),
-
   totalGenres: z.array(z.string()).min(1, "At least one genre is required"),
 
   totalScreenshots: z
@@ -51,7 +39,7 @@ const MovieValidator = z.object({
   overview: z
     .string()
     .min(20, "Overview must be at least 20 characters")
-    .max(500, "Overview cannot exceed 315 characters"),
+    .max(700, "Overview cannot exceed 700 characters"),
 
   isFeatured: z.boolean(),
 

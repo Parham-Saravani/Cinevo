@@ -6,12 +6,14 @@ import {
   takeAllGenres,
   filters,
   removeSeries,
+  updateSerie
 } from "../controllers/series.controller.js";
 
 const router = Router();
 
 router.get("/", takeAllSeries);
 router.get("/year", takeAllYears);
+router.put("/", updateSerie);
 router.delete("/", removeSeries);
 router.get("/genre", takeAllGenres);
 router.get("/filter", filters);
