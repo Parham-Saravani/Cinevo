@@ -66,7 +66,6 @@ https://cinevo-iota.vercel.app
 
 ### 🎬 Content Discovery
 
-<<<<<<< HEAD
 - Browse movies and TV series
 - Explore trending content
 - Discover new releases
