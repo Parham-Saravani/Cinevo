@@ -5,12 +5,18 @@ import ContentCard from "../elements/ContentCard";
 import { removeContent as removeSeries } from "../../../Utilities/removeContent";
 import Toast from "../../Toast/Toast";
 import EmptyAdminSeriesDashboard from "../../Empty/EmptyAdminSeriesDashboard";
+import Pagination from "../../Common/Pagination";
+import { useLoaderData } from "react-router";
 
 function AdminSeries() {
   const [series, setSeries] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const data = useLoaderData();  
+  let totalData = [];
+  if (data) {
+    totalData = data;
+  }
   const removeContent = async (_id) => {
     const value = await removeSeries(_id, "/api/series");
     Toast(value);
@@ -19,54 +25,53 @@ function AdminSeries() {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(`${baseUrl}/api/series`);
-        const data = await response.json();
-        setSeries(data);
-      } catch (error) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    })();
+    if (data) {
+      setLoading(false);
+      return;
+    }
+    setError(true);
   }, []);
   return (
-    <section className="space-y-5 animate-fadeIn">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl max-sm:text-2xl font-bold text-text-primary">
-          Series
-        </h1>
+    <>
+      <section className="space-y-5 animate-fadeIn">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl max-sm:text-2xl font-bold text-text-primary">
+            Series
+          </h1>
 
-        <button className="bg-cta-primary text-text-primary px-5 py-3 rounded-xl text-sm cursor-pointer hover:bg-cta-primary/70 transition-colors duration-300">
-          Add Series
-        </button>
-      </div>
-      <div className="rounded-xl bg-input-bg p-5 max-sm:p-4">
-        <p className="text-text-secondary max-sm:text-xs">
-          Manage all TV series and episodes.
-        </p>
-      </div>
-      {series.length !== 0 && (
-        <div className="grid gap-3 grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-4 max-sm:grid-cols-3">
-          {loading && series.length === 0
-            ? Array.from({ length: 7 }).map((_, index) => {
-                return <LoadingCard key={index} />;
-              })
-            : series.map((item) => {
-                return (
-                  <ContentCard
-                    endPoint={"/api/series"}
-                    onRemove={removeContent}
-                    key={item._id}
-                    data={item}
-                  />
-                );
-              })}
+          <button className="bg-cta-primary text-text-primary px-5 py-3 rounded-xl text-sm cursor-pointer hover:bg-cta-primary/70 transition-colors duration-300">
+            Add Series
+          </button>
         </div>
+        <div className="rounded-xl bg-input-bg p-5 max-sm:p-4">
+          <p className="text-text-secondary max-sm:text-xs">
+            Manage all TV series and episodes.
+          </p>
+        </div>
+        {series.length !== 0 && (
+          <div className="grid gap-3 grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-4 max-sm:grid-cols-3">
+            {loading && series.length === 0
+              ? Array.from({ length: 7 }).map((_, index) => {
+                  return <LoadingCard key={index} />;
+                })
+              : series.map((item) => {
+                  return (
+                    <ContentCard
+                      endPoint={"/api/series"}
+                      onRemove={removeContent}
+                      key={item._id}
+                      data={item}
+                    />
+                  );
+                })}
+          </div>
+        )}
+        {series.length === 0 && <EmptyAdminSeriesDashboard />}
+      </section>
+      {!loading && (
+        <Pagination data={totalData} setData={setSeries} itemPerPage={35} />
       )}
-      {series.length === 0 && <EmptyAdminSeriesDashboard />}
-    </section>
+    </>
   );
 }
 export default AdminSeries;

@@ -14,31 +14,10 @@ function AdminSettings() {
   const [updatedData, setUpdatedData] = useState({});
 
   useEffect(() => {
-    if (Boolean(Object.keys(updatedData).length)) {
-      (async () => {
-        try {
-          const token = getCookie("auth-token");
-          const repsonse = await fetch(`${baseUrl}/api/user/update`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ token, data: updatedData }),
-          });
-          if (!repsonse.ok) {
-            console.log("errorr");
-            return;
-          }
-          setLoading(false);
-          const data = await repsonse.json();
-          setProfileImagePreview(null);
-          setAdminUsername("");
-          setAdminEmail("");
-          Toast({ children: "Profile updated successfully.", isError: false });
-        } catch (error) {
-          console.log(error);
-        }
-      })();
+    console.log(updatedData);
+
+    if (Object.keys(updatedData).length) {
+      console.log("data updated");
     }
   }, [updatedData]);
 
@@ -46,12 +25,23 @@ function AdminSettings() {
     if (profileImageFile) {
       setLoading(true);
       const value = await getUserData(profileImageFile);
-      setUpdatedData((prev) => ({ ...prev, imageUrl: value }));
-    } else if (adminUsername) {
+      if (value) {
+        setUpdatedData((prev) => ({ ...prev, imageUrl: value }));
+      } else {
+        setUpdatedData({});
+        setLoading(false);
+        Toast({ children: "Image does'nt upload successfully." });
+        return;
+      }
+    }
+    if (adminUsername) {
       setUpdatedData((prev) => ({ ...prev, username: adminUsername }));
-    } else if (adminEmail) {
+    }
+    if (adminEmail) {
       setUpdatedData((prev) => ({ ...prev, email: adminEmail }));
-    } else {
+    }
+
+    if (!profileImageFile && !adminUsername && !adminEmail) {
       Toast({ children: "No changes detected." });
     }
   };

@@ -116,20 +116,15 @@ function ContentFilters({
           <div className="col-span-1 flex max-xl:justify-between items-center justify-end">
             <div className="h-12.5 w-23 flex gap-2 items-center rounded-xl bg-input-bg/50 px-2 py-2 border border-input-border/50 mr-5 max-xl:mr-0">
               <button
-                onClick={(event) =>
-                  changeLayout(event.currentTarget.dataset.layout)
-                }
+                onClick={() => changeLayout("grid")}
                 className={`flex items-center justify-center text-text-secondary hover:bg-text-secondary/20 transition-colors duration-300 h-full w-full rounded-xl cursor-pointer ${layout === "grid" ? "acitve-layout" : ""}`}
                 data-layout="grid"
               >
                 <LuLayoutGrid className="size-4.5 stroke-current" />
               </button>
               <button
-                onClick={(event) =>
-                  changeLayout(event.currentTarget.dataset.layout)
-                }
+                onClick={() => changeLayout("list")}
                 className={`flex items-center justify-center text-text-secondary hover:bg-text-secondary/20 transition-colors duration-300 h-full w-full rounded-xl cursor-pointer ${layout === "list" ? "acitve-layout" : ""}`}
-                data-layout="list"
               >
                 <CiBoxList className="size-4.5 stroke-current" />
               </button>
@@ -234,20 +229,15 @@ function ContentFilters({
             <div className="col-span-1 flex max-xl:justify-between items-center justify-end">
               <div className="h-12.5 w-23 flex gap-2 items-center rounded-xl bg-input-bg/50 px-2 py-2 border border-input-border/50 mr-5 max-xl:mr-0">
                 <button
-                  onClick={(event) =>
-                    changeLayout(event.currentTarget.dataset.layout)
-                  }
+                  onClick={() => changeLayout("grid")}
                   className={`flex items-center justify-center text-text-secondary hover:bg-text-secondary/20 transition-colors duration-300 h-full w-full rounded-xl cursor-pointer ${layout === "grid" ? "acitve-layout" : ""}`}
                   data-layout="grid"
                 >
                   <LuLayoutGrid className="size-4.5 stroke-current" />
                 </button>
                 <button
-                  onClick={(event) =>
-                    changeLayout(event.currentTarget.dataset.layout)
-                  }
+                  onClick={() => changeLayout("list")}
                   className={`flex items-center justify-center text-text-secondary hover:bg-text-secondary/20 transition-colors duration-300 h-full w-full rounded-xl cursor-pointer ${layout === "list" ? "acitve-layout" : ""}`}
-                  data-layout="list"
                 >
                   <CiBoxList className="size-4.5 stroke-current" />
                 </button>

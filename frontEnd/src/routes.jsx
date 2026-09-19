@@ -36,10 +36,47 @@ const router = createBrowserRouter([
   {
     path: "/movies",
     element: <Movies />,
+    loader: async () => {
+      try {
+        const response = await Promise.all([
+          fetch(`${baseUrl}/api/movies`),
+          fetch(`${baseUrl}/api/movies/genre`),
+          fetch(`${baseUrl}/api/movies/year`),
+        ]);
+        response.forEach((item) => {
+          if (!item.ok) {
+            console.log(response);
+
+            return;
+          }
+        });
+        return await Promise.all(response.map((res) => res.json()));
+      } catch (error) {
+        return undefined;
+      }
+    },
   },
   {
     path: "/series",
     element: <Series />,
+    loader: async () => {
+      try {
+        const response = await Promise.all([
+          fetch(`${baseUrl}/api/series`),
+          fetch(`${baseUrl}/api/series/genre`),
+          fetch(`${baseUrl}/api/series/year`),
+        ]);
+        response.forEach((item) => {
+          if (!item.ok) {
+            console.log(response);
+            return;
+          }
+        });
+        return await Promise.all(response.map((res) => res.json()));
+      } catch (error) {
+        return undefined;
+      }
+    },
   },
   {
     path: "/serie/:slug",
@@ -92,8 +129,23 @@ const router = createBrowserRouter([
               }
             },
           },
-          { path: "movies", element: <AdminMovies /> },
-          { path: "series", element: <AdminSeries /> },
+          {
+            path: "movies",
+            element: <AdminMovies />,
+          },
+          {
+            path: "series",
+            element: <AdminSeries />,
+            loader: async () => {
+              try {
+                const response = await fetch(`${baseUrl}/api/series`);
+                const data = await response.json();
+                return data;
+              } catch (error) {
+                return undefined;
+              }
+            },
+          },
           { path: "users", element: <AdminUsers /> },
           {
             path: "comments",

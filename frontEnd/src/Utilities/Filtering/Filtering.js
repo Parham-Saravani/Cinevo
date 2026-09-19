@@ -1,10 +1,5 @@
 import { baseUrl } from "../constants";
-const filtering = async (
-  loadingState,
-  typeValue = undefined,
-  setContent,
-  searchParams,
-) => {
+const filtering = async (loadingState, typeValue = undefined, searchParams) => {
   loadingState(true);
   const filters = {};
   const year = searchParams.get("year");
@@ -25,8 +20,8 @@ const filtering = async (
       });
       if (!response.ok) throw Error();
       const data = await response.json();
-      
-      setContent(data);
+
+      return data;
     } catch (error) {
     } finally {
       loadingState(false);

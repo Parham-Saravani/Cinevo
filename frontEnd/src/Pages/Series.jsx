@@ -5,9 +5,10 @@ import Card from "../Components/Card/Card";
 import { baseUrl } from "../Utilities/constants";
 import ListCard from "../Components/Card/ListCard";
 import LoadingCard from "../Components/Loader/LoadingCard";
-import { useSearchParams, useNavigate } from "react-router";
+import { useSearchParams, useNavigate, useLoaderData } from "react-router";
 import EmptyFiltering from "../Components/Empty/EmptyFiltering";
 import filtering from "../Utilities/Filtering/Filtering";
+import Pagination from "../Components/Common/Pagination";
 
 function Series() {
   const navigate = useNavigate();
@@ -21,50 +22,37 @@ function Series() {
   const [currentYear, setCurrentYear] = useState("All");
   const [currentGenre, setCurrentGenre] = useState("All");
   const [isClear, setIsClear] = useState(false);
-
+  const data = useLoaderData();
+  let totalData = [];
+  if (data) {
+    totalData = data[0];
+  }
   useEffect(() => {
     document.title = "Series | Cinevo";
     setSearchParams({});
-
-    (async () => {
-      try {
-        const response = await Promise.all([
-          fetch(`${baseUrl}/api/series`),
-          fetch(`${baseUrl}/api/series/genre`),
-          fetch(`${baseUrl}/api/series/year`),
-        ]);
-        // response.forEach((item) => {
-        //   if (!item.ok) {
-        //     throw Error();
-        //   }
-        // });
-        const [totalSeries, genres, years] = await Promise.all(
-          response.map((res) => res.json()),
-        );
-        setYears([...years]);
-        setGenres([...genres]);
-        setSeries([...totalSeries]);
-      } catch (error) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    })();
+    if (data) {
+      setYears(data[2]);
+      setGenres(data[1]);
+      setLoading(false);
+      return;
+    }
+    setError(true);
   }, []);
+  useEffect(() => {
+    console.log(layout);
+  }, [layout]);
   useEffect(() => {
     setCurrentYear("All");
     setCurrentGenre("All");
   }, [isClear]);
+
   useEffect(() => {
-    (async () => {
-      const data = await filtering(
-        setLoading,
-        "series",
-        setSeries,
-        searchParams,
-      );
-      console.log(data);
-    })();
+    if (searchParams.size) {
+      (async () => {
+        const data = await filtering(setLoading, "series", searchParams);
+        totalData = data;
+      })();
+    }
   }, [searchParams]);
 
   const changeLayout = (value) => {
@@ -99,7 +87,7 @@ function Series() {
             genres={genres}
           />
 
-          <section className="mt-7">
+          <section className="mt-7 min-h-197.5">
             <div className="container mx-auto">
               {!loading && series.length === 0 ? (
                 <EmptyFiltering />
@@ -127,6 +115,8 @@ function Series() {
               )}
             </div>
           </section>
+
+          <Pagination data={totalData} setData={setSeries} itemPerPage={21} />
         </main>
       </header>
     </>

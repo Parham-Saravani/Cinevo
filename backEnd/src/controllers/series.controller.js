@@ -19,6 +19,7 @@ const takeAllSeries = async (req, res) => {
       ageRating: true,
       director: true,
       featured: true,
+      seasons:true,
       trending: true,
     },
   );

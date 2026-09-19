@@ -12,7 +12,7 @@ export const getUserData = async (profileImageFile) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ token:userToken }),
+      body: JSON.stringify({ token: userToken }),
     });
     if (!response.ok) {
       console.log("try again!");
@@ -42,6 +42,6 @@ export const getUserData = async (profileImageFile) => {
     });
     return uploadProfileImage.url;
   } catch (error) {
-    console.log(error);
+    return undefined;
   }
 };

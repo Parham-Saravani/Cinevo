@@ -5,9 +5,10 @@ import Card from "../Components/Card/Card";
 import { baseUrl } from "../Utilities/constants";
 import ListCard from "../Components/Card/ListCard";
 import LoadingCard from "../Components/Loader/LoadingCard";
-import { useSearchParams, useNavigate } from "react-router";
+import { useSearchParams, useNavigate, useLoaderData } from "react-router";
 import EmptyFiltering from "../Components/Empty/EmptyFiltering";
 import filtering from "../Utilities/Filtering/Filtering";
+import Pagination from "../Components/Common/Pagination";
 
 function Movies() {
   const navigate = useNavigate();
@@ -22,42 +23,33 @@ function Movies() {
   const [currentGenre, setCurrentGenre] = useState("All");
   const [isClear, setIsClear] = useState(false);
 
+  const data = useLoaderData();
+  let totalData = [];
+  if (data) {
+    totalData = data[0];
+  }
   useEffect(() => {
     document.title = "Movies | Cinevo";
     setSearchParams({});
-    (async () => {
-      try {
-        const response = await Promise.all([
-          fetch(`${baseUrl}/api/movies`),
-          fetch(`${baseUrl}/api/movies/genre`),
-          fetch(`${baseUrl}/api/movies/year`),
-        ]);
-        response.forEach((item) => {
-          if (!item.ok) {
-            throw Error();
-          }
-        });
-        const [totalMovies, genres, years] = await Promise.all(
-          response.map((res) => res.json()),
-        );
-        setYears([...years]);
-        setGenres([...genres]);
-        setMovies([...totalMovies]);
-      } catch (error) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    })();
+    if (data) {
+      setYears(data[2]);
+      setGenres(data[1]);
+      setLoading(false);
+      return;
+    }
+    setError(true);
   }, []);
   useEffect(() => {
     setCurrentYear("All");
     setCurrentGenre("All");
   }, [isClear]);
   useEffect(() => {
-    (async () => {
-      filtering(setLoading, "movie", setMovies, searchParams, setError);
-    })();
+    if (searchParams.size) {
+      (async () => {
+        const data = filtering(setLoading, "movie", searchParams, setError);
+        totalData = data;
+      })();
+    }
   }, [searchParams]);
 
   const changeLayout = (value) => {
@@ -120,6 +112,8 @@ function Movies() {
               )}
             </div>
           </section>
+
+          <Pagination data={totalData} setData={setMovies} itemPerPage={21} />
         </main>
       </header>
     </>
