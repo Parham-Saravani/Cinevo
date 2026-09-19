@@ -14,6 +14,8 @@ import {
   filtering,
   searchOnContent,
   tekeDashboardData,
+  takeUserWatchlist,
+  takeUserFavorites,
 } from "../controllers/discover.controller.js";
 const router = Router();
 
@@ -26,6 +28,8 @@ router.get("/genre", takeAllGenres);
 router.get("/types", takeAllTypes);
 router.get("/year", takeAllYears);
 router.get("/all", takeAllContent);
+router.post("/watchlist", takeUserWatchlist);
+router.post("/favorites", takeUserFavorites);
 router.get("/dashboard/home", tekeDashboardData);
 router.get("/imagekit", getImageKitData);
 router.get("/similar/:slug", takeSimilarContent);

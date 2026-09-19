@@ -26,6 +26,7 @@ import AdminComments from "./Components/Dashboard/AdminLayouts/AdminComments";
 import AdminUsers from "./Components/Dashboard/AdminLayouts/AdminUsers";
 
 import { baseUrl } from "./Utilities/constants";
+import takeUserContent from "./Utilities/takeUserContent";
 
 const router = createBrowserRouter([
   {
@@ -101,8 +102,20 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         children: [
           { index: true, element: <UserDashboard /> },
-          { path: "watchlist", element: <UserWatchList /> },
-          { path: "favorites", element: <UserFavorites /> },
+          {
+            path: "watchlist",
+            element: <UserWatchList />,
+            loader: async () => {
+              return await takeUserContent("/api/discover/watchlist");
+            },
+          },
+          {
+            path: "favorites",
+            element: <UserFavorites />,
+            loader: async () => {
+              return await takeUserContent("/api/discover/favorites");
+            },
+          },
           { path: "settings", element: <UserSetting /> },
         ],
       },

@@ -1,50 +1,24 @@
-import { FaPlay, FaTrash, FaStar } from "react-icons/fa6";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import EmptyWatchlist from "../../Empty/EmptyUserWatchlist";
+import { useLoaderData } from "react-router";
+import UserWatchListItem from "../elements/UserWatchlistItem";
 
 function UserWatchList() {
-  const movies = [
-    {
-      id: 1,
-      title: "Interstellar",
-      type: "Movie",
-      year: 2014,
-      rating: 8.7,
-      poster: "https://ik.imagekit.io/Cinevo/Posters/TheDarkKnight.jpg",
-    },
-    {
-      id: 1,
-      title: "Interstellar",
-      type: "Movie",
-      year: 2014,
-      rating: 8.7,
-      poster: "https://ik.imagekit.io/Cinevo/Posters/TheDarkKnight.jpg",
-    },
-    {
-      id: 2,
-      title: "The Last of Us",
-      type: "Series",
-      year: 2023,
-      rating: 8.8,
-      poster: "https://ik.imagekit.io/Cinevo/Posters/TheDarkKnight.jpg",
-    },
-    {
-      id: 3,
-      title: "Inception",
-      type: "Movie",
-      year: 2010,
-      rating: 8.8,
-      poster: "https://ik.imagekit.io/Cinevo/Posters/TheDarkKnight.jpg",
-    },
-    {
-      id: 4,
-      title: "Dark",
-      type: "Series",
-      year: 2017,
-      rating: 8.7,
-      poster: "https://ik.imagekit.io/Cinevo/Posters/TheDarkKnight.jpg",
-    },
-  ];
+  const [content, setContent] = useState([]);
+  const [error, setError] = useState(false);
+  const data = useLoaderData();
 
+  useEffect(() => {
+    if (data) {
+      setContent(data);
+      return;
+    }
+    setError(true);
+  }, []);
+
+  if (error) {
+    return <h1>We Got Error!</h1>;
+  }
   return (
     <section className="space-y-6 animate-fadeIn">
       <div className="flex items-center justify-between">
@@ -62,66 +36,20 @@ function UserWatchList() {
           <p className="text-xs text-text-secondary">Total Items</p>
 
           <p className="mt-1 text-xl font-bold text-text-primary">
-            {movies.length}
+            {content.length}
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-4">
-        {movies.map((movie) => (
-          <article
-            key={movie.id}
-            className="group overflow-hidden rounded-2xl bg-input-bg"
-          >
-            <Link
-              to={`/movie/the-dark-knight`}
-              className="relative block overflow-hidden"
-            >
-              <img
-                src={movie.poster}
-                alt={movie.title}
-                className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-black">
-                  <FaPlay />
-                </div>
-              </div>
-            </Link>
-
-            <div className="p-4">
-              <h2 className="truncate font-semibold text-text-primary">
-                {movie.title}
-              </h2>
-
-              <div className="mt-1 flex items-center justify-between text-xs text-text-secondary">
-                <span>
-                  {movie.type} • {movie.year}
-                </span>
-
-                <span className="flex items-center gap-1 rounded-md bg-yellow-500/20 px-2 py-1 text-yellow-500">
-                  <FaStar />
-                  {movie.rating}
-                </span>
-              </div>
-
-              <div className="mt-4 flex gap-2">
-                <Link
-                  to={`/movie/the-dark-knight`}
-                  className="flex-1 rounded-lg bg-cta-primary py-2 text-center text-xs text-white"
-                >
-                  Watch Now
-                </Link>
-
-                <button className="flex h-9 w-9 items-center justify-center rounded-lg border border-input-border text-text-secondary transition-colors hover:border-red-500 hover:text-red-500">
-                  <FaTrash />
-                </button>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
+      {content.length !== 0 ? (
+        <div className="grid grid-cols-5 gap-4">
+          {content.map((item) => (
+            <UserWatchListItem key={item._id} {...item} />
+          ))}
+        </div>
+      ) : (
+        <EmptyWatchlist />
+      )}
     </section>
   );
 }

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import DefaultUserProfileImage from "/profile/default.webp";
-import { FaLeaf } from "react-icons/fa";
 
-function UserTopBar({ username, role, imageUrl, loading }) {
+function UserTopBar({ username, imageUrl, loading }) {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -33,7 +32,7 @@ function UserTopBar({ username, role, imageUrl, loading }) {
             <p
               className={`text-xs text-text-secondary ${loading ? "w-20 h-4 rounded-md bg-gray-700 animate-pulse" : ""}`}
             >
-              Administrator
+              User
             </p>
           </div>
         </div>

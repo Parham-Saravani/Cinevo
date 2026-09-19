@@ -3,6 +3,7 @@ import Movie from "../models/movie.model.js";
 import User from "../models/user.model.js";
 import Comment from "../models/comment.model.js";
 import crypto from "crypto";
+import { decompressToken } from "../utilities/token.js";
 
 const getImageKitData = async (req, res) => {
   const pubKey = process.env.IMAGEKEY_PRIVATE_KEY;
@@ -30,14 +31,20 @@ const takeSimilarContent = async (req, res) => {
   }
   const current = movie || series;
   const [similaMovies, similarSeries] = await Promise.all([
-    Serie.find({
-      _id: { $ne: current._id },
-      genres: { $in: current.genres },
-    }, {poster:true, genres:true}).limit(5),
-    Movie.find({
-      _id: { $ne: current._id },
-      genres: { $in: current.genres },
-    }, {poster:true, genres:true}).limit(5),
+    Serie.find(
+      {
+        _id: { $ne: current._id },
+        genres: { $in: current.genres },
+      },
+      { poster: true, genres: true },
+    ).limit(5),
+    Movie.find(
+      {
+        _id: { $ne: current._id },
+        genres: { $in: current.genres },
+      },
+      { poster: true, genres: true },
+    ).limit(5),
   ]);
   res.json([...similaMovies, ...similarSeries]);
 };
@@ -443,6 +450,44 @@ const tekeDashboardData = async (req, res) => {
     },
   });
 };
+
+const takeUserWatchlist = async (req, res) => {
+  const { token } = req.body;
+  const userId = decompressToken(token);
+  console.log(userId);
+
+  if (token) {
+    try {
+      const data = await User.findOne(
+        { _id: userId },
+        { _id: false, watchlist: true },
+      );      
+      res.json(data['watchlist']);
+    } catch (error) {
+      res.json({ message: "USER_NOT_FOUND" });
+    }
+  } else {
+    res.status(400).json({ message: "TOKEN_NOT_FOUND" });
+  }
+};
+const takeUserFavorites = async (req, res) => {
+  const { token } = req.body;
+  const userId = decompressToken(token);
+  if (token) {
+    try {
+      const data = await User.findOne(
+        { _id: userId },
+        { _id: false, favorites: true },
+      );
+
+      res.json(data["favorites"]);
+    } catch (error) {
+      res.json({ message: "USER_NOT_FOUND" });
+    }
+  } else {
+    res.status(400).json({ message: "TOKEN_NOT_FOUND" });
+  }
+};
 export {
   getImageKitData,
   takeSimilarContent,
@@ -457,4 +502,6 @@ export {
   filtering,
   searchOnContent,
   tekeDashboardData,
+  takeUserWatchlist,
+  takeUserFavorites,
 };
