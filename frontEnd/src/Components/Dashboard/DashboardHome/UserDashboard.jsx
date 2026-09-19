@@ -1,149 +1,162 @@
-import { Link } from "react-router";
-import { FaArrowRight } from "react-icons/fa6";
+import { Link, useLoaderData } from "react-router";
+import { useEffect, useState } from "react";
+import { FaArrowRight, FaBookmark, FaHeart, FaFilm } from "react-icons/fa6";
 
 function UserDashboard() {
+  const [watchlist, setWatchlist] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+
+  const data = useLoaderData();
+
+  const ContentItem = ({ poster, title }) => {
+    return (
+      <div className="flex items-center gap-3 rounded-xl p-2 transition-colors duration-300 hover:bg-input-border/10">
+        <img
+          src={poster}
+          alt={title}
+          className="h-16 w-12 rounded-lg bg-input-border object-cover"
+        />
+        <span className="line-clamp-1 text-text-primary">{title}</span>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    if (data.length) {
+      setWatchlist(data[0]);
+      setFavorites(data[1]);
+    }
+  }, []);
+
   return (
-    <section className="space-y-6 animate-fadeIn">
-      {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-input-border/40 bg-input-bg p-6">
-        <div className="relative z-10">
-          <h1 className="mt-2 text-3xl font-bold text-text-primary max-sm:text-2xl">
-            Ready for your next movie night?
-          </h1>
+    <section className="animate-fadeIn space-y-6">
+      <div className="overflow-hidden rounded-2xl border border-input-border/40 bg-input-bg p-6">
+        <div className="flex flex-col gap-4">
+          <span className="w-fit rounded-full bg-cta-primary/15 px-3 py-1 text-xs font-medium text-cta-primary">
+            Cinevo Dashboard
+          </span>
 
-          <p className="mt-2 max-w-lg text-sm text-text-secondary">
-            Continue where you left off and discover new movies and series
-            curated just for you.
-          </p>
-
-          <button className="mt-5 h-11 rounded-xl bg-cta-primary px-5 text-white">
-            Resume Watching
-          </button>
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
-        <div className="rounded-2xl bg-input-bg p-5">
-          <p className="text-sm text-text-secondary">Favorites</p>
-          <h2 className="mt-2 text-3xl font-bold text-text-primary">24</h2>
-        </div>
-
-        <div className="rounded-2xl bg-input-bg p-5">
-          <p className="text-sm text-text-secondary">Watchlist</p>
-          <h2 className="mt-2 text-3xl font-bold text-text-primary">18</h2>
-        </div>
-
-        <div className="rounded-2xl bg-input-bg p-5">
-          <p className="text-sm text-text-secondary">Movies Watched</p>
-          <h2 className="mt-2 text-3xl font-bold text-text-primary">86</h2>
-        </div>
-
-        <div className="rounded-2xl bg-input-bg p-5">
-          <p className="text-sm text-text-secondary">Series Watched</p>
-          <h2 className="mt-2 text-3xl font-bold text-text-primary">31</h2>
-        </div>
-      </div>
-
-      {/* Continue Watching */}
-      <div className="rounded-2xl bg-input-bg p-5">
-        <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-text-primary">
-              Continue Watching
-            </h2>
+            <h1 className="text-3xl font-bold text-text-primary max-sm:text-2xl">
+              Your movie collection
+            </h1>
 
-            <p className="mt-1 text-xs text-text-secondary">
-              Pick up where you left off.
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-text-secondary">
+              Manage your favorites, organize your watchlist, and keep track of
+              everything you want to watch next.
             </p>
           </div>
         </div>
+      </div>
 
-        <div className="mt-5 space-y-4">
-          <div className="flex items-center gap-4 rounded-xl bg-bg-primary p-3">
-            <div className="h-24 w-16 rounded-lg bg-input-border" />
+      <div className="grid grid-cols-2 gap-4">
+        <div className="rounded-2xl bg-input-bg p-5">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-text-secondary">Favorites</p>
 
-            <div className="flex-1">
-              <h3 className="font-medium text-text-primary">Stranger Things</h3>
-
-              <p className="mt-1 text-sm text-text-secondary">
-                Season 3 • Episode 4
-              </p>
-
-              <div className="mt-3 h-2 overflow-hidden rounded-full bg-input-border">
-                <div className="h-full w-[62%] rounded-full bg-cta-primary" />
-              </div>
-
-              <p className="mt-2 text-xs text-text-secondary">62% watched</p>
+            <div className="rounded-lg bg-red-500/10 p-2">
+              <FaHeart className="text-red-400" />
             </div>
-
-            <button className="rounded-lg bg-cta-primary px-4 py-2 text-sm text-white">
-              Resume
-            </button>
           </div>
+
+          <h2 className="mt-3 text-3xl font-bold text-text-primary">
+            {favorites.length}
+          </h2>
+
+          <p className="mt-1 text-xs text-text-secondary">
+            Saved favorite titles
+          </p>
+        </div>
+
+        <div className="rounded-2xl bg-input-bg p-5">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-text-secondary">Watchlist</p>
+
+            <div className="rounded-lg bg-cta-primary/10 p-2">
+              <FaBookmark className="text-cta-primary" />
+            </div>
+          </div>
+
+          <h2 className="mt-3 text-3xl font-bold text-text-primary">
+            {watchlist.length}
+          </h2>
+
+          <p className="mt-1 text-xs text-text-secondary">
+            Titles waiting to be watched
+          </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+        {/* Favorites */}
         <div className="rounded-2xl bg-input-bg p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold text-text-primary">
               Favorites
             </h2>
+
             <Link
-              to={"favorites"}
-              className="flex items-center gap-1.5 text-xs text-cta-primary transform-colors duration-300 hover:text-cta-primary/70"
-            >
-              View All <FaArrowRight />
-            </Link>{" "}
-          </div>
-
-          <div className="mt-5 space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="h-16 w-12 rounded-lg bg-input-border" />
-              <span className="text-text-primary">Interstellar</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="h-16 w-12 rounded-lg bg-input-border" />
-              <span className="text-text-primary">The Dark Knight</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="h-16 w-12 rounded-lg bg-input-border" />
-              <span className="text-text-primary">Breaking Bad</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl bg-input-bg p-5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-text-primary">
-              Watchlist
-            </h2>
-            <Link
-              to={"watchlist"}
-              className="flex items-center gap-1.5 text-xs text-cta-primary transform-colors duration-300 hover:text-cta-primary/70"
+              to="favorites"
+              className="flex items-center gap-1.5 text-xs text-cta-primary transition-colors duration-300 hover:text-cta-primary/70"
             >
               View All <FaArrowRight />
             </Link>
           </div>
 
           <div className="mt-5 space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="h-16 w-12 rounded-lg bg-input-border" />
-              <span className="text-text-primary">Dune Part Two</span>
-            </div>
+            {favorites.length ? (
+              favorites.map((item, index) => (
+                <ContentItem key={index} {...item} />
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <FaHeart className="text-5xl text-text-secondary/40" />
 
-            <div className="flex items-center gap-3">
-              <div className="h-16 w-12 rounded-lg bg-input-border" />
-              <span className="text-text-primary">Dark</span>
-            </div>
+                <h3 className="mt-5 text-lg font-semibold text-text-primary">
+                  No favorites yet
+                </h3>
 
-            <div className="flex items-center gap-3">
-              <div className="h-16 w-12 rounded-lg bg-input-border" />
-              <span className="text-text-primary">The Bear</span>
-            </div>
+                <p className="mt-2 max-w-xs text-sm leading-6 text-text-secondary">
+                  Movies and series you love will appear here.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Watchlist */}
+        <div className="rounded-2xl bg-input-bg p-5">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-text-primary">
+              Watchlist
+            </h2>
+
+            <Link
+              to="watchlist"
+              className="flex items-center gap-1.5 text-xs text-cta-primary transition-colors duration-300 hover:text-cta-primary/70"
+            >
+              View All <FaArrowRight />
+            </Link>
+          </div>
+
+          <div className="mt-5 space-y-3">
+            {watchlist.length ? (
+              watchlist.map((item, index) => (
+                <ContentItem key={index} {...item} />
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <FaBookmark className="text-5xl text-text-secondary/40" />
+
+                <h3 className="mt-5 text-lg font-semibold text-text-primary">
+                  Your watchlist is empty
+                </h3>
+
+                <p className="mt-2 max-w-xs text-sm leading-6 text-text-secondary">
+                  Save titles to watch them whenever you're ready.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

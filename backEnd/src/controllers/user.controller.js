@@ -99,7 +99,13 @@ const takeUserData = async (req, res) => {
       try {
         const userData = await User.findOne(
           { _id: userID },
-          { _id: false, username: true, role: true, imageUrl: true },
+          {
+            _id: false,
+            username: true,
+            role: true,
+            imageUrl: true,
+            email: true,
+          },
         );
         if (userData) {
           res.json(userData);

@@ -101,7 +101,16 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <DashboardLayout />,
         children: [
-          { index: true, element: <UserDashboard /> },
+          {
+            index: true,
+            element: <UserDashboard />,
+            loader: async () => {
+              return await Promise.all([
+                takeUserContent("/api/discover/watchlist"),
+                takeUserContent("/api/discover/favorites"),
+              ]);
+            },
+          },
           {
             path: "watchlist",
             element: <UserWatchList />,

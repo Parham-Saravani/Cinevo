@@ -1,5 +1,9 @@
+import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
+import getCookie from "../../../Utilities/Cookie/getCookie";
+import LoginToComment from "./LoginToComment";
+import { baseUrl } from "../../../Utilities/constants";
 
 function CommentFrom({
   newCommentMessage,
@@ -7,6 +11,41 @@ function CommentFrom({
   onStatusChange,
   onType,
 }) {
+  const [error, setError] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const token = getCookie("auth-token");
+    (async () => {
+      if (token) {
+        try {
+          const response = await fetch(`${baseUrl}/api/user/me`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token }),
+          });
+          if (!response.ok) {
+            throw Error();
+          }
+          const data = await response.json();
+          setUsername(data.username);
+          setEmail(data.email);
+        } catch (error) {
+          setError(true);
+        }
+      } else {
+        setError(true);
+      }
+    })();
+  }, []);
+
+  if (error) {
+    return <LoginToComment />;
+  }
+
   return (
     <div className="bg-linear-to-br from-cta-primary/10 via-transparent to-cta-primary/10 px-3 py-4 border border-white/10 rounded-xl">
       <form className="grid grid-cols-3 max-lg:grid-cols-5 max-md:grid-cols-3 gap-4 text-sm max-lg:text-xs max-md:text-sm">
@@ -16,7 +55,7 @@ function CommentFrom({
 
             <input
               className="w-full ml-3 outline-hidden comments-user-username"
-              value="Parham"
+              value={username}
               type="text"
               readOnly
             />
@@ -25,7 +64,7 @@ function CommentFrom({
             <MdOutlineEmail className="size-6 fill-current" />
             <input
               className="w-full ml-3 outline-hidden comments-user-email"
-              value="parhamsaravani83@gmail.com"
+              value={email}
               type="text"
               readOnly
             />
