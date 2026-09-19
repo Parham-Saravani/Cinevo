@@ -69,7 +69,7 @@ function Movies() {
     <>
       <header>
         <Header />
-        <main className="mt-10 text-text-primary">
+        <main className="mt-10 max-sm:mt-5 text-text-primary">
           <ContentFilters
             onClearSmash={setIsClear}
             currentYear={currentYear}
@@ -102,7 +102,7 @@ function Movies() {
                         ) : (
                           <div
                             key={index}
-                            className="group rounded-xl overflow-hidden h-62"
+                            className="group rounded-xl overflow-hidden max-sm:h-50 h-62"
                           >
                             <Card {...item} />
                           </div>

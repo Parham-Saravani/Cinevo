@@ -79,7 +79,7 @@ function Genre() {
       <header>
         <Header />
 
-        <main className="mt-10 text-text-primary animate-fadeIn">
+        <main className="mt-10 max-sm:mt-5 text-text-primary animate-fadeIn">
           <section>
             <div className="container mx-auto">
               <h3 className="font-bold text-3xl max-sm:text-2xl">
@@ -116,7 +116,7 @@ function Genre() {
             </div>
           </section>
 
-          <section className="mt-7">
+          <section className="mt-7  pb-5">
             <div className="container mx-auto">
               {!loading && content.length === 0 ? (
                 <EmptyFiltering />
@@ -134,7 +134,7 @@ function Genre() {
                         ) : (
                           <div
                             key={index}
-                            className="group rounded-xl overflow-hidden h-62"
+                            className="group rounded-xl overflow-hidden max-sm:h-50 h-62"
                           >
                             <Card {...item} />
                           </div>

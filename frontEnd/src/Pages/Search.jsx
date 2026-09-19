@@ -40,7 +40,7 @@ function Search() {
       <header>
         <Header />
 
-        <main className="mt-10 text-text-primary animate-fadeIn">
+        <main className="mt-10 max-sm:mt-5 text-text-primary animate-fadeIn">
           <section>
             <div className="container mx-auto">
               <div>
@@ -52,7 +52,7 @@ function Search() {
                   Find movies and TV series from our collection.
                 </p>
               </div>
-              <div className="mt-7">
+              <div className="mt-7  pb-5">
                 <form className="flex gap-3 max-sm:flex-col">
                   <div className="relative flex-1">
                     <input

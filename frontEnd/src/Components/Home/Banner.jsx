@@ -27,19 +27,19 @@ function Banner({
             <h1 className="text-white text-6xl font-bold max-lg:text-4xl max-sm:text-2xl">
               {title}
             </h1>
-            <p className="mt-2 text-text-secondary w-140 max-sm:w-full max-md:text-[13px] max-md:line-clamp-3 max-sm:line-clamp-2">
+            <p className="mt-2 text-text-secondary w-140 max-sm:w-75 max-md:text-[13px] max-md:line-clamp-3 max-sm:line-clamp-2">
               {bannerDescription}
             </p>
             <div className="mt-5 flex">
               <Link
                 to={type === "movie" ? `/movِie/${slug}` : `/serie/${slug}`}
-                className="flex max-md:gap-1 gap-2 items-center justify-center bg-cta-primary hover:bg-cta-hover text-text-primary font-semibold w-45 max-md:w-fit text-sm max-md:text-[10px] max-md:px-3 py-3 max-md:py-0 transition-colors duration-300 cursor-pointer rounded-xl"
+                className="h-13 max-sm:h-10 flex max-md:gap-1 gap-2 items-center justify-center bg-cta-primary hover:bg-cta-hover text-text-primary font-semibold w-40 max-md:w-30 text-sm max-md:text-[10px] max-md:px-3 py-3 max-md:py-0 transition-colors duration-300 cursor-pointer rounded-xl"
               >
                 <FaPlay className="size-6 max-md:size-4 fill-text-primary" />
                 Watch Now
               </Link>
             </div>
-            <div className="mt-5 flex flex-wrap items-center text-sm max-md:text-xs">
+            <div className="max-sm:hidden mt-5 flex flex-wrap items-center text-sm max-md:text-xs">
               <p className="relative mx-4 flex gap-1 items-center text-text-secondary banner-data">
                 <FaStar className="size-4 fill-yellow-500" />
                 {rating}/10
