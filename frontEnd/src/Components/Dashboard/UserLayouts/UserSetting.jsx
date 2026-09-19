@@ -1,9 +1,80 @@
-import { id, useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import PasswordInput from "../../PasswordInput";
+import { getUserData } from "../../../Utilities/uploadProfileImage";
+import Toast from "../../Toast/Toast";
+import getCookie from "../../../Utilities/Cookie/getCookie";
+import { baseUrl } from "../../../Utilities/constants";
+
 function UserSetting() {
   const id = useId();
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [profileImagePreview, setProfileImagePreview] = useState(null);
+  const [userUsername, setUserUsername] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [updatedData, setUpdatedData] = useState({});
+
+  useEffect(() => {
+    const controller = new AbortController();
+    if (Object.keys(updatedData).length) {
+      (async () => {
+        try {
+          const token = getCookie("auth-token");
+          const repsonse = await fetch(`${baseUrl}/api/user/update`, {
+            signal: controller.signal,
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token, data: updatedData }),
+          });
+          if (!repsonse.ok) {
+            console.log("errorr");
+            return;
+          }
+          setLoading(false);
+          const data = await repsonse.json();
+          setAdminUsername("");
+          setAdminEmail("");
+          Toast({ children: "Profile updated successfully.", isError: false });
+        } catch (error) {
+          Toast({
+            children: "Please check your network and try again!",
+            isError: false,
+          });
+        }
+      })();
+    }
+    return () => {
+      controller.abort();
+    };
+  }, [updatedData]);
+
+  const updateAccountDetail = async () => {
+    if (profileImageFile) {
+      setLoading(true);
+      const value = await getUserData(profileImageFile);
+      if (value) {
+        setUpdatedData((prev) => ({ ...prev, imageUrl: value }));
+      } else {
+        setUpdatedData({});
+        setLoading(false);
+        Toast({ children: "Image does'nt upload successfully." });
+        return;
+      }
+    }
+    if (userUsername) {
+      setUpdatedData((prev) => ({ ...prev, username: userUsername }));
+    }
+    if (userEmail) {
+      setUpdatedData((prev) => ({ ...prev, email: userEmail }));
+    }
+
+    if (!profileImageFile && !userUsername && !userEmail) {
+      Toast({ children: "No changes detected." });
+    }
+  };
+
   return (
     <main className="space-y-6 animate-fadeIn">
       <div>
@@ -71,6 +142,8 @@ function UserSetting() {
               </label>
 
               <input
+                value={userUsername}
+                onInput={(event) => setUserUsername(event.target.value)}
                 type="text"
                 placeholder="Your username"
                 className="w-full h-14 rounded-xl border-2 border-input-border/50 px-4 text-text-primary outline-hidden"
@@ -83,14 +156,24 @@ function UserSetting() {
               </label>
 
               <input
+                value={userEmail}
+                onInput={(event) => setUserEmail(event.target.value)}
                 type="email"
                 placeholder="Your email address"
                 className="w-full h-14 rounded-xl border-2 border-input-border/50 px-4 text-text-primary outline-hidden"
               />
             </div>
 
-            <button className="w-full h-11 rounded-lg bg-cta-primary text-white cursor-pointer">
-              Save Profile
+            <button
+              disabled={loading}
+              onClick={updateAccountDetail}
+              className={`transition-colors duration-300 w-full h-11 rounded-lg bg-cta-primary text-white cursor-pointer disabled:bg-cta-primary/50 ${loading ? "flex justify-center items-center" : ""}`}
+            >
+              {loading ? (
+                <div className="aspect-square w-3 h-3 animate-loader rounded-full"></div>
+              ) : (
+                "Save Changes"
+              )}
             </button>
           </div>
         </div>

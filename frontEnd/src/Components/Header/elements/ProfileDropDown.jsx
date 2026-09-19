@@ -31,7 +31,7 @@ function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
         <img
           onLoad={() => setIsLoading(false)}
           onError={(event) => event.target.src = DefaultProfileImage}
-          src={imageUrl}
+          src={imageUrl || DefaultProfileImage}
           className={`size-8 rounded-full object-cover ${isLoading ? "bg-gray-700 animate-pulse" : ""}`}
           alt="Profile"
         />

@@ -21,7 +21,7 @@ function AdminTopBar({ username, role, imageUrl, loading }) {
             onError={(event) => {
               event.target.src = DefaultUserProfileImage;
             }}
-            src={imageUrl && imageUrl ? imageUrl : DefaultUserProfileImage}
+            src={imageUrl || DefaultUserProfileImage}
             alt="profile-Image"
             className={`${imageLoading ? "bg-gray-700 animate-pulse" : ""} object-cover size-9 rounded-full`}
           />

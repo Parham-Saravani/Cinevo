@@ -14,11 +14,40 @@ function AdminSettings() {
   const [updatedData, setUpdatedData] = useState({});
 
   useEffect(() => {
-    console.log(updatedData);
+    const controller = new AbortController();
 
     if (Object.keys(updatedData).length) {
-      console.log("data updated");
+      (async () => {
+        try {
+          const token = getCookie("auth-token");
+          const repsonse = await fetch(`${baseUrl}/api/user/update`, {
+            signal: controller.signal,
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token, data: updatedData }),
+          });
+          if (!repsonse.ok) {
+            console.log("errorr");
+            return;
+          }
+          setLoading(false);
+          const data = await repsonse.json();
+          setAdminUsername("");
+          setAdminEmail("");
+          Toast({ children: "Profile updated successfully.", isError: false });
+        } catch (error) {
+          Toast({
+            children: "Please check your network and try again!",
+            isError: false,
+          });
+        }
+      })();
     }
+    return () => {
+      controller.abort();
+    };
   }, [updatedData]);
 
   const updateAccountDetail = async () => {

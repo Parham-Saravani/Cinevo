@@ -19,7 +19,7 @@ function UserTopBar({ username, role, imageUrl, loading }) {
           <img
             onLoad={() => setIsLoading(false)}
             onError={(event) => (event.target.src = DefaultUserProfileImage)}
-            src={imageUrl}
+            src={imageUrl || DefaultUserProfileImage}
             alt=""
             className={`size-9 rounded-full ${isLoading ? "bg-gray-700 animate-pulse" : ""}`}
           />
