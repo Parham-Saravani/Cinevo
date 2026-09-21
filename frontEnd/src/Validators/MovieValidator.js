@@ -25,13 +25,16 @@ const MovieValidator = z.object({
 
   ageRating: z.string().min(1, "Age rating is required"),
 
-  totalGenres: z.array(z.string()).min(1, "At least one genre is required"),
+  genres: z
+    .array(z.object({ id: z.string(), title: z.string() }))
+    .min(1, "At least one genre is required"),
 
   totalScreenshots: z
-    .array(z.string())
-    .min(1, "At least one screenshot is required"),
+    .array(z.object({ id: z.string(), file: z.file() }))
+    .min(1, "At least one screenshot is required")
+    .max(4, "Maximum 4 screenshots are allowed"),
 
-  bannerDesc: z
+  bannerDescription: z
     .string()
     .min(10, "Banner description must be at least 10 characters")
     .max(200, "Banner description cannot exceed 100 characters"),
@@ -44,6 +47,9 @@ const MovieValidator = z.object({
   isFeatured: z.boolean(),
 
   isTrend: z.boolean(),
+
+  posterFile: z.file(),
+  bannerFile: z.file(),
 });
 
 export default MovieValidator;

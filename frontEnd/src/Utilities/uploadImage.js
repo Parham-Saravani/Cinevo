@@ -1,5 +1,6 @@
 import { baseUrl } from "./constants";
 import { upload } from "@imagekit/react";
+
 export const uploadImage = async (currentFile, currentFileName) => {
   try {
     const imagekitParamsResponse = await fetch(
@@ -22,6 +23,7 @@ export const uploadImage = async (currentFile, currentFileName) => {
       publicKey,
       fileName: currentFileName,
     });
+
     return uploadProfileImage.url;
   } catch (error) {
     return undefined;

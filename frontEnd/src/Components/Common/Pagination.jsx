@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { generatePages } from "../../Utilities/generatePages";
 
-function Pagination({ data, setData, itemPerPage }) {
-  console.log(data);
-  
+function Pagination({ data, setData, itemPerPage }) {  
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemPerPage);
 

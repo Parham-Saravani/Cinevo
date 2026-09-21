@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-function DropDown({ title, children }) {
+function DropDown({ title, children, modal = false }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="col-span-1 relative">
+    <div className={`col-span-1 relative ${modal ? 'h-11 text-sm  ' : ''}`}>
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center justify-between px-2.5 py-3 bg-input-bg/50 border-2 border-input-border/50 w-full h-full rounded-xl cursor-pointer open-sort-btn"
+        className="text-text-secondary/50 flex items-center justify-between px-2.5 py-3 bg-input-bg/50 border-2 border-input-border/50 w-full h-full rounded-xl cursor-pointer"
       >
         <span>{title}</span>
         <IoIosArrowDown className="size-4.5 fill-current" />

@@ -439,12 +439,12 @@ function EditBtn({ data, endPoint }) {
           </label>
           <div className="flex w-full flex-col items-center justify-between gap-2">
             {totalScreenshots.length !== 0 ? (
-              <div className="grid grid-cols-1 flex-wrap gap-2">
+              <div className="grid grid-cols-1 flex-wrap gap-2 w-full">
                 {totalScreenshots.map((item, index) => {
                   return (
                     <span
                       key={index}
-                      className="group text-text-secondary relative col-span-1 flex w-full items-center gap-2 truncate rounded-lg bg-input-bg/50 px-3 py-3 text-sm text-primary max-sm:text-xs max-sm:leading-2"
+                      className="animate-fadeIn group text-text-secondary relative col-span-1 flex w-full items-center gap-2 truncate rounded-lg bg-input-bg/50 px-3 py-3 text-sm text-primary max-sm:text-xs max-sm:leading-2"
                     >
                       {item}
 

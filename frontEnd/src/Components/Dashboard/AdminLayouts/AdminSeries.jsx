@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { baseUrl } from "../../../Utilities/constants";
 import LoadingCard from "../../Loader/LoadingCard";
 import ContentCard from "../elements/ContentCard";
 import { removeContent as removeSeries } from "../../../Utilities/removeContent";
@@ -7,22 +6,50 @@ import Toast from "../../Toast/Toast";
 import EmptyAdminSeriesDashboard from "../../Empty/EmptyAdminSeriesDashboard";
 import Pagination from "../../Common/Pagination";
 import { useLoaderData } from "react-router";
+import AddModal from "../elements/AddModal/AddModal";
+import BasicInformation from "../elements/AddModal/components/BasicInformation";
+import Media from "../elements/AddModal/components/Media";
+import Description from "../elements/AddModal/components/Description";
+import Genres from "../elements/AddModal/components/Genres";
+import Options from "../elements/AddModal/components/Options";
+import Seasons from "../elements/AddModal/components/Seasons";
+import ModalScreenshots from "../elements/AddModal/components/ModalScreenshots";
 
 function AdminSeries() {
   const [series, setSeries] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const data = useLoaderData();  
-  let totalData = [];
-  if (data) {
-    totalData = data;
-  }
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [newMovie, setNewMovie] = useState({
+    type: "series",
+    title: "",
+    releaseYear: "",
+    director: "",
+    duration: "",
+    rating: "",
+    ageRating: "",
+    genres: [],
+    totalScreenshots: [],
+    totalSeasons: [],
+    bannerDescription: "",
+    overview: "",
+    isFeatured: false,
+    isTrend: false,
+    posterFile: null,
+    bannerFile: null,
+    trailerFile: null,
+  });
+
+  const data = useLoaderData();
+
   const removeContent = async (_id) => {
     const value = await removeSeries(_id, "/api/series");
     Toast(value);
     const filteredMovies = series.filter((item) => item._id !== _id);
     setSeries(filteredMovies);
   };
+
+  const registerNewSerie = () => {};
 
   useEffect(() => {
     if (data) {
@@ -39,7 +66,12 @@ function AdminSeries() {
             Series
           </h1>
 
-          <button className="bg-cta-primary text-text-primary px-5 py-3 rounded-xl text-sm cursor-pointer hover:bg-cta-primary/70 transition-colors duration-300">
+          <button
+            onClick={() => {
+              setIsAddModalOpen((prev) => !prev);
+            }}
+            className="bg-cta-primary text-text-primary px-5 py-3 rounded-xl text-sm cursor-pointer hover:bg-cta-primary/70 transition-colors duration-300"
+          >
             Add Series
           </button>
         </div>
@@ -68,8 +100,42 @@ function AdminSeries() {
         )}
         {series.length === 0 && <EmptyAdminSeriesDashboard />}
       </section>
+
+      <AddModal
+        title={"Add new Serie"}
+        captoin={"Add a new serie to your content library."}
+        setter={setNewMovie}
+        onSubmit={registerNewSerie}
+        isAddModalOpen={isAddModalOpen}
+        setModalStatus={setIsAddModalOpen}
+      >
+        <main className="space-y-5 p-6 overflow-y-auto hide-scroll">
+          <BasicInformation {...newMovie} setter={setNewMovie} />
+          <Seasons value={newMovie.totalSeasons} setter={setNewMovie} />
+          <Media {...newMovie} setter={setNewMovie} />
+
+          <Description
+            bannerDesc={newMovie.bannerDesc}
+            overview={newMovie.overview}
+            setter={setNewMovie}
+          />
+          <Genres data={{ value: newMovie.genres, setter: setNewMovie }} />
+          <ModalScreenshots
+            setter={setNewMovie}
+            value={newMovie.totalScreenshots}
+          />
+          <Options
+            data={{
+              setter: setNewMovie,
+              trend: newMovie.isTrend,
+              featured: newMovie.isFeatured,
+            }}
+          />
+        </main>
+      </AddModal>
+
       {!loading && (
-        <Pagination data={totalData} setData={setSeries} itemPerPage={35} />
+        <Pagination data={data} setData={setSeries} itemPerPage={35} />
       )}
     </>
   );

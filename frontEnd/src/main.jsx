@@ -10,7 +10,6 @@ createRoot(document.getElementById("root")).render(
     <Toaster
       toastOptions={{
         position: "top-left",
-        duration: 3000,
         className:
           "max-w-fit! bg-input-bg! px-3! py-3! border! border-white/10! rounded-xl!",
       }}

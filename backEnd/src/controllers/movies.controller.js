@@ -1,9 +1,47 @@
 import Movie from "../models/movie.model.js";
-const registerNewMovie = async (req, res) => {
-  const data = req.body;
-  console.log(data);
+import generateSlug from "../utilities/slugGenerator.js";
 
-  res.json(data);
+const registerNewMovie = async (req, res) => {
+  const { content } = req.body;
+  if (Object.keys(content).length) {
+    if (
+      (content.type,
+      content.title,
+      content.releaseYear,
+      content.director,
+      content.duration,
+      content.rating,
+      content.ageRating,
+      content.genres.length !== 0,
+      content.poster,
+      content.banner,
+      content.screenshots.length !== 0,
+      content.bannerDescription,
+      content.overview,
+      typeof content.isFeatured === "boolean",
+      typeof content.isTrend === "boolean")
+    ) {
+      const slug = generateSlug(content.title);
+      content.genres = content.genres.map((item) => {
+        return item.title;
+      });
+      delete content.posterFile;
+      delete content.bannerFile;
+      delete content.totalScreenshots;
+      try {
+        await Movie.create({ ...content, slug });
+        res.status(201).json({ message: "MOVIE_CREATED" });
+      } catch (error) {
+        console.log(error);
+
+        res.json("TRY_AGAIN");
+      }
+    } else {
+      res.json("NOT_VALID_DATA");
+    }
+  } else {
+    res.json({ message: "NOT_VALID_DATA" });
+  }
 };
 const takeAllMovies = async (req, res) => {
   const movies = await Movie.find(
