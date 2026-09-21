@@ -132,7 +132,7 @@ function AdminDashboard() {
                     </span>
                     <div className="flex text-text-secondary">
                       <p>{item.value}</p>
-                      <p className="ml-3">28%</p>
+                      <p className="ml-3">{takeContentPercentage(item.value , stats.moviesCount + stats.seriesCount)}</p>
                     </div>
                   </li>
                 );
@@ -360,4 +360,7 @@ function AdminDashboard() {
   );
 }
 
+const takeContentPercentage = (value, totalData) => {
+  return Math.floor((value / totalData) * 100) + '%'
+};
 export default AdminDashboard;

@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const movieSchema = new mongoose.Schema(
   {
-    title: { type: String },
-    slug: { type: String, required: true },
+    title: { type: String, unique: true },
+    slug: { type: String, unique: true, required: true },
 
     type: { type: String, default: "movie" },
 
