@@ -1,4 +1,4 @@
 const generateSlug = (title) => {
-  return title.split(" ").join("-");
+  return title.toLowerCase().split(" ").join("-");
 };
 export default generateSlug;
