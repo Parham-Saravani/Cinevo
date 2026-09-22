@@ -1,4 +1,6 @@
 import Serie from "../models/series.model.js";
+import generateSlug from "../utilities/slugGenerator.js";
+
 const takeAllSeries = async (req, res) => {
   const series = await Serie.find(
     {},
@@ -19,7 +21,7 @@ const takeAllSeries = async (req, res) => {
       ageRating: true,
       director: true,
       featured: true,
-      seasons:true,
+      seasons: true,
       trending: true,
     },
   );
@@ -131,6 +133,50 @@ const updateSerie = async (req, res) => {
     res.json({ message: "INVALID_DATA" });
   }
 };
+const registerNewSerie = async (req, res) => {
+  const { content } = req.body;
+  if (Object.keys(content).length) {
+    if (
+      (content.type,
+      content.title,
+      content.releaseYear,
+      content.director,
+      content.duration,
+      content.rating,
+      content.ageRating,
+      content.genres.length !== 0,
+      content.poster,
+      content.banner,
+      content.seasons.length !== 0,
+      content.screenshots.length !== 0,
+      content.bannerDescription,
+      content.overview,
+      typeof content.isFeatured === "boolean",
+      typeof content.isTrend === "boolean")
+    ) {
+      const slug = generateSlug(content.title);
+      content.genres = content.genres.map((item) => {
+        return item.title;
+      });
+      delete content.posterFile;
+      delete content.bannerFile;
+      delete content.totalScreenshots;
+      try {
+        await Serie.create({ ...content, slug });
+        res.status(201).json({ message: "SERIE_CREATED" });
+      } catch (error) {
+        console.log(error);
+
+        res.json("TRY_AGAIN");
+      }
+    } else {
+      res.json("NOT_VALID_DATA");
+    }
+  } else {
+    res.json({ message: "NOT_VALID_DATA" });
+  }
+};
+
 export {
   takeAllSeries,
   takeSerie,
@@ -139,4 +185,5 @@ export {
   filters,
   removeSeries,
   updateSerie,
+  registerNewSerie,
 };

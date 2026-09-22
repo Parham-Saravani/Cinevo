@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const MovieValidator = z.object({
+const SerieValidator = z.object({
   title: z
     .string()
     .min(3, "Title must be at least 3 characters")
@@ -29,6 +29,17 @@ const MovieValidator = z.object({
     .array(z.object({ id: z.string(), title: z.string() }))
     .min(1, "At least one genre is required"),
 
+  seasons: z
+    .array(
+      z.object({
+        title: z.string(),
+        episodes: z.array(
+          z.object({ title: z.string(), releaseDate: z.string() }),
+        ),
+      }),
+    )
+    .min(1, "At least one season is required"),
+
   totalScreenshots: z
     .array(z.object({ id: z.string(), file: z.file() }))
     .min(1, "At least one screenshot is required")
@@ -47,7 +58,6 @@ const MovieValidator = z.object({
   isFeatured: z.boolean(),
 
   isTrend: z.boolean(),
-
   posterFile: z.file({
     error: "Poster image is required",
   }),
@@ -57,4 +67,4 @@ const MovieValidator = z.object({
   }),
 });
 
-export default MovieValidator;
+export default SerieValidator;

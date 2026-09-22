@@ -2,7 +2,7 @@ import Toast from "../Components/Toast/Toast";
 import { baseUrl } from "./constants";
 import { uploadImage } from "./uploadImage";
 
-const UploadImagesAndRegisterContent = async (content) => {
+const UploadImagesAndRegisterContent = async (content, endpoint) => {
   try {
     const poster = await uploadImage(
       content.posterFile,
@@ -36,7 +36,7 @@ const UploadImagesAndRegisterContent = async (content) => {
     content.banner = banner;
     content.screenshots = screenshots;
 
-    const response = await fetch(`${baseUrl}/api/movies`, {
+    const response = await fetch(`${baseUrl}${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const UploadImagesAndRegisterContent = async (content) => {
   } catch (error) {
     console.log(error);
 
-    Toast({ children: "`Please check your network connection.`" });
+    Toast({ children: "Please check your network connection." });
   }
 };
 

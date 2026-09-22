@@ -17,13 +17,13 @@ function Seasons({ value, setter }) {
         };
       }),
     };
-    setter((prev) => ({ ...prev, totalSeasons: [...value, newSeason] }));
+    setter((prev) => ({ ...prev, seasons: [...value, newSeason] }));
     setIsSecondModalOpen(false);
     setCurrentSeasonEpisodes("");
   };
   const deleteSeason = (title) => {
     const newSeasons = value.filter((item) => item.title !== title);
-    setter((prev) => ({ ...prev, totalSeasons: newSeasons }));
+    setter((prev) => ({ ...prev, seasons: newSeasons }));
   };
   return (
     <>

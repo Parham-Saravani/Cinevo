@@ -54,7 +54,7 @@ function AdminMovies() {
   const registerNewMovie = async () => {
     const status = MovieValidator.safeParse(newMovie);
     if (status.success) {
-      const request = UploadImagesAndRegisterContent(newMovie);
+      const request = UploadImagesAndRegisterContent(newMovie, '/api/movies');
       toast.promise(
         request,
         {

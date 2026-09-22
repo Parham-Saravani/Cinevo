@@ -14,13 +14,16 @@ import Genres from "../elements/AddModal/components/Genres";
 import Options from "../elements/AddModal/components/Options";
 import Seasons from "../elements/AddModal/components/Seasons";
 import ModalScreenshots from "../elements/AddModal/components/ModalScreenshots";
+import UploadImagesAndRegisterContent from "../../../Utilities/registerNewContent";
+import SerieValidator from "../../../Validators/SerieValidator";
+import toast from "react-hot-toast";
 
 function AdminSeries() {
   const [series, setSeries] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [newMovie, setNewMovie] = useState({
+  const [newSerie, setNewSerie] = useState({
     type: "series",
     title: "",
     releaseYear: "",
@@ -30,7 +33,7 @@ function AdminSeries() {
     ageRating: "",
     genres: [],
     totalScreenshots: [],
-    totalSeasons: [],
+    seasons: [],
     bannerDescription: "",
     overview: "",
     isFeatured: false,
@@ -49,7 +52,31 @@ function AdminSeries() {
     setSeries(filteredMovies);
   };
 
-  const registerNewSerie = () => {};
+  const registerNewSerie = async () => {
+    const status = SerieValidator.safeParse(newSerie);
+    if (status.success) {
+      const request = UploadImagesAndRegisterContent(newSerie, "/api/series");
+      toast.promise(
+        request,
+        {
+          loading: "Creating serie...",
+          success: "Movie created successfully",
+          error: "Something went wrong. Please try again.",
+        },
+        { style: { color: "white" } },
+      );
+      const data = await request;
+      if (data.message === "MOVIE_CREATED") {
+        setSeries((prev) => [
+          ...prev,
+          { genres: newSerie.genres.map((item) => item.title) },
+        ]);
+      }
+      return data.message;
+    }
+
+    Toast({ children: status.error.issues[0].message });
+  };
 
   useEffect(() => {
     if (data) {
@@ -104,31 +131,31 @@ function AdminSeries() {
       <AddModal
         title={"Add new Serie"}
         captoin={"Add a new serie to your content library."}
-        setter={setNewMovie}
+        setter={setNewSerie}
         onSubmit={registerNewSerie}
         isAddModalOpen={isAddModalOpen}
         setModalStatus={setIsAddModalOpen}
       >
         <main className="space-y-5 p-6 overflow-y-auto hide-scroll">
-          <BasicInformation {...newMovie} setter={setNewMovie} />
-          <Seasons value={newMovie.totalSeasons} setter={setNewMovie} />
-          <Media {...newMovie} setter={setNewMovie} />
+          <BasicInformation {...newSerie} setter={setNewSerie} />
+          <Seasons value={newSerie.seasons} setter={setNewSerie} />
+          <Media {...newSerie} setter={setNewSerie} />
 
           <Description
-            bannerDesc={newMovie.bannerDesc}
-            overview={newMovie.overview}
-            setter={setNewMovie}
+            bannerDesc={newSerie.bannerDesc}
+            overview={newSerie.overview}
+            setter={setNewSerie}
           />
-          <Genres data={{ value: newMovie.genres, setter: setNewMovie }} />
+          <Genres data={{ value: newSerie.genres, setter: setNewSerie }} />
           <ModalScreenshots
-            setter={setNewMovie}
-            value={newMovie.totalScreenshots}
+            setter={setNewSerie}
+            value={newSerie.totalScreenshots}
           />
           <Options
             data={{
-              setter: setNewMovie,
-              trend: newMovie.isTrend,
-              featured: newMovie.isFeatured,
+              setter: setNewSerie,
+              trend: newSerie.isTrend,
+              featured: newSerie.isFeatured,
             }}
           />
         </main>
