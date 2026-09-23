@@ -43,7 +43,7 @@
 .menu-item-active::before {
   content: "";
   position: absolute;
-  bottom: -0.45rem;
+  bottom: -2.5px;
   width: 2.5rem;
   margin: auto;
   left: 0;
@@ -103,26 +103,6 @@
 }
 .swiper-pagination-bullet-active {
   background-color: var(--color-cta-primary) !important;
-}
-/* Movie Page */
-.header-hero::after {
-  content: "";
-  inset: 0 0 -8.5px 0;
-  z-index: 0;
-  position: absolute;
-  background:
-    linear-gradient(
-      180deg,
-      var(--color-bg-primary),
-      transparent,
-      var(--color-bg-primary)
-    ),
-    linear-gradient(
-      270deg,
-      var(--color-bg-primary),
-      transparent,
-      var(--color-bg-primary)
-    );
 }
 
 /* Serie Page */

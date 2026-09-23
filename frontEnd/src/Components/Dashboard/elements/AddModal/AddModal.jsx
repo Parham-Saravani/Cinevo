@@ -13,7 +13,7 @@ function AddModal({
 }) {
   return (
     <div
-      className={`${isAddModalOpen ? "animate-fadeIn fixed" : "hidden"} z-100 fixed inset-0  flex items-center transition-all duration-300 justify-center bg-black/70 backdrop-blur-sm`}
+      className={`${isAddModalOpen ? "animate-fadeIn fixed" : "hidden"} max-lg:px-6 z-100 fixed inset-0  flex items-center transition-all duration-300 justify-center bg-black/70 backdrop-blur-sm`}
     >
       <div className="max-h-[90vh] w-full max-w-4xl overflow-hidden flex flex-col rounded-2xl border border-input-border bg-bg-primary shadow-2xl hide-scroll">
         <header className="border-b border-input-border p-5 flex items-center justify-between">

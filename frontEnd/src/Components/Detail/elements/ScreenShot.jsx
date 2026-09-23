@@ -4,7 +4,7 @@ import { RiMovie2Line } from "react-icons/ri";
 function ScreenShot({ imgUrl }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-
+  
   return (
     <div
       className={
@@ -15,12 +15,12 @@ function ScreenShot({ imgUrl }) {
     >
       {error ? (
         <div className="flex flex-col items-center justify-center w-full h-full bg-gray-900 rounded-xl gap-2">
-          <RiMovie2Line className="fa-solid fa-film text-4xl text-gray-500" />
-          <p className="text-sm font-medium text-text-primary/70">
+          <RiMovie2Line className="fa-solid fa-film text-4xl max-sm:text-xl text-gray-500" />
+          <p className="text-sm max-sm:text-[10px] font-medium text-text-primary/70">
             Scene not available
           </p>
 
-          <span className="text-xs text-text-secondary/50">
+          <span className="text-xs max-sm:text-[9px] text-text-secondary/50">
             Screenshot couldn't be loaded
           </span>
         </div>

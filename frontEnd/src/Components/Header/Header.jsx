@@ -5,9 +5,14 @@ import { baseUrl } from "../../Utilities/constants";
 import removeCookie from "../../Utilities/Cookie/removeCookie";
 import getCookie from "../../Utilities/Cookie/getCookie";
 import Toast from "../Toast/Toast";
-import { FiSearch } from "react-icons/fi";
 import { FaHome, FaSearch } from "react-icons/fa";
-import { FaClapperboard, FaCompass, FaMagnifyingGlass, FaTv } from "react-icons/fa6";
+import {
+  FaClapperboard,
+  FaCompass,
+  FaMagnifyingGlass,
+  FaTv,
+} from "react-icons/fa6";
+import { TbLayoutDashboardFilled } from "react-icons/tb";
 
 function Header() {
   const matches = useMatches();
@@ -64,71 +69,81 @@ function Header() {
   };
 
   return (
-    <div className="max-sm:pt-0  max-sm:py-2! max-sm:z-200 max-sm:left-0 max-sm:right-0 max-sm:w-fit max-sm:bg-linear-90 max-sm:bg-input-bg max-sm:fixed max-sm:bottom-2 max-sm:rounded-xl  animate-fadeIn container mx-auto pt-5">
-      <div className="max-sm:justify-center flex justify-between items-center">
+    <div className="max-md:pt-0  max-md:py-2! max-md:z-200 max-md:left-0 max-md:right-0 max-md:w-fit max-md:bg-linear-90 max-md:bg-input-bg max-md:fixed max-md:bottom-2 max-md:rounded-xl  animate-fadeIn container mx-auto pt-5">
+      <div className="max-md:justify-center flex justify-between items-center">
         <div className="flex items-center">
-          <NavLink to="/" className="max-sm:hidden text-white font-bold text-2xl">
+          <NavLink
+            to="/"
+            className="max-md:hidden text-white font-bold text-2xl"
+          >
             Cinevo
           </NavLink>
-          <ul className="max-sm:ml-0 max-sm:from-cta-primary/70 max-sm:via-transparend max-sm:to-cta-primary/10 flex gap-4 max-sm:justify-center justify-between items-center ml-20">
+          <ul className="text-sm max-md:ml-0 max-md:from-cta-primary/70 max-md:via-transparend max-md:to-cta-primary/10 flex gap-4 max-md:justify-center justify-between items-center ml-20">
             <NavLink
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative md:menu-item-active  max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center gap-1"
-                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center"
+                  ? "max-md:bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center gap-1 menu-item-active"
+                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
               }
             >
-              <FaHome className="hidden max-sm:block size-4.5" />
+              <FaHome className="hidden max-md:block size-4.5" />
               <p className="max-sm:text-[10px] max-sm:mt-1">Home</p>
             </NavLink>
             <NavLink
               to="/movies"
               className={({ isActive }) =>
                 isActive
-                  ? "bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative md:menu-item-active  max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center gap-1"
-                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center"
+                  ? "max-md:bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center gap-1 menu-item-active"
+                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
               }
             >
-              <FaClapperboard className="hidden max-sm:block size-4.5" />
-              <p className="max-sm:text-[10px] max-sm:mt-1">Movies</p>
+              <FaClapperboard className="hidden max-md:block size-4.5" />
+              <p className="max-md:text-[10px] max-md:mt-1">Movies</p>
             </NavLink>
             <NavLink
               to="/series"
               className={({ isActive }) =>
                 isActive
-                  ? "bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative md:menu-item-active  max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center gap-1"
-                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center"
+                  ? "max-md:bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center gap-1 menu-item-active"
+                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
               }
             >
-              <FaTv className="hidden max-sm:block size-4.5" />
-              <p className="max-sm:text-[10px] max-sm:mt-1">Series</p>
+              <FaTv className="hidden max-md:block size-4.5" />
+              <p className="max-md:text-[10px] max-md:mt-1">Series</p>
             </NavLink>
             <NavLink
               to="/genre"
               className={({ isActive }) =>
                 isActive
-                  ? "bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative md:menu-item-active  max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center gap-1"
-                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center"
+                  ? "max-md:bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center gap-1 menu-item-active"
+                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
               }
             >
-              <FaCompass className="hidden max-sm:block size-4.5" />
-              <p className="max-sm:text-[10px] max-sm:mt-1">Genres</p>
+              <FaCompass className="hidden max-md:block size-4.5" />
+              <p className="max-md:text-[10px] max-md:mt-1">Genres</p>
             </NavLink>
             <NavLink
               to="/search"
               className={({ isActive }) =>
                 isActive
-                  ? "bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative md:menu-item-active  max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center gap-1"
-                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 text-sm font-normal relative max-sm:flex max-sm:justify-center max-sm:flex-col max-sm:items-center"
+                  ? "max-md:bg-cta-primary/50 px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center gap-1 menu-item-active"
+                  : "px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
               }
             >
-              <FaMagnifyingGlass className="hidden max-sm:block size-4.5" />
-              <p className="max-sm:text-[10px] max-sm:mt-1">Search</p>
+              <FaMagnifyingGlass className="hidden max-md:block size-4.5" />
+              <p className="max-md:text-[10px] max-md:mt-1">Search</p>
             </NavLink>
+            <Link
+              to={userData.role === "admin" ? "/admin" : "/dashboard"}
+              className="hidden px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
+            >
+              <TbLayoutDashboardFilled className="hidden max-md:block size-4.5" />
+              <p className="max-md:text-[10px] max-md:mt-1">Dashbaord</p>
+            </Link>
           </ul>
         </div>
-        <div className="max-sm:hidden flex gap-10 items-center">
+        <div className="max-md:hidden flex gap-10 items-center">
           {!nessSearchBox && (
             <div className="relative w-90">
               <input

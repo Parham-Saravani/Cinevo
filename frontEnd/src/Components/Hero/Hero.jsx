@@ -13,7 +13,14 @@ function Hero({ loading, title, banner, poster, bannerDescription }) {
         <Header />
       </section>
 
-      <section className="h-190 max-xl:h-160 max-lg:h-140 max-md:h-100 max-sm:h-90 relative header-hero">
+      <section
+        className="relative h-190 max-xl:h-160 max-lg:h-140 max-md:h-100 max-sm:h-90
+    after:absolute after:content-['']
+    after:inset-[0_0_-11px_0]
+    max-sm:after:inset-[0_0_0_0]
+    after:z-0
+    after:bg-[linear-gradient(180deg,var(--color-bg-primary),transparent,var(--color-bg-primary)),linear-gradient(270deg,var(--color-bg-primary),transparent,var(--color-bg-primary))]"
+      >
         <img
           onLoad={() => setBannerLoading(false)}
           src={banner}
@@ -37,9 +44,13 @@ function Hero({ loading, title, banner, poster, bannerDescription }) {
               <div className="absolute top-0 w-full h-full bg-black/20 z-10 rounded-xl"></div>
             </div>
             <div className="ml-9 w-fit max-sm:ml-0 max-sm:flex max-sm:flex-col max-sm:justify-center max-sm:items-center">
-              {loading ? <div className="bg-gray-900 animate-pulse w-100 h-15 rounded-xl"></div> :  <h1 className='text-white text-6xl max-md:text-5xl max-sm:text-4xl font-bold max-sm:text-center'>
-                {title}
-              </h1>}
+              {loading ? (
+                <div className="bg-gray-900 animate-pulse w-100 h-15 rounded-xl"></div>
+              ) : (
+                <h1 className="text-white text-6xl max-md:text-5xl max-sm:text-4xl font-bold max-sm:text-center">
+                  {title}
+                </h1>
+              )}
               {loading ? (
                 <div className="mt-6">
                   <div className="rounded-md bg-gray-900 animate-pulse h-3.5 w-120"></div>
