@@ -122,7 +122,7 @@ function Genre() {
                 <EmptyFiltering />
               ) : (
                 <div
-                  className={`grid ${layout === "grid" ? "grid-cols-7" : "grid-cols-1"} max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5 movies-page-movies-container`}
+                  className={`grid ${layout === "grid" ? "grid-cols-8 max-2xl:grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3" : "grid-cols-1"} gap-5 movies-page-movies-container`}
                 >
                   {loading
                     ? Array.from({ length: 7 }).map((item, index) => {
@@ -134,7 +134,7 @@ function Genre() {
                         ) : (
                           <div
                             key={index}
-                            className="group rounded-xl overflow-hidden max-sm:h-50 h-62"
+                            className="group rounded-xl overflow-hidden max-sm:h-50 max-2xl:h-62 h-70"
                           >
                             <Card {...item} />
                           </div>

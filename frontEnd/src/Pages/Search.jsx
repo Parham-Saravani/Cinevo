@@ -118,7 +118,7 @@ function Search() {
 
           <section className="mt-7 pb-5">
             <div className="container mx-auto">
-              <div className="relative grid grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 gap-5">
+              <div className="relative grid grid-cols-8 max-2xl:grid-cols-7 max-xl:grid-cols-6 max-lg:grid-cols-5 gap-5 max-md:grid-cols-4 max-sm:grid-cols-3">
                 {loading ? (
                   Array.from({ length: 7 }).map((item, index) => {
                     return <LoadingCard key={index} />;
@@ -130,7 +130,7 @@ function Search() {
                     return (
                       <div
                         key={index}
-                        className="group rounded-xl overflow-hidden h-62"
+                        className="group rounded-xl overflow-hidden max-sm:h-50 max-2xl:h-62 h-70"
                       >
                         <Card {...item} />
                       </div>

@@ -1,8 +1,9 @@
 import { Link } from "react-router";
 import { HiStar, HiCalendar, HiClock, HiFire } from "react-icons/hi";
-import { MdMovie, MdTv } from "react-icons/md";
+import { MdMovie } from "react-icons/md";
 import { MdOutlinePlaylistPlay, MdWorkspacePremium } from "react-icons/md";
-import { LuClapperboard } from "react-icons/lu";
+import { LuClapperboard, LuImageOff } from "react-icons/lu";
+import { useState } from "react";
 
 function ListCard({
   poster,
@@ -20,17 +21,36 @@ function ListCard({
   featured,
   trending,
 }) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   return (
     <div className="animate-fadeIn col-span-1 max-sm:flex-col max-sm:items-center group flex items-center gap-5 rounded-xl border border-input-border/50 p-4 transition-all duration-300 hover:border-input-border-focus">
       <Link
         to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`}
         className="shrink-0"
       >
-        <img
-          src={poster}
-          alt={title}
-          className="h-50 w-38 rounded-xl object-cover transition-transform duration-300 group-hover:scale-105"
-        />
+        {error ? (
+          <div className="flex h-50 w-38 flex-col items-center justify-center gap-2 rounded-xl bg-gray-900/70 text-center">
+            <LuImageOff className="size-9" />
+
+            <p className="text-xs font-medium text-text-primary">
+              Failed to load image
+            </p>
+
+            <span className="text-[10px] text-text-secondary">
+              Poster unavailable
+            </span>
+          </div>
+        ) : (
+          <img
+            onLoad={() => setLoading(false)}
+            onError={() => setError(true)}
+            src={poster}
+            alt={title}
+            className={`${loading ? "bg-gray-900 animate-pulse" : ""} h-50 w-38 rounded-xl object-cover transition-transform duration-300 group-hover:scale-105`}
+          />
+        )}
       </Link>
 
       <div className="flex flex-1 flex-col">
