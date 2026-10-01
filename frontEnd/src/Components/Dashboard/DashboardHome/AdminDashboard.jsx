@@ -4,9 +4,8 @@ import { Link } from "react-router";
 import { Area, Line, XAxis, YAxis, CartesianGrid, AreaChart } from "recharts";
 import { useLoaderData } from "react-router";
 import { Pie, PieChart, Tooltip } from "recharts";
-import defaultProfilImage from "../../../../public/profile/default.webp";
-import FormatTimeAgo from "../../../Utilities/FormatTimeAgo/FormatTimeAgo";
-
+import LatestContentItem from "../elements/LatestContentItem";
+import LatestUserItem from "../elements/LatestUserItem";
 const lineChartData = [
   { day: "Saturday", views: 1250 },
   { day: "Sunday", views: 1680 },
@@ -132,7 +131,12 @@ function AdminDashboard() {
                     </span>
                     <div className="flex text-text-secondary">
                       <p>{item.value}</p>
-                      <p className="ml-3">{takeContentPercentage(item.value , stats.moviesCount + stats.seriesCount)}</p>
+                      <p className="ml-3">
+                        {takeContentPercentage(
+                          item.value,
+                          stats.moviesCount + stats.seriesCount,
+                        )}
+                      </p>
                     </div>
                   </li>
                 );
@@ -225,38 +229,7 @@ function AdminDashboard() {
 
           <div className="space-y-4">
             {recentData.lastMovies.map((movie) => (
-              <div
-                key={movie._id}
-                className="flex items-center justify-between"
-              >
-                <div className="flex items-center gap-3">
-                  <img
-                    src={movie.poster}
-                    alt={movie.title}
-                    className="w-14 h-17 rounded-lg "
-                  />
-
-                  <div className="flex-1">
-                    <h3 className="text-sm font-medium text-text-primary">
-                      {movie.title}
-                    </h3>
-
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {movie.genres.slice(0, 2).map((genre) => (
-                        <span
-                          key={genre}
-                          className="px-2 py-1 rounded-full text-[10px] bg-white/5 text-text-secondary"
-                        >
-                          {genre}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <span className="text-[10px] flex justify-center items-center bg-bg-primary/50 text-text-secondary rounded-full max-w-20 px-1.5 py-1.5 truncate">
-                  {FormatTimeAgo(movie.createdAt)}
-                </span>
-              </div>
+              <LatestContentItem key={movie._id} {...movie} />
             ))}
           </div>
         </div>
@@ -276,36 +249,8 @@ function AdminDashboard() {
           </div>
 
           <div className="space-y-4">
-            {recentData.lastSeries.map((item) => (
-              <div key={item._id} className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <img
-                    src={item.poster}
-                    alt={item.title}
-                    className="w-14 h-17 rounded-lg object-cover"
-                  />
-
-                  <div className="flex-1">
-                    <h3 className="text-sm font-medium text-text-primary">
-                      {item.title}
-                    </h3>
-
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {item.genres.slice(0, 2).map((genre) => (
-                        <span
-                          key={genre}
-                          className="px-2 py-1 rounded-full text-[10px] bg-white/5 text-text-secondary"
-                        >
-                          {genre}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <span className="text-[10px] flex justify-center items-center bg-bg-primary/50 text-text-secondary rounded-full max-w-20 px-1.5 py-1.5 truncate">
-                  {FormatTimeAgo(item.createdAt)}
-                </span>
-              </div>
+            {recentData.lastSeries.map((serie) => (
+              <LatestContentItem key={serie._id} {...serie} />
             ))}
           </div>
         </div>
@@ -327,31 +272,7 @@ function AdminDashboard() {
 
           <div className="space-y-4">
             {recentData.lastUsers.map((user) => (
-              <div key={user._id} className="flex items-center gap-3">
-                <img
-                  src={
-                    user.imageUrl !== null ? user.imageUrl : defaultProfilImage
-                  }
-                  alt={user.username}
-                  className="size-9 max-sm:size-7 rounded-full object-cover"
-                />
-
-                <div className="flex-1">
-                  <h3 className="max-sm:text-xs font-medium text-text-primary">
-                    {user.username}
-                  </h3>
-
-                  <p className="text-sm max-sm:text-xs text-text-secondary truncate max-sm:max-w-40 max-w-50">
-                    {user.email}
-                  </p>
-                </div>
-
-                <span
-                  className={`max-w-14 truncate text-xs px-2 py-1 rounded-full ${user.role === "admin" ? "bg-cta-primary/10 text-cta-primary" : "bg-blue-500/10 text-blue-500"}`}
-                >
-                  {user.role}
-                </span>
-              </div>
+              <LatestUserItem {...user} />
             ))}
           </div>
         </div>
@@ -361,6 +282,6 @@ function AdminDashboard() {
 }
 
 const takeContentPercentage = (value, totalData) => {
-  return Math.floor((value / totalData) * 100) + '%'
+  return Math.floor((value / totalData) * 100) + "%";
 };
 export default AdminDashboard;
