@@ -1,27 +1,17 @@
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import removeCookie from "../../../Utilities/Cookie/removeCookie";
 import AdminDropDownMenu from "./AdminDropDownMenu";
 import UserDropDownMenu from "./UserDropDownMenu";
-import DefaultProfileImage from "/profile/default.webp"
+import DefaultProfileImage from "/profile/default.webp";
 
-function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
+function ProfileDropDown({ username, role, imageUrl, logOut }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const changeMenuStatus = () => {
     setIsOpen(!isOpen);
   };
-  if (loading) {
-    return (
-      <div className="h-12.75 w-40 bg-gray-900 animate-pulse rounded-full"></div>
-    );
-  }
-  if (error) {
-    removeCookie("auth-token");
-    return;
-  }
   return (
     <div className="relative">
       <button
@@ -30,7 +20,7 @@ function ProfileDropDown({ username, role, imageUrl, logOut, loading }) {
       >
         <img
           onLoad={() => setIsLoading(false)}
-          onError={(event) => event.target.src = DefaultProfileImage}
+          onError={(event) => (event.target.src = DefaultProfileImage)}
           src={imageUrl || DefaultProfileImage}
           className={`size-8 rounded-full object-cover ${isLoading ? "bg-gray-700 animate-pulse" : ""}`}
           alt="Profile"

@@ -44,8 +44,6 @@ function Login() {
               "Login failed. Please check your credentials and try again.",
           });
         } else if (data.message === "LOGIN_SUCCESSFUL") {
-          console.log(data.userData);
-
           dispatch({ type: "LOGIN", data: data.userData });
           showToast({
             isError: false,

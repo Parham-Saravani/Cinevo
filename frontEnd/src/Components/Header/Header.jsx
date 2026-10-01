@@ -1,10 +1,7 @@
 import { NavLink, Link, useNavigate, useMatches } from "react-router";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import ProfileDropDown from "./elements/ProfileDropDown";
-import { baseUrl } from "../../Utilities/constants";
 import removeCookie from "../../Utilities/Cookie/removeCookie";
-import getCookie from "../../Utilities/Cookie/getCookie";
-import Toast from "../Toast/Toast";
 import { FaHome, FaSearch } from "react-icons/fa";
 import {
   FaClapperboard,
@@ -13,60 +10,19 @@ import {
   FaTv,
 } from "react-icons/fa6";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
+import { AuthContext } from "../../Context/AuthProvider";
 
 function Header() {
+  const { userData } = useContext(AuthContext);
+  console.log(userData);
+
   const matches = useMatches();
   const nessSearchBox = matches.some(
     (item) => item.handle?.from === "hide-header-searchBox",
   );
 
   const navigate = useNavigate();
-  const [isLogin, setIslogin] = useState(false);
-  const [loading, setIsLoading] = useState(true);
-  const [userData, setUserData] = useState({});
-  const [error, setError] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-
-  useEffect(() => {
-    const token = getCookie("auth-token");
-
-    if (token) {
-      (async () => {
-        try {
-          const response = await fetch(`${baseUrl}/api/user/me`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ token }),
-          });
-          if (!response.ok) throw Error();
-          const data = await response.json();
-          if (data.message === "INVALID_TOKEN") {
-            throw Error("Invalid token. Please log in again.");
-          } else if (data.message === "INVALID_DATA") {
-            throw Error("Invalid user data.");
-          }
-
-          setIslogin(true);
-          setIsLoading(false);
-          setUserData({ ...data });
-        } catch (error) {
-          setError(true);
-          removeCookie("auth-token");
-          setIsLoading(false);
-          Toast({ children: error.message });
-        }
-      })();
-    } else {
-      removeCookie("auth-token");
-    }
-  }, []);
-
-  const logOutHandler = () => {
-    setIslogin(false);
-    removeCookie("auth-token");
-  };
 
   return (
     <div className="max-md:pt-0  max-md:py-2! max-md:z-200 max-md:left-0 max-md:right-0 max-md:w-fit max-md:bg-linear-90 max-md:bg-input-bg max-md:fixed max-md:bottom-2 max-md:rounded-xl  animate-fadeIn container mx-auto pt-5">
@@ -134,13 +90,13 @@ function Header() {
               <FaMagnifyingGlass className="hidden max-md:block size-4.5" />
               <p className="max-md:text-[10px] max-md:mt-1">Search</p>
             </NavLink>
-            <Link
+            {/* <Link
               to={userData.role === "admin" ? "/admin" : "/dashboard"}
               className="hidden px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
             >
               <TbLayoutDashboardFilled className="hidden max-md:block size-4.5" />
               <p className="max-md:text-[10px] max-md:mt-1">Dashbaord</p>
-            </Link>
+            </Link> */}
           </ul>
         </div>
         <div className="max-md:hidden flex gap-10 items-center">
@@ -174,12 +130,8 @@ function Header() {
               </button>
             </div>
           )}
-          {!error && isLogin ? (
-            <ProfileDropDown
-              {...userData}
-              loading={loading}
-              logOut={logOutHandler}
-            />
+          {userData ? (
+            <ProfileDropDown {...userData} />
           ) : (
             <Link
               to="/auth"
@@ -188,7 +140,7 @@ function Header() {
               Login | Signup
             </Link>
           )}
-          <div className="hidden relative profile-content">
+          <div className="hidden relative">
             <button className="bg-input-bg hover:bg-input-bg/90 hover:border-input-border-hover px-2 py-2 border-2 border-input-border rounded-full cursor-pointer transition-colors duration-300">
               <svg
                 className="text-text-secondary size-6"
