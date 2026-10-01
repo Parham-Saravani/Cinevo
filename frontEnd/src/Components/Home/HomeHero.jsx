@@ -11,7 +11,7 @@ function HomeHero({ data }) {
       <section className="absolute z-30 left-0 right-0">
         <Header />
       </section>
-      <section className="banner relative h-190 max-xl:h-150 max-lg:h-140 max-md:h-100 max-sm:h-90">
+      <section className="banner relative h-220 max-xl:h-150 max-lg:h-140 max-md:h-100 max-sm:h-90">
         {data ? (
           <Swiper
             className="h-full"

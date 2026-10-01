@@ -1,11 +1,11 @@
 import { createRoot } from "react-dom/client";
 import { Toaster } from "react-hot-toast";
-
 import App from "./App.jsx";
 import "./index.css";
+import { AuthProvider } from "./Context/AuthProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <>
+  <AuthProvider>
     <App />
     <Toaster
       toastOptions={{
@@ -14,5 +14,5 @@ createRoot(document.getElementById("root")).render(
           "max-w-fit! bg-input-bg! px-3! py-3! border! border-white/10! rounded-xl!",
       }}
     />
-  </>,
+  </AuthProvider>,
 );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "../Header/Header";
 import { FaPlay } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";

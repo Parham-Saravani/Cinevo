@@ -42,7 +42,16 @@ const registerNewUser = async (req, res) => {
           password: hashedPassword,
         });
         const token = await createToken(newUser._id);
-        res.status(201).json({ message: "USER_CREATED", token });
+        res.status(201).json({
+          message: "USER_CREATED",
+          token,
+          userData: {
+            username: newUser.username,
+            imageUrl: newUser.imageUrl,
+            email: newUser.email,
+            role: newUser.role,
+          },
+        });
       }
     } catch (error) {
       res.json({ message: error.message });
@@ -60,8 +69,17 @@ const loginOperation = async (req, res) => {
       if (user) {
         const passwordCompare = await bcrypt.compare(password, user.password);
         if (passwordCompare) {
-          const token = await createToken(user._id);
-          res.json({ message: "LOGIN_SUCCESSFUL", token });
+          const token = createToken(user._id);
+          res.json({
+            message: "LOGIN_SUCCESSFUL",
+            token,
+            userData: {
+              username: user.username,
+              imageUrl: user.imageUrl,
+              email: user.email,
+              role: user.role,
+            },
+          });
           // if (user.isLogin) {
           //   throw new Error("ALREADY_LOGIN");
           // } else {

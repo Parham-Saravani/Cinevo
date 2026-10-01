@@ -367,6 +367,9 @@
   @variant xl {
     max-width: 86rem;
   }
+  @variant 2xl{
+    max-width:117rem
+  }
   @media (max-width: 576px) {
     .banner::after {
       height: 2rem !important;

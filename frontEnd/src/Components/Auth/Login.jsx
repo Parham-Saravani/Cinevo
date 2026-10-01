@@ -1,16 +1,18 @@
-import { useEffect, useId } from "react";
+import { useContext, useEffect, useId } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { MdOutlineMail } from "react-icons/md";
 import LoginValidator from "../../Validators/LoginValidator";
 import { useState } from "react";
 import showToast from "../Toast/Toast";
-import { baseUrl } from "../../Utilities/constants";
 import saveCookie from "../../Utilities/Cookie/saveCookie";
 import { useNavigate } from "react-router";
 import PasswordInput from "../PasswordInput";
 import removeCookie from "../../Utilities/Cookie/removeCookie";
+import { AuthContext } from "../../Context/AuthProvider";
+import { baseUrl } from "../../Utilities/constants";
 
 function Login() {
+  const { dispatch } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rembember, setRemember] = useState(false);
@@ -33,6 +35,7 @@ function Login() {
           throw Error();
         }
         const data = await response.json();
+
         setIsLoading(false);
 
         if (data.message === "WRONG_CREDENTIALS") {
@@ -41,6 +44,9 @@ function Login() {
               "Login failed. Please check your credentials and try again.",
           });
         } else if (data.message === "LOGIN_SUCCESSFUL") {
+          console.log(data.userData);
+
+          dispatch({ type: "LOGIN", data: data.userData });
           showToast({
             isError: false,
             children: "Login successful. Welcome back to Cinevo!",
@@ -67,9 +73,7 @@ function Login() {
   const id = useId();
   return (
     <div className="animate-fadeInUp">
-      <h2 className="font-bold text-2xl max-sm:text-xl">
-        Welcome Back
-      </h2>
+      <h2 className="font-bold text-2xl max-sm:text-xl">Welcome Back</h2>
       <p className="text-text-secondary text-sm max-sm:text-xs">
         Glad to see you again! Please login to continue
       </p>
