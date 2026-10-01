@@ -21,7 +21,7 @@ function Banner({
         src={banner}
         loading="lazy"
       />
-      <div className="absolute bg-linear-90 from-black/70 via-black/60 to-transparent w-full top-0 right-0 h-full">
+      <div className="absolute bg-[linear-gradient(180deg,var(--color-bg-primary),transparent,var(--color-bg-primary)),linear-gradient(270deg,var(--color-bg-primary),transparent,var(--color-bg-primary))] w-full top-0 right-0 h-full">
         <div className="container mx-auto">
           <div className="top-0 max-md:top-8 bottom-0 my-auto absolute h-fit">
             <h1 className="text-white text-6xl font-bold max-lg:text-4xl max-sm:text-2xl">
@@ -48,7 +48,7 @@ function Banner({
                 {genres.map((item, index) => {
                   return (
                     <span
-                      className="banner-genres mr-2.5 relative before:absolute before:content-[','] before:-right-1.5"
+                      className="banner-genres mr-2.5 relative before:absolute before:content-[''] before:-right-1.5"
                       key={index}
                     >
                       {item}

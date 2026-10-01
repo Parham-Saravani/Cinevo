@@ -73,7 +73,6 @@ function Home() {
           }
           data={data.trending}
         >
-          {" "}
           Trending Now
         </Section>
 
@@ -84,7 +83,6 @@ function Home() {
           }
           data={data.newRelease}
         >
-          {" "}
           New Releases
         </Section>
 
@@ -95,7 +93,6 @@ function Home() {
           }
           data={data.popular}
         >
-          {" "}
           Popular Series
         </Section>
 
@@ -106,7 +103,6 @@ function Home() {
           }
           data={data.recommend}
         >
-          {" "}
           Recommended
         </Section>
       </main>

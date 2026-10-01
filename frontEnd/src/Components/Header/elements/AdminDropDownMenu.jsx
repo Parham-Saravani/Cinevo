@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-function AdminDropDownMenu({isOpen , onLogout}) {
+function AdminDropDownMenu({ isOpen }) {
   return (
     <div
       className={`${isOpen ? "opacity-100 block" : "hidden opacity-0"} z-100 absolute text-text-secondary top-full right-0 mt-2 w-56 bg-input-bg border border-input-border rounded-xl overflow-hidden`}
@@ -43,13 +43,6 @@ function AdminDropDownMenu({isOpen , onLogout}) {
       >
         Settings
       </Link>
-
-      <button
-        onClick={onLogout}
-        className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 cursor-pointer transition-colors duration-300"
-      >
-        Logout
-      </button>
     </div>
   );
 }

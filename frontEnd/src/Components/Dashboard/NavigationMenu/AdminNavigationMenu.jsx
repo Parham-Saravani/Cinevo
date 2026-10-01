@@ -9,9 +9,11 @@ import {
 } from "react-icons/fa6";
 import { MdMovie, MdDashboard } from "react-icons/md";
 import removeCookie from "../../../Utilities/Cookie/removeCookie";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../Context/AuthProvider";
 
 function AdminNavigationMenu() {
+  const { dispatch } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -99,6 +101,7 @@ function AdminNavigationMenu() {
           <button
             onClick={() => {
               removeCookie("auth-token");
+              dispatch({type:"LOGOUT"})
               navigate("/", { replace: true });
             }}
             className="cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red-400 transition hover:bg-red-500/10"

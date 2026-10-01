@@ -36,14 +36,14 @@ const takeSimilarContent = async (req, res) => {
         _id: { $ne: current._id },
         genres: { $in: current.genres },
       },
-      { poster: true, genres: true },
+      { poster: true, genres: true, slug: true, type: true },
     ).limit(5),
     Movie.find(
       {
         _id: { $ne: current._id },
         genres: { $in: current.genres },
       },
-      { poster: true, genres: true },
+      { poster: true, genres: true, slug: true, type: true },
     ).limit(5),
   ]);
   res.json([...similaMovies, ...similarSeries]);
@@ -461,8 +461,8 @@ const takeUserWatchlist = async (req, res) => {
       const data = await User.findOne(
         { _id: userId },
         { _id: false, watchlist: true },
-      );      
-      res.json(data['watchlist']);
+      );
+      res.json(data["watchlist"]);
     } catch (error) {
       res.json({ message: "USER_NOT_FOUND" });
     }

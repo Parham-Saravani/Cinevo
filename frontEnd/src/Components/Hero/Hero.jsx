@@ -2,11 +2,12 @@ import { useState } from "react";
 import Header from "../Header/Header";
 import { FaPlay } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
+import { LuImageOff } from "react-icons/lu";
 
 function Hero({ loading, title, banner, poster, bannerDescription }) {
   const [bannerLoading, setBannerLoading] = useState(true);
   const [posterLoading, setPosterLoading] = useState(true);
-
+  const [posterError, setPosterError] = useState(false);
   return (
     <header className="animate-fadeIn">
       <section className="absolute z-10 left-0 right-0">
@@ -32,15 +33,30 @@ function Hero({ loading, title, banner, poster, bannerDescription }) {
         <div className="container mx-auto">
           <div className="top-20 max-xl:top-20 max-lg:top-80 max-md:top-60 max-sm:top-40 max-sm:w-[95%] absolute flex max-sm:flex-col items-center z-10 bottom-0 my-auto h-fit">
             <div
-              className={`max-sm:mb-6 relative h-107 max-xl:h-90 max-lg:h-70 max-md:h-55 w-80 max-xl:w-67 max-md:w-50 max-sm:w-45 rounded-xl ${posterLoading ? "bg-gray-900 animate-pulse" : ""}`}
+              className={`max-sm:mb-6 relative h-107 max-xl:h-90 max-lg:h-70 max-md:h-55 w-80 max-xl:w-67 max-md:w-50 max-sm:w-45 rounded-xl`}
             >
-              <img
-                src={poster}
-                onLoad={() => setPosterLoading(false)}
-                className={`rounded-xl w-full block ${posterLoading ? "animate-pulse bg-gray-900" : ""}`}
-                loading="lazy"
-                alt=""
-              />
+              {posterError ? (
+                <div className="flex bg-gray-900 h-full w-full flex-col items-center justify-center rounded-xl border border-input-border bg-card">
+                  <LuImageOff className="size-12 text-text-secondary" />
+
+                  <p className="mt-3 text-sm font-medium text-text-primary">
+                    Unable to load poster
+                  </p>
+
+                  <span className="mt-1 text-xs text-text-secondary">
+                    Image unavailable
+                  </span>
+                </div>
+              ) : (
+                <img
+                  src={poster}
+                  onLoad={() => setPosterLoading(false)}
+                  onError={() => setPosterError(true)}
+                  className={`rounded-xl w-full h-full block ${posterLoading ? "animate-pulse bg-gray-900" : ""}`}
+                  loading="lazy"
+                  alt=""
+                />
+              )}
               <div className="absolute top-0 w-full h-full bg-black/20 z-10 rounded-xl"></div>
             </div>
             <div className="ml-9 w-fit max-sm:ml-0 max-sm:flex max-sm:flex-col max-sm:justify-center max-sm:items-center">

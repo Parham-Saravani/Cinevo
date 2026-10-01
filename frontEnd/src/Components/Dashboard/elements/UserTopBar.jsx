@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DefaultUserProfileImage from "/profile/default.webp";
+import { AuthContext } from "../../../Context/AuthProvider";
 
-function UserTopBar({ username, imageUrl, loading }) {
+function UserTopBar() {
+  const { userData :{username ,imageUrl}} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -24,16 +26,10 @@ function UserTopBar({ username, imageUrl, loading }) {
           />
 
           <div>
-            <h3
-              className={`text-sm font-medium text-white ${loading ? "w-15 h-4 rounded-md bg-gray-700 animate-pulse" : ""}`}
-            >
+            <h3 className={`text-sm font-medium text-white`}>
               {username && username}
             </h3>
-            <p
-              className={`text-xs text-text-secondary ${loading ? "w-20 h-4 rounded-md bg-gray-700 animate-pulse" : ""}`}
-            >
-              User
-            </p>
+            <p className={`text-xs text-text-secondary`}>User</p>
           </div>
         </div>
       </div>

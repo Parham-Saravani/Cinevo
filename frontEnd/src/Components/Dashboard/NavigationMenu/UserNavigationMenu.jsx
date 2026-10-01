@@ -8,9 +8,11 @@ import {
 import { FaHome } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 import removeCookie from "../../../Utilities/Cookie/removeCookie";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../Context/AuthProvider";
 
 function UserNavigationMenu() {
+  const { dispatch } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const menuItems = [
@@ -92,6 +94,7 @@ function UserNavigationMenu() {
             onClick={() => {
               removeCookie("auth-token");
               navigate("/", { replace: true });
+              dispatch({ type: "LOGOUT" });
             }}
             className="cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-red-400 transition hover:bg-red-500/10"
           >

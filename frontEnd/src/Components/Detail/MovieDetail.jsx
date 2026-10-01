@@ -101,7 +101,7 @@ function MovieDetail({
         </div>
       </Section>
 
-      {/* <!-- Similar Series --> */}
+      {/* <!-- Similar Movie --> */}
       <Section>
         <Content value={"Similar Movies"}>
           <div className="overflow-hidden mt-2">

@@ -1,6 +1,8 @@
+import { useState } from "react";
 import defaultProfilImage from "../../../../public/profile/default.webp";
 
 function LatestUser({ imageUrl, username, email, role }) {
+  const [loading, setLoading] = useState(true);
   return (
     <div className="flex items-center gap-3">
       <img

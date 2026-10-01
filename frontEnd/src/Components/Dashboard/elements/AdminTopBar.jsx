@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DefaultUserProfileImage from "/profile/default.webp";
+import { AuthContext } from "../../../Context/AuthProvider";
 
-function AdminTopBar({ username, role, imageUrl, loading }) {
+function AdminTopBar() {
+  const {
+    userData: { username, imageUrl },
+  } = useContext(AuthContext);
+
   const [imageLoading, setImageLoading] = useState(true);
   return (
     <header className="max-sm:hidden sticky top-0 z-40 flex py-2 border-b border-input-border bg-input-bg px-6">
@@ -27,16 +32,10 @@ function AdminTopBar({ username, role, imageUrl, loading }) {
           />
 
           <div>
-            <h3
-              className={`text-sm font-medium text-white ${loading ? "w-15 h-4 rounded-md bg-gray-700 animate-pulse" : ""}`}
-            >
+            <h3 className={`text-sm font-medium text-white`}>
               {username && username}
             </h3>
-            <p
-              className={`text-xs text-text-secondary ${loading ? "w-20 h-4 rounded-md bg-gray-700 animate-pulse" : ""}`}
-            >
-              Administrator
-            </p>
+            <p className={`text-xs text-text-secondary`}>Administrator</p>
           </div>
         </div>
       </div>

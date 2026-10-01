@@ -271,8 +271,8 @@ function AdminDashboard() {
           </div>
 
           <div className="space-y-4">
-            {recentData.lastUsers.map((user) => (
-              <LatestUserItem {...user} />
+            {recentData.lastUsers.map((user, index) => (
+              <LatestUserItem key={index} {...user} />
             ))}
           </div>
         </div>

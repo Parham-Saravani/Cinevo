@@ -56,19 +56,7 @@
   -ms-border-radius: 4rme;
   -o-border-radius: 4rme;
 }
-.banner::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 8rem;
-  background-image: linear-gradient(
-    to bottom,
-    transparent,
-    var(--color-bg-primary)
-  );
-  z-index: 1;
-}
+
 .banner-data:before {
   content: "";
   position: absolute;

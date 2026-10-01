@@ -9,6 +9,7 @@ import {
   FaMagnifyingGlass,
   FaTv,
 } from "react-icons/fa6";
+import { HiUserCircle } from "react-icons/hi";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { AuthContext } from "../../Context/AuthProvider";
 
@@ -90,15 +91,26 @@ function Header() {
               <FaMagnifyingGlass className="hidden max-md:block size-4.5" />
               <p className="max-md:text-[10px] max-md:mt-1">Search</p>
             </NavLink>
-            {/* <Link
-              to={userData.role === "admin" ? "/admin" : "/dashboard"}
-              className="hidden px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
-            >
-              <TbLayoutDashboardFilled className="hidden max-md:block size-4.5" />
-              <p className="max-md:text-[10px] max-md:mt-1">Dashbaord</p>
-            </Link> */}
+            {userData ? (
+              <Link
+                to={userData.role === "admin" ? "/admin" : "/dashboard"}
+                className="hidden px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
+              >
+                <TbLayoutDashboardFilled className="hidden max-md:block size-4.5" />
+                <p className="max-md:text-[10px] max-md:mt-1">Dashbaord</p>
+              </Link>
+            ) : (
+              <Link
+                to={"/auth"}
+                className="hidden px-1 py-1 rounded-md menu-item text-white hover:text-text-secondary transition-colors duration-300 font-normal relative max-md:flex max-md:justify-center max-md:flex-col max-md:items-center"
+              >
+                <HiUserCircle className="hidden max-md:block size-4.5" />
+                <p className="max-md:text-[10px] max-md:mt-1">Login | Signup</p>
+              </Link>
+            )}
           </ul>
         </div>
+
         <div className="max-md:hidden flex gap-10 items-center">
           {!nessSearchBox && (
             <div className="relative w-90">
