@@ -1,9 +1,7 @@
-import { data, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import AdminNavigationMenu from "../Dashboard/NavigationMenu/AdminNavigationMenu";
-import { useContext, useEffect, useState } from "react";
-import getCookie from "../../Utilities/Cookie/getCookie";
+import { useContext, useState } from "react";
 import UserNavigationMenu from "../Dashboard/NavigationMenu/UserNavigationMenu";
-import { baseUrl } from "../../Utilities/constants";
 import AdminTopBar from "../Dashboard/elements/AdminTopBar";
 import UserTopBar from "../Dashboard/elements/UserTopBar";
 import { AuthContext } from "../../Context/AuthProvider";
