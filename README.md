@@ -95,7 +95,6 @@ https://cinevo-iota.vercel.app
 - Toast notifications with React Hot Toast
 - Responsive content sliders
 - Form validation with Zod
-=======
 * Browse movies and TV series
 * Explore trending content
 * Discover new releases
@@ -241,24 +240,6 @@ Authentication-related routes and user-specific pages are separated from public 
 
 ---
 
-## 🔌 API
-
-Cinevo uses a RESTful API built with Node.js and Express.js.
-
-Example endpoints:
-
-```text
-GET /api/banners
-GET /api/discover/trending
-GET /api/discover/newRelease
-GET /api/discover/popular
-GET /api/discover/recommend
-```
-
-The React frontend communicates with the backend through HTTP requests and handles loading, success, error, and empty states accordingly.
-
----
-
 ## 🚀 Getting Started
 
 ### 1. Clone the repository
@@ -328,7 +309,6 @@ Cinevo is designed to provide a responsive experience across:
 
 ---
 
-<<<<<<< HEAD
 ## 🎯 Project Goals
 
 Cinevo was built to practice and demonstrate:
@@ -345,34 +325,3 @@ Cinevo was built to practice and demonstrate:
 - Responsive UI development
 - Error and loading state handling
 - Full-stack application development
-
----
-
-## 🔮 Future Improvements
-
-- [ ] Advanced search
-- [ ] Advanced filtering
-- [ ] Rating system
-- [ ] Video player
-- [ ] Infinite scrolling
-- [ ] Performance optimization
-- [ ] Production deployment
-=======
-## 🔮 Future Improvements
-
-* [ ] Rating system
-* [ ] Video player
-* [ ] Infinite scrolling
-* [ ] Performance optimization
->>>>>>> 47b1563fa47a9e1e85889e901fe39ca0e1d73433
-
----
-
-## 👨‍💻 Author
-
-**Parham Saravani**
-
-Junior Frontend Developer focused on React and modern frontend development.
-
-- GitHub: [Parham-Saravani](https://github.com/Parham-Saravani)
-- LinkedIn: [Parham Saravani](https://www.linkedin.com/in/parham-saravani-63b56a374)
