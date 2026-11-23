@@ -9,7 +9,6 @@ export const updateContent = async (contentID, updateData, endpoint) => {
       },
       body: JSON.stringify({ _id: contentID, updateData }),
     });
-    console.log(response);
 
     if (!response.ok) {
       return {
@@ -17,7 +16,6 @@ export const updateContent = async (contentID, updateData, endpoint) => {
       };
     }
     const data = await response.json();
-    console.log(data);
 
     if (data.message === "UPDATE_SUCCESSFUL") {
       return {

@@ -1,5 +1,11 @@
 import Movie from "../models/movie.model.js";
 import generateSlug from "../utilities/slugGenerator.js";
+import {
+  newScreenshots,
+  newBanner,
+  newPoster,
+  newTrailer,
+} from "../consts/newData.js";
 
 const registerNewMovie = async (req, res) => {
   const { content } = req.body;
@@ -66,6 +72,7 @@ const takeAllMovies = async (req, res) => {
       trending: true,
     },
   );
+  movies.forEach((item) => (item.poster = newPoster));
   res.json(movies);
 };
 const takeMovieData = async (req, res) => {
@@ -73,7 +80,10 @@ const takeMovieData = async (req, res) => {
   try {
     const movieData = await Movie.findOne({ slug: title });
     if (!movieData) throw new Error("NOT_FOUND");
-
+    movieData.screenshots = newScreenshots;
+    movieData.banner = newBanner;
+    movieData.poster = newPoster;
+    movieData.trailer = newTrailer;
     res.json(movieData);
   } catch (error) {
     res.json({ message: error.message });

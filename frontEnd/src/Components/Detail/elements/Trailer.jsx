@@ -33,11 +33,13 @@ function Trailer({ trailer }) {
             onLoadedData={() => {
               setLoading(false);
             }}
+            onPlay={() => setLoading(false)}
+            onWaiting={() => setLoading(true)}
             onLoadStart={() => {
               setLoading(true);
             }}
             onError={() => setError(true)}
-            className={`aspect-video object-cover w-full h-full ${loading ? "bg-gray-900 animate-pulse" : ""}`}
+            className={`aspect-video object-cover w-full h-full bg-gray-950 ${loading ? "bg-gray-900 animate-pulse" : ""}`}
             src={trailer}
           ></video>
         )}

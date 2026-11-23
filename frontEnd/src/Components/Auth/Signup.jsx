@@ -65,8 +65,6 @@ function Signup() {
           });
         }
       } catch (error) {
-        console.log(error);
-
         Toast({
           children: error.message,
         });
@@ -75,9 +73,7 @@ function Signup() {
   };
   return (
     <div className="animate-fadeInUp">
-      <h2 className="font-bold text-2xl max-sm:text-xl">
-        Create Your Account
-      </h2>
+      <h2 className="font-bold text-2xl max-sm:text-xl">Create Your Account</h2>
       <p className="text-text-secondary text-sm max-sm:text-xs">
         Join Cinevo and start exploring
       </p>

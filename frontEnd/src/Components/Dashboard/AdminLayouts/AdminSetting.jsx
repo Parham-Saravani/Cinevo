@@ -29,7 +29,6 @@ function AdminSettings() {
             body: JSON.stringify({ token, data: updatedData }),
           });
           if (!repsonse.ok) {
-            console.log("errorr");
             return;
           }
           setLoading(false);

@@ -12,14 +12,11 @@ const takeUserContent = async (endPoint) => {
       body: JSON.stringify({ token }),
     });
     if (!response.ok) {
-      console.log(response);
       return;
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
-    
     return undefined;
   }
 };

@@ -10,7 +10,6 @@ export const removeContent = async (contentID, endpoint) => {
       body: JSON.stringify({ id: contentID }),
     });
     if (!response.ok) {
-      console.log("remove failed!");
       return;
     }
     const data = await response.json();

@@ -4,7 +4,6 @@ import AdminCommentItem from "../elements/AdminCommentItem";
 
 function AdminComments() {
   const data = useLoaderData();
-  console.log(data);
 
   return (
     <section className="relative space-y-5 animate-fadeIn">

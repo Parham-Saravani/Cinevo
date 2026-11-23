@@ -9,7 +9,6 @@ const UploadImagesAndRegisterContent = async (content, endpoint) => {
       content.title.split(" ").join(""),
     );
     if (!poster) {
-      console.log(`poster not uploaded`);
       return;
     }
 
@@ -18,7 +17,6 @@ const UploadImagesAndRegisterContent = async (content, endpoint) => {
       content.title.split(" ").join(""),
     );
     if (!banner) {
-      console.log(`banner not uploaded`);
       return;
     }
 
@@ -44,14 +42,11 @@ const UploadImagesAndRegisterContent = async (content, endpoint) => {
       body: JSON.stringify({ content }),
     });
     if (!response.ok) {
-      console.log("server error");
       return;
     }
 
     return await response.json();
   } catch (error) {
-    console.log(error);
-
     Toast({ children: "Please check your network connection." });
   }
 };

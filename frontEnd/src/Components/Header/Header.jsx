@@ -15,8 +15,6 @@ import { AuthContext } from "../../Context/AuthProvider";
 
 function Header() {
   const { userData } = useContext(AuthContext);
-  console.log(userData);
-
   const matches = useMatches();
   const nessSearchBox = matches.some(
     (item) => item.handle?.from === "hide-header-searchBox",

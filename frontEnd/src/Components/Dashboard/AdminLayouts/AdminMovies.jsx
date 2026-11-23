@@ -21,9 +21,7 @@ function AdminMovies() {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    (console.log(movies), [movies]);
-  });
+
   const [newMovie, setNewMovie] = useState({
     type: "movie",
     title: "",
@@ -54,7 +52,7 @@ function AdminMovies() {
   const registerNewMovie = async () => {
     const status = MovieValidator.safeParse(newMovie);
     if (status.success) {
-      const request = UploadImagesAndRegisterContent(newMovie, '/api/movies');
+      const request = UploadImagesAndRegisterContent(newMovie, "/api/movies");
       toast.promise(
         request,
         {

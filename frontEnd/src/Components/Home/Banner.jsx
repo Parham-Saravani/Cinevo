@@ -32,7 +32,7 @@ function Banner({
             </p>
             <div className="mt-5 flex">
               <Link
-                to={type === "movie" ? `/movِie/${slug}` : `/serie/${slug}`}
+                to={type === "movie" ? `/movie/${slug}` : `/serie/${slug}`}
                 className="h-13 max-sm:h-10 flex max-md:gap-1 gap-2 items-center justify-center bg-cta-primary hover:bg-cta-hover text-text-primary font-semibold w-40 max-md:w-30 text-sm max-md:text-[10px] max-md:px-3 py-3 max-md:py-0 transition-colors duration-300 cursor-pointer rounded-xl"
               >
                 <FaPlay className="size-6 max-md:size-4 fill-text-primary" />

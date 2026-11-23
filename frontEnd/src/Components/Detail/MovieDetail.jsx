@@ -13,13 +13,11 @@ import CommentLoading from "./elements/CommentLoading";
 import SimilarContentLoading from "./elements/SliderLoading";
 
 function MovieDetail({
-  isLogin,
   loading,
   typeHandler,
   onStatusChange,
   newCommentMessage,
   newCommentSpoil,
-  onSmash,
   totalComments,
   similarContent,
   overview,

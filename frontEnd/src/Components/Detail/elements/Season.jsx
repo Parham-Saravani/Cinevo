@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 
 function Season({ activeSeason, onSmash, seasons }) {
-  console.log();
-
   return (
     <Swiper
       className="mt-2"

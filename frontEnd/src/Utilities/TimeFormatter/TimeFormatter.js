@@ -3,10 +3,9 @@ const TimeFormatter = (time) => {
   const minute = time - hour * 60;
   if (hour) {
     return `${hour}h${minute}m`;
-  }else{
-    return `${minute}m`
+  } else {
+    return `${minute}m`;
   }
-  console.log(hour);
 };
 
 export default TimeFormatter;

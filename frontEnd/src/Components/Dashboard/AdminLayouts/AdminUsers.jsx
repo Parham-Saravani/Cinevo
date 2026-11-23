@@ -9,7 +9,6 @@ function AdminUsers() {
       try {
         const response = await fetch(`${baseUrl}/api/user`);
         if (!response.ok) {
-          console.log(response);
           return;
         }
         const data = await response.json();

@@ -1,5 +1,11 @@
 import Serie from "../models/series.model.js";
 import generateSlug from "../utilities/slugGenerator.js";
+import {
+  newScreenshots,
+  newBanner,
+  newPoster,
+  newTrailer,
+} from "../consts/newData.js";
 
 const takeAllSeries = async (req, res) => {
   const series = await Serie.find(
@@ -25,6 +31,8 @@ const takeAllSeries = async (req, res) => {
       trending: true,
     },
   );
+  series.forEach((item) => (item.poster = newPoster));
+
   res.json(series);
 };
 
@@ -33,6 +41,10 @@ const takeSerie = async (req, res) => {
   try {
     const serieData = await Serie.findOne({ slug: title });
     if (!serieData) throw new Error("NOT_FOUND");
+    serieData.screenshots = newScreenshots;
+    serieData.banner = newBanner;
+    serieData.poster = newPoster;
+    serieData.trailer = newTrailer;
     res.json(serieData);
   } catch (error) {
     res.json({ message: error.message });

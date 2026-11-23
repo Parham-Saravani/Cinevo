@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import Card from "../Card/Card";
 function Slider({ data }) {
-  console.log(data);
-  
   return (
     <Swiper grabCursor={true} slidesPerView={"auto"} spaceBetween={13}>
       {data.map((item) => {

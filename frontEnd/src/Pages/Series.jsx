@@ -38,9 +38,7 @@ function Series() {
     }
     setError(true);
   }, []);
-  useEffect(() => {
-    console.log(layout);
-  }, [layout]);
+  useEffect(() => {}, [layout]);
   useEffect(() => {
     setCurrentYear("All");
     setCurrentGenre("All");

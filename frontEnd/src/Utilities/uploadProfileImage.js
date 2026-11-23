@@ -15,7 +15,6 @@ export const getUserData = async (profileImageFile) => {
       body: JSON.stringify({ token: userToken }),
     });
     if (!response.ok) {
-      console.log("try again!");
       return;
     }
 

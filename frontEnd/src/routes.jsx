@@ -176,9 +176,7 @@ const router = createBrowserRouter([
               try {
                 const response = await fetch(`${baseUrl}/api/comment`);
                 return await response.json();
-              } catch (error) {
-                console.log(error);
-              }
+              } catch (error) {}
             },
           },
           { path: "settings", element: <AdminSetting /> },

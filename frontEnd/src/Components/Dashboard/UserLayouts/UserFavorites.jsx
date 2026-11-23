@@ -7,7 +7,6 @@ function UserFavorites() {
   const [error, setError] = useState(false);
 
   const data = useLoaderData();
-  console.log(data);
 
   useEffect(() => {
     if (data) {

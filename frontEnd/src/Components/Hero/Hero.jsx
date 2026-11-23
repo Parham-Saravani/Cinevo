@@ -15,12 +15,12 @@ function Hero({ loading, title, banner, poster, bannerDescription }) {
       </section>
 
       <section
-        className="relative h-190 max-xl:h-160 max-lg:h-140 max-md:h-100 max-sm:h-90
-    after:absolute after:content-['']
-    after:inset-[0_0_-11px_0]
-    max-sm:after:inset-[0_0_0_0]
-    after:z-0
-    after:bg-[linear-gradient(180deg,var(--color-bg-primary),transparent,var(--color-bg-primary)),linear-gradient(270deg,var(--color-bg-primary),transparent,var(--color-bg-primary))]"
+        className="relative h-220 max-xl:h-160 max-lg:h-140 max-md:h-100 max-sm:h-90
+        after:absolute after:content-['']
+        after:inset-[0_0_-11px_0]
+        max-sm:after:inset-[0_0_0_0]
+        after:z-0
+        after:bg-[linear-gradient(180deg,var(--color-bg-primary),transparent,var(--color-bg-primary)),linear-gradient(270deg,var(--color-bg-primary),transparent,var(--color-bg-primary))]"
       >
         <img
           onLoad={() => setBannerLoading(false)}
@@ -52,7 +52,7 @@ function Hero({ loading, title, banner, poster, bannerDescription }) {
                   src={poster}
                   onLoad={() => setPosterLoading(false)}
                   onError={() => setPosterError(true)}
-                  className={`rounded-xl w-full h-full block ${posterLoading ? "animate-pulse bg-gray-900" : ""}`}
+                  className={`rounded-xl w-full h-full block transition-opacity opacity-0 ${posterLoading ? "animate-pulse bg-gray-900 " : "opacity-100"}`}
                   loading="lazy"
                   alt=""
                 />

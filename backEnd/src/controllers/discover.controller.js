@@ -4,6 +4,7 @@ import User from "../models/user.model.js";
 import Comment from "../models/comment.model.js";
 import crypto from "crypto";
 import { decompressToken } from "../utilities/token.js";
+import { newPoster } from "../consts/newData.js";
 
 const getImageKitData = async (req, res) => {
   const pubKey = process.env.IMAGEKEY_PRIVATE_KEY;
@@ -30,7 +31,7 @@ const takeSimilarContent = async (req, res) => {
     res.json({ message: "NOT_FOUND" });
   }
   const current = movie || series;
-  const [similaMovies, similarSeries] = await Promise.all([
+  const [similarMovies, similarSeries] = await Promise.all([
     Serie.find(
       {
         _id: { $ne: current._id },
@@ -46,7 +47,10 @@ const takeSimilarContent = async (req, res) => {
       { poster: true, genres: true, slug: true, type: true },
     ).limit(5),
   ]);
-  res.json([...similaMovies, ...similarSeries]);
+
+  similarMovies.forEach((item) => (item.poster = newPoster));
+  similarSeries.forEach((item) => (item.poster = newPoster));
+  res.json([...similarMovies, ...similarSeries]);
 };
 const takeTrendContent = async (req, res) => {
   const totalTrendSeries = await Serie.find(
@@ -71,6 +75,8 @@ const takeTrendContent = async (req, res) => {
       type: true,
     },
   ).limit(5);
+  totalTrendSeries.forEach((item) => (item.poster = newPoster));
+  totalTrendMovies.forEach((item) => (item.poster = newPoster));
   res.json([...totalTrendMovies, ...totalTrendSeries]);
 };
 const takeNewContent = async (req, res) => {
@@ -96,6 +102,8 @@ const takeNewContent = async (req, res) => {
       type: true,
     },
   ).limit(5);
+  totalPopularSeries.forEach((item) => (item.poster = newPoster));
+  totalPopularMovies.forEach((item) => (item.poster = newPoster));
   res.json([...totalPopularSeries, ...totalPopularMovies]);
 };
 
@@ -122,6 +130,8 @@ const takePopularContent = async (req, res) => {
       type: true,
     },
   ).limit(5);
+  totalPopularSeries.forEach((item) => (item.poster = newPoster));
+  totalPopularMovies.forEach((item) => (item.poster = newPoster));
   res.json([...totalPopularSeries, ...totalPopularMovies]);
 };
 const takeRecommendedContent = async (req, res) => {
@@ -147,6 +157,8 @@ const takeRecommendedContent = async (req, res) => {
       type: true,
     },
   ).limit(5);
+  recommendSeries.forEach((item) => (item.poster = newPoster));
+  recommendMovies.forEach((item) => (item.poster = newPoster));
   res.json([...recommendSeries, ...recommendMovies]);
 };
 
@@ -370,6 +382,7 @@ const filtering = async (req, res) => {
     featured: true,
     trending: true,
   });
+  data.forEach((item) => (item.poster = newPoster));
   return res.json(data);
 };
 const searchOnContent = async (req, res) => {
@@ -414,6 +427,8 @@ const searchOnContent = async (req, res) => {
       trending: true,
     },
   );
+  movies.forEach((item) => (item.poster = newPoster));
+  series.forEach((item) => (item.poster = newPoster));
   res.json([...movies, ...series]);
 };
 const tekeDashboardData = async (req, res) => {
